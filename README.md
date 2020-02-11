@@ -7,7 +7,7 @@ a web micro-framework.
 ## Team
 
 - Wyatt Holcombe
-- MEMBER2
+- Rayna Mishra
 - MEMBER3
 - MEMBER4
 
