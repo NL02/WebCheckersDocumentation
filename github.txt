@@ -1,0 +1,57 @@
+commit 0b8bfd00a74b9ae0705f775c1a887fae3ac8bdf8
+Author: erd9091 <erd9091@rit.edu>
+Date:   Wed Feb 19 15:50:19 2020 -0500
+
+    Added my name
+
+commit 19ad212085bb5d189626fd7dd7467cf2a9309419
+Author: Miao Lin Wu <mw4815@rit.edu>
+Date:   Tue Feb 18 22:47:56 2020 -0500
+
+    edited readme
+
+commit 071b3a78b946d182bf126cca86801592b7fc852a
+Author: nelsonliang <nl3514@g.rit.edu>
+Date:   Tue Feb 18 22:22:16 2020 -0500
+
+    Update README.md
+    
+    Changed Member3 to Nelson Liang
+
+commit 5442149683e66c0696c8fd1b02dda32935e5f2ee
+Author: rvm8343 <47134111+rvm8343@users.noreply.github.com>
+Date:   Mon Feb 10 20:12:05 2020 -0500
+
+    Update README.md
+
+commit b56ebc6e521f6de0885441ffd95cbc70f9682e8e
+Author: wymario <wymario@yahoo.com>
+Date:   Mon Feb 10 15:44:16 2020 -0500
+
+    Added name "Wyatt Holcombe" to README.md
+
+commit cc0a57ed88309083216e0f7aa6c7c6a0cc5705bf
+Author: KennBMartinez <kbmvse@rit.edu>
+Date:   Fri May 31 16:46:59 2019 -0400
+
+    Updates for you to always include disclaimers
+
+commit 58a0d2291cd13129702c22c1d52aa5c44b4f150a
+Author: KennBMartinez <kbmvse@rit.edu>
+Date:   Fri May 31 16:39:27 2019 -0400
+
+    For your benefit.
+    
+    Share if you think something else is needed.
+
+commit ce03d52fe9e6b3b6c9d824d65d9e77777fe1e31e
+Author: KennBMartinez <kbmvse@rit.edu>
+Date:   Fri May 31 16:35:55 2019 -0400
+
+    Initial WEBCHECKERS SEED REPO 2188-2191
+
+commit 7e7b18fcb7e7d1297d8985bf430ed1f27fa92151
+Author: KennBMartinez <kbmvse@rit.edu>
+Date:   Fri May 31 16:32:48 2019 -0400
+
+    Initial commit
