@@ -8,7 +8,7 @@ a web micro-framework.
 
 - Wyatt Holcombe
 - Rayna Mishra
-- MEMBER3
+- Nelson Liang
 - MEMBER4
 
 
