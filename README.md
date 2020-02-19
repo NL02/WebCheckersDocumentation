@@ -10,7 +10,7 @@ a web micro-framework.
 - Rayna Mishra
 - Nelson Liang
 - Miao Lin Wu
-
+- Ethan Davison
 
 ## Prerequisites
 
