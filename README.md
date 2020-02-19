@@ -9,7 +9,7 @@ a web micro-framework.
 - Wyatt Holcombe
 - Rayna Mishra
 - Nelson Liang
-- MEMBER4
+- Miao Lin Wu
 
 
 ## Prerequisites
