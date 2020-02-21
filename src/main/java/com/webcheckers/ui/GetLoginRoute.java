@@ -24,10 +24,13 @@ public class GetLoginRoute implements Route {
 
     public GetLoginRoute(final TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
+        LOG.config("GetLoginRoute initialized");
     }
 
     public Object handle(Request request, Response response) {
-        return null;
+        Map<String, Object> vm = new HashMap<>();
+        vm.put("title", "Login");
+        return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
     }
 
 }
