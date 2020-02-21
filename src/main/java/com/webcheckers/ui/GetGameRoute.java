@@ -34,7 +34,17 @@ public class GetGameRoute implements Route {
         LOG.config("GetGameRoute is initialized.");
 
     }
-
+    /**
+     * Render the WebCheckers Game page.
+     *
+     * @param request
+     *   the HTTP request
+     * @param response
+     *   the HTTP response
+     *
+     * @return
+     *   the rendered HTML for the Home page
+     */
     public Object handle(Request request, Response response) {
         LOG.finer("GetGameRoute is invoked.");
 
