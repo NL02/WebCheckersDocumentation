@@ -20,7 +20,20 @@ public class GetGameRoute implements Route {
 
     private static final Message GAME_MSG = Message.info("Game Page.");
 
+    private static final Message GAMEID_MSG = Message.info("gameID");
+
+    private static final Message CURRENT_USER_MSG = Message.info("currentUser");
+
+    private static final Message VIEWMODE_MSG = Message.info("modeOptions");
+
+    private static final Message RED_PLAYER_MSG = Message.info("redPlayer");
+
+    private static final Message WHITE_PLAYER_MSG = Message.info("whitePlayer");
+
+    private static final Message ACTIVE_COLOR_MSG = Message.info("activeColor");
+
     private final TemplateEngine templateEngine;
+
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
