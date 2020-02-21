@@ -13,8 +13,9 @@
         <form action="./signin" method="POST">
             Please enter in your username and password.
 
-            <input name="Username" />
-            <input name="Password" />
+            <br/>
+            <p>Username <input name="Username" /></p>
+            <p>Password: <input name="Password" /></p>
             <br/><br/>
             <button type="login">Login</button>
         </form>
