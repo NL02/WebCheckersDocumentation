@@ -21,7 +21,7 @@ public class GetLoginRoute implements Route {
     static final String TITLE = "Please Login";
     static final String VIEW_NAME = "signin.ftl";
 
-    private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
+    private static final Logger LOG = Logger.getLogger(GetLoginRoute.class.getName());
 
 
     private final TemplateEngine templateEngine;
