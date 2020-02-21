@@ -12,9 +12,10 @@
 
         <form action="./signin" method="POST">
             Please enter in your username and password.
-
+            <br/>
             <input name="Username" />
-            <input name="Password" />
+            <br/>
+            <input type= "password" name="Password" />
             <br/><br/>
             <button type="login">Login</button>
         </form>
