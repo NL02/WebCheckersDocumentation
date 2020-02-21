@@ -18,7 +18,7 @@ public class GetLoginRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
-    private static final Message LOGIN_MSG = Message.info("Please Login");
+    private static final String LOGIN_MSG = "Please Login";
 
     private final TemplateEngine templateEngine;
 
