@@ -52,7 +52,7 @@ public class GetGameRoute implements Route {
         vm.put("title", "Let's start the Game!");
 
         // render the View
-        return templateEngine.render(new ModelAndView(vm , "home.ftl"));
+        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
 
 }
