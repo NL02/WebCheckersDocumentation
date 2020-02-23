@@ -1,36 +1,26 @@
 package com.webcheckers.ui.board;
 
 public class BoardSquare {
-    private Color color;
+    private int cellIdx;
+    private boolean valid;
     private CheckersPiece piece;
 
-    protected BoardSquare(Color c, CheckersPiece p) {
-        this.color = c;
-        this.piece = p;
+    protected BoardSquare(int index, boolean valid, CheckersPiece piece) {
+        this.cellIdx = index;
+        this.valid = valid;
+        this.piece = piece;
     }
 
-    protected BoardSquare(Color c) {
-        this(c, null);
+    public int getCellIdx() {
+        return this.cellIdx;
     }
 
-    public boolean hasPiece() {
-        return this.piece != null;
+    public boolean isValid() {
+        return valid;
     }
 
-    /* Old and not needed for Sprint 1
-
-    public void placePiece(CheckersPiece p) {
-        if (this.piece != null) {
-            this.removePiece();
-        }
-        this.piece = p;
+    public CheckersPiece getPiece() {
+        return this.piece;
     }
 
-    public CheckersPiece removePiece() {
-        CheckersPiece copy = piece.duplicate();
-        this.piece = null;
-        return copy;
-    }
-
-     */
 }

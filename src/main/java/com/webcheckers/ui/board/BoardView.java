@@ -1,50 +1,40 @@
 package com.webcheckers.ui.board;
 
-import com.webcheckers.ui.board.BoardSquare;
+import java.util.Iterator;
 
-public class BoardView {
-    private BoardSquare[][] board;
+public class BoardView implements Iterable<BoardRow> {
+    private static final int NUM_ROWS = 8;
+
+    private final BoardRow[] rows;
 
     public BoardView() {
-
+        rows = new BoardRow[NUM_ROWS];
     }
 
-    /*
-    private void populateBoard() {
-        board = new BoardSquare[8][8];
-        Color squareColor = Color.WHITE; // Square at (0, 0) is always white
+    public Iterator<BoardRow> iterator() {
+        return new BoardIterator(this);
+    }
 
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                board[i][j] = new BoardSquare(squareColor);
-                squareColor = squareColor == Color.WHITE ? Color.RED : Color.WHITE;
-            }
-        }
-    }*/
 
-    /*public Iterator<BoardSquare> iterator() {
-        return new BoardIterator(this.board);
-    }*/
+    public class BoardIterator implements Iterator<BoardRow> {
+        private int index;
+        private final BoardRow[] rows;
 
-    /*
-    private class BoardIterator implements Iterator<BoardSquare> {
-        private int row, column;
-        private BoardSquare[][] board;
-
-        public BoardIterator(BoardSquare[][] board) {
-            this.board = board;
+        public BoardIterator(BoardView board) {
+            this.rows = board.rows;
+            index = 0;
         }
 
+        @Override
         public boolean hasNext() {
-
-            return false;
+            return index < rows.length;
         }
 
-        public BoardSquare next() {
-            return board[0][0];
+        @Override
+        public BoardRow next() {
+            index++;
+            return rows[index - 1];
         }
+
     }
-
-     */
-
 }
