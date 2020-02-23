@@ -1,8 +1,6 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.CheckersGame;
-//todo get enum for the game in CheckersGame
-import com.webcheckers.model.CheckersGame.GuessResult;
 
 /**
  * The object to coordinate the state of the Web Application.
@@ -22,6 +20,7 @@ public class PlayerServices {
 
     //
     // Public Methods
+    //
 
     /**
      * Construct a new {@Linkplain PlayerServices} but wait for the player to want to start a game
@@ -42,7 +41,7 @@ public class PlayerServices {
      */
     public synchronized CheckersGame currentGame() {
         if(game == null) {
-            game = PlayerLobby.getGame();
+            game = lobby.getGame();
         }
         return game;
     }

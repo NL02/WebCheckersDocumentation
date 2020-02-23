@@ -43,7 +43,7 @@ public class PlayerLobby {
      * @return
      *   A new {@link CheckersGame}
      */
-    public void getGame(){
+    public CheckersGame getGame(){
         return new CheckersGame();
     }
 
