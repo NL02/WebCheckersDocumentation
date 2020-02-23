@@ -1,6 +1,8 @@
 package com.webcheckers.model;
 
-public class CheckersBoard {
+import java.util.Iterator;
+
+public class CheckersBoard implements Iterable<BoardSquare>{
     private BoardSquare[][] board;
 
     public CheckersBoard() {
@@ -18,4 +20,27 @@ public class CheckersBoard {
             }
         }
     }
+
+    public Iterator<BoardSquare> iterator() {
+        return new BoardIterator(this.board);
+    }
+
+    private class BoardIterator implements Iterator<BoardSquare> {
+        private int row, column;
+        private BoardSquare[][] board;
+
+        public BoardIterator(BoardSquare[][] board) {
+            this.board = board;
+        }
+
+        public boolean hasNext() {
+
+            return false;
+        }
+
+        public BoardSquare next() {
+            return board[0][0];
+        }
+    }
+
 }
