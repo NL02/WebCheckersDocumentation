@@ -1,4 +1,4 @@
-package com.webcheckers.model;
+package com.webcheckers.ui.board;
 
 public class BoardSquare {
     private Color color;
@@ -17,6 +17,8 @@ public class BoardSquare {
         return this.piece != null;
     }
 
+    /* Old and not needed for Sprint 1
+
     public void placePiece(CheckersPiece p) {
         if (this.piece != null) {
             this.removePiece();
@@ -29,4 +31,6 @@ public class BoardSquare {
         this.piece = null;
         return copy;
     }
+
+     */
 }

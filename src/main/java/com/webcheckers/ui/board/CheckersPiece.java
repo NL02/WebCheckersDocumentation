@@ -1,21 +1,23 @@
-package com.webcheckers.model;
+package com.webcheckers.ui.board;
 
 public class CheckersPiece {
     private Color color;
-    private boolean isKing;
+    private PieceType type;
 
     protected CheckersPiece(Color c) {
         color = c;
-        isKing = false;
+        type = PieceType.SINGLE;
     }
 
     public Color getColor() {
         return this.color;
     }
 
-    public boolean isKing() {
-        return this.isKing;
+    public PieceType getType() {
+        return this.type;
     }
+
+    /* Old and not needed for Sprint 1
 
     public void becomeKing() {
         this.isKing = true;
@@ -28,4 +30,6 @@ public class CheckersPiece {
         }
         return copy;
     }
+
+     */
 }

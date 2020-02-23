@@ -1,14 +1,15 @@
-package com.webcheckers.model;
+package com.webcheckers.ui.board;
 
-import java.util.Iterator;
+import com.webcheckers.ui.board.BoardSquare;
 
-public class CheckersBoard implements Iterable<BoardSquare>{
+public class BoardView {
     private BoardSquare[][] board;
 
-    public CheckersBoard() {
-        this.populateBoard();
+    public BoardView() {
+
     }
 
+    /*
     private void populateBoard() {
         board = new BoardSquare[8][8];
         Color squareColor = Color.WHITE; // Square at (0, 0) is always white
@@ -19,12 +20,13 @@ public class CheckersBoard implements Iterable<BoardSquare>{
                 squareColor = squareColor == Color.WHITE ? Color.RED : Color.WHITE;
             }
         }
-    }
+    }*/
 
-    public Iterator<BoardSquare> iterator() {
+    /*public Iterator<BoardSquare> iterator() {
         return new BoardIterator(this.board);
-    }
+    }*/
 
+    /*
     private class BoardIterator implements Iterator<BoardSquare> {
         private int row, column;
         private BoardSquare[][] board;
@@ -42,5 +44,7 @@ public class CheckersBoard implements Iterable<BoardSquare>{
             return board[0][0];
         }
     }
+
+     */
 
 }

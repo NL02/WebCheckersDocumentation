@@ -1,4 +1,4 @@
-package com.webcheckers.model;
+package com.webcheckers.ui.board;
 
 public enum Color {
     WHITE,
