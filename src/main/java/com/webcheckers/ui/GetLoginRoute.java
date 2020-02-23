@@ -16,9 +16,13 @@ import com.webcheckers.util.Message;
 
 public class GetLoginRoute implements Route {
 
-    private static final Logger LOG = Logger.getLogger(GetLoginRoute.class.getName());
+    // Values used in the view-model map for rendering the login view after signin button is pressed.
+    static final String TITLE_ATTR = "title";
+    static final String TITLE = "Please Login";
+    static final String VIEW_NAME = "signin.ftl";
 
-    private static final String LOGIN_MSG = "Please Login";
+
+    private static final Logger LOG = Logger.getLogger(GetLoginRoute.class.getName());
 
     private final TemplateEngine templateEngine;
 
@@ -33,10 +37,10 @@ public class GetLoginRoute implements Route {
         HashMap<String, Object> vm = new HashMap<>();
 
         // display login page title
-        vm.put("title", LOGIN_MSG);
+        vm.put(TITLE_ATTR, TITLE);
 
         // render the view
-        return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
+        return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
 
 }
