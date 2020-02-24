@@ -47,6 +47,8 @@ public class PostLoginRoute implements Route {
         final String password = request.queryParams(USER_PASS);
         System.out.println(username);
         System.out.println(password);
+
+        response.redirect("/");
         return null;
     }
 }
