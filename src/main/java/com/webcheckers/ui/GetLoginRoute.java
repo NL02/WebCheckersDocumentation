@@ -24,7 +24,6 @@ public class GetLoginRoute implements Route {
     public Object handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
 
-
         // render the View
         return templateEngine.render(new ModelAndView(vm , "home.ftl"));
     }

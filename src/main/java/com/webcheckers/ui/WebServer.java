@@ -54,6 +54,8 @@ public class WebServer {
    */
   public static final String HOME_URL = "/";
 
+  public static final String LOGIN_URL = "/signin";
+
   //
   // Attributes
   //
