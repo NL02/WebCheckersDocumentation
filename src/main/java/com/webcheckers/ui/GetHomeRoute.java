@@ -23,6 +23,8 @@ public class GetHomeRoute implements Route {
 
   private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
+  private static final String NUM_PLAYERS_MSG = "There are %d players signed on.";
+
   private final TemplateEngine templateEngine;
 
   /**
@@ -57,6 +59,9 @@ public class GetHomeRoute implements Route {
 
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);
+
+    Message num_players = Message.info(String.format(NUM_PLAYERS_MSG, 3)); //change 3 to numplayers from playerlobby
+    vm.put("num_players", num_players);
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));
