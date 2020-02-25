@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.appl.PlayerLobby;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -26,6 +27,7 @@ public class GetHomeRoute implements Route {
   private static final String NUM_PLAYERS_MSG = "There are %d players signed on.";
 
   private final TemplateEngine templateEngine;
+  private final PlayerLobby playerLobby;
 
   /**
    * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
@@ -33,7 +35,8 @@ public class GetHomeRoute implements Route {
    * @param templateEngine
    *   the HTML template rendering engine
    */
-  public GetHomeRoute(final TemplateEngine templateEngine) {
+  public GetHomeRoute(PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+    this.playerLobby = playerLobby;
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
     //
     LOG.config("GetHomeRoute is initialized.");

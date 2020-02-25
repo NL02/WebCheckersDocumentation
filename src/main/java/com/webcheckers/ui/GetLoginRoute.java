@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.appl.PlayerLobby;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -25,9 +26,11 @@ public class GetLoginRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetLoginRoute.class.getName());
 
     private final TemplateEngine templateEngine;
+    private final PlayerLobby playerLobby;
 
-    public GetLoginRoute(final TemplateEngine templateEngine) {
+    public GetLoginRoute(PlayerLobby playerLobby, final TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
+        this.playerLobby = playerLobby;
         LOG.config("GetLoginRoute is initialized.");
     }
 

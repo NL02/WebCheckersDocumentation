@@ -1,7 +1,7 @@
 package com.webcheckers.model;
 
 public class Player {
-    private final int playerID; // Internal ID constructed by hashing player info
+    //private final int playerID; // Internal ID constructed by hashing player info
     private final String username;
     private final String password;
     private boolean status;
@@ -16,12 +16,12 @@ public class Player {
         this.username = username;
         this.password = password;
         this.status = true;
-        playerID = username.hashCode() + password.hashCode();
+        //playerID = username.hashCode() + password.hashCode();
     }
 
-    private int getPlayerID() {
-        return playerID;
-    }
+    //private int getPlayerID() {
+    //   return playerID;
+    //}
 
     private String getUsername() {
         return username;
@@ -32,4 +32,5 @@ public class Player {
     }
 
     //todo: get password?
+    //todo: hash code is causing problems so I commented it out
 }

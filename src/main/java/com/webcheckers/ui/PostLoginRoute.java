@@ -20,17 +20,18 @@ public class PostLoginRoute implements Route {
 
     private static final String ERROR_TYPE = "error";
 
-    private PlayerLobby lobby;
 
     //
     // Attributes
     //
     private final TemplateEngine templateEngine;
+    private final PlayerLobby playerLobby;
 
-    private PostLoginRoute( TemplateEngine templateEngine) {
+    public PostLoginRoute( PlayerLobby playerLobby, TemplateEngine templateEngine) {
         //validation
         Objects.requireNonNull(templateEngine,"templateEngine must not be null");
 
+        this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
         LOG.config("PostGuessRoute is initialized.");
     }
@@ -50,7 +51,7 @@ public class PostLoginRoute implements Route {
         final String password = request.queryParams(USER_PASS);
 
         // adds user to the map
-        boolean is_added = lobby.saveUser(username, password);
+        boolean is_added = playerLobby.saveUser(username, password);
 
         System.out.println(username);
         System.out.println(password);

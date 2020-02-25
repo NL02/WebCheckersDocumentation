@@ -64,11 +64,11 @@ public class PlayerLobby {
     }
 
     public boolean saveUser(String username, String password) {
-        if( username == null && username.matches("^[a-zA-Z0-9 ]*$")){
-            System.out.println("Not alphaNumeric/spaces");
-            return false;
-        }
-        else if (userMap.containsKey(username)) {
+        //if( username == null && username.matches("^[a-zA-Z0-9]*$")){
+        //    System.out.println("Not alphaNumeric/spaces");
+        //    return false;
+        //}
+        if (userMap.containsKey(username)) {
             return false;
         }
         else{
@@ -77,6 +77,8 @@ public class PlayerLobby {
             return true;
         }
     }
+
+    //todo get list of active users
 
 
 
