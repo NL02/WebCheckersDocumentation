@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import java.util.Map;
 
 import com.webcheckers.model.CheckersGame;
+import com.webcheckers.model.Player;
 
 /**
  * The object to coordinate the state of the Web Application and keep sitewide statistics.
@@ -24,7 +25,7 @@ public class PlayerLobby {
     //
 
     // change Map to Map <username, Player>
-    private Map <String, String> userMap = new HashMap<>();
+    private Map <String, Player> userMap = new HashMap<>();
     private int totalGames = 0;
 
     //
@@ -71,7 +72,8 @@ public class PlayerLobby {
             return false;
         }
         else{
-            userMap.put(username, password);
+            Player player = new Player(username, password);
+            userMap.put(username, player);
             return true;
         }
     }

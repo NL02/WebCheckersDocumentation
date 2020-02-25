@@ -3,6 +3,8 @@ package com.webcheckers.model;
 public class Player {
     private final int playerID; // Internal ID constructed by hashing player info
     private final String username;
+    private final String password;
+    private boolean status;
 
     /**
      * Construct a Player and set its fields.
@@ -12,14 +14,22 @@ public class Player {
      */
     public Player(String username, String password) {
         this.username = username;
+        this.password = password;
+        this.status = true;
         playerID = username.hashCode() + password.hashCode();
     }
 
-    public int getPlayerID() {
+    private int getPlayerID() {
         return playerID;
     }
 
-    public String getUsername() {
+    private String getUsername() {
         return username;
     }
+
+    private boolean getStatus(){
+        return status;
+    }
+
+    //todo: get password?
 }
