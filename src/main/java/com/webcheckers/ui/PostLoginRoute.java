@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.PlayerLobby;
 import spark.*;
 
 import java.util.HashMap;
@@ -13,18 +14,20 @@ public class PostLoginRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(PostLoginRoute.class.getName());
 
-    static final String USER_USER = "username";
-    static final String USER_PASS = "password";
-    static final String MESSAGE_ATTR = "message";
+    private static final String USER_USER = "username";
+    private static final String USER_PASS = "password";
+    private static final String MESSAGE_ATTR = "message";
 
-    static final String ERROR_TYPE = "error";
+    private static final String ERROR_TYPE = "error";
+
+    private PlayerLobby lobby;
 
     //
     // Attributes
     //
     private final TemplateEngine templateEngine;
 
-    public PostLoginRoute( TemplateEngine templateEngine) {
+    private PostLoginRoute( TemplateEngine templateEngine) {
         //validation
         Objects.requireNonNull(templateEngine,"templateEngine must not be null");
 
@@ -45,6 +48,10 @@ public class PostLoginRoute implements Route {
 
         final String username = request.queryParams(USER_USER);
         final String password = request.queryParams(USER_PASS);
+
+        // adds user to the map
+        boolean is_added = lobby.saveUser(username, password);
+
         System.out.println(username);
         System.out.println(password);
 

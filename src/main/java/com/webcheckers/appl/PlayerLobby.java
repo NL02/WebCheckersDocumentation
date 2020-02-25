@@ -11,6 +11,8 @@ import com.webcheckers.model.CheckersGame;
  *
  * This class is an example of the Pure Fabrication principle.
  *
+ * Contains all players that have signed in and are in the system
+ *
  * @author
  * @author
  */
@@ -21,7 +23,8 @@ public class PlayerLobby {
     // Attributes
     //
 
-    private Map <String, String> userMap = new HashMap<String, String>();
+    // change Map to Map <username, Player>
+    private Map <String, String> userMap = new HashMap<>();
     private int totalGames = 0;
 
     //
@@ -29,11 +32,11 @@ public class PlayerLobby {
     //
 
     /**
-     * Get a new {@Linkplain PlayerServices} object to provide client-specific services to
+     * Get a new {PlayerServices} object to provide client-specific services to
      * the client who just connected to this application.
      *
      * @return
-     *   A new {@Link PlayerServices}
+     *   A new {PlayerServices}
      */
     public PlayerServices newPlayerServices(){
         LOG.fine("New player services instance created.");
@@ -41,7 +44,7 @@ public class PlayerLobby {
     }
 
     /**
-     * Create a new {@Linkplain CheckersGame} game.
+     * Create a new {CheckersGame} game.
      *
      * @return
      *   A new {@link CheckersGame}
