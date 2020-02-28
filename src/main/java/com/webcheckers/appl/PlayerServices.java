@@ -7,6 +7,8 @@ import com.webcheckers.model.CheckersGame;
  *
  * This class is an example of the GRASP Controller principle.
  *
+ * Handles each individual player in the game
+ *
  */
 
 public class PlayerServices {
@@ -23,10 +25,10 @@ public class PlayerServices {
     //
 
     /**
-     * Construct a new {@Linkplain PlayerServices} but wait for the player to want to start a game
+     * Construct a new {PlayerServices} but wait for the player to want to start a game
      *
      * @param lobby
-     *      the {@Link PlayerLobby} that has site wide responsibilities
+     *      the {PlayerLobby} that has site wide responsibilities
      */
     PlayerServices(PlayerLobby lobby){
         game = null;

@@ -1,7 +1,7 @@
 package com.webcheckers.model;
 
 import com.webcheckers.appl.PlayerLobby;
-import sun.rmi.runtime.Log;
+//import sun.rmi.runtime.Log;
 
 import java.util.logging.Logger;
 

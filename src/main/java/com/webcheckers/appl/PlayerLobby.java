@@ -1,15 +1,20 @@
 package com.webcheckers.appl;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
 import java.util.Map;
 
 import com.webcheckers.model.CheckersGame;
+import com.webcheckers.model.Player;
 
 /**
  * The object to coordinate the state of the Web Application and keep sitewide statistics.
  *
  * This class is an example of the Pure Fabrication principle.
+ *
+ * Contains all players that have signed in and are in the system
  *
  * @author
  * @author
@@ -20,8 +25,10 @@ public class PlayerLobby {
     //
     // Attributes
     //
+    private ArrayList<Player> onlinePlayers = new ArrayList<>();
 
-    private Map <String, String> userMap = new HashMap<String, String>();
+    // change Map to Map <username, Player>
+    private Map <String, Player> userMap = new HashMap<>();
     private int totalGames = 0;
 
     //
@@ -29,11 +36,11 @@ public class PlayerLobby {
     //
 
     /**
-     * Get a new {@Linkplain PlayerServices} object to provide client-specific services to
+     * Get a new {PlayerServices} object to provide client-specific services to
      * the client who just connected to this application.
      *
      * @return
-     *   A new {@Link PlayerServices}
+     *   A new {PlayerServices}
      */
     public PlayerServices newPlayerServices(){
         LOG.fine("New player services instance created.");
@@ -41,7 +48,7 @@ public class PlayerLobby {
     }
 
     /**
-     * Create a new {@Linkplain CheckersGame} game.
+     * Create a new {CheckersGame} game.
      *
      * @return
      *   A new {@link CheckersGame}
@@ -59,19 +66,22 @@ public class PlayerLobby {
         }
     }
 
-    public boolean saveUser(String username, String password) {
-        if( username == null && username.matches("^[a-zA-Z0-9 ]*$")){
-            System.out.println("Not alphaNumeric/spaces");
-            return false;
-        }
-        else if (userMap.containsKey(username)) {
+    public boolean saveUser(String username) {
+        //if( username == null && username.matches("^[a-zA-Z0-9]*$")){
+        //    System.out.println("Not alphaNumeric/spaces");
+        //    return false;
+        //}
+        if (userMap.containsKey(username)) {
             return false;
         }
         else{
-            userMap.put(username, password);
+            Player player = new Player(username);
+            userMap.put(username, player);
             return true;
         }
     }
+
+    //todo get list of active users
 
 
 
