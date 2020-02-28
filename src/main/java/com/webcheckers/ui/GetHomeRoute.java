@@ -20,14 +20,27 @@ import com.webcheckers.util.Message;
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
 public class GetHomeRoute implements Route {
+
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
-  private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+  // Values used in the view-model map for rendering the home view.
+  static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+  static final String TITLE_ATTR = "title";
+  static final String TITLE = "Welcome!";
+  static final String NUM_PLAYERS_ATTR = "num_players";
+  static final String NUM_PLAYERS_MSG = "There are %d players signed on.";
+  static final String MESSAGE_ATTR = "message";
+  static final String VIEW_NAME = "home.ftl";
 
-  private static final String NUM_PLAYERS_MSG = "There are %d players signed on.";
+  // Key in the session attribute map for the player who started the session
+  static final String PLAYERSERVICES_KEY = "playerServices";
+  static final String TIMEOUT_SESSION_KEY = "timeoutWatchdog";
 
-  private final TemplateEngine templateEngine;
+  //
+  // Attributes
+
   private final PlayerLobby playerLobby;
+  private final TemplateEngine templateEngine;
 
   /**
    * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
@@ -58,15 +71,15 @@ public class GetHomeRoute implements Route {
     LOG.finer("GetHomeRoute is invoked.");
     //
     Map<String, Object> vm = new HashMap<>();
-    vm.put("title", "Welcome!");
+    vm.put(TITLE_ATTR, TITLE);
 
     // display a user message in the Home page
-    vm.put("message", WELCOME_MSG);
+    vm.put(MESSAGE_ATTR, WELCOME_MSG);
 
-    Message num_players = Message.info(String.format(NUM_PLAYERS_MSG, 3)); //change 3 to numplayers from playerlobby
-    vm.put("num_players", num_players);
+    Message num_players = Message.info(String.format(NUM_PLAYERS_MSG, playerLobby.getLiveCount())); //change 3 to numplayers from playerlobby
+    vm.put( NUM_PLAYERS_ATTR, num_players);
 
     // render the View
-    return templateEngine.render(new ModelAndView(vm , "home.ftl"));
+    return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
   }
 }
