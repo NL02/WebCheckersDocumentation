@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 
-//import com.example.appl.PlayerServices;
 import com.webcheckers.appl.PlayerServices;
 
 /**
@@ -14,7 +13,6 @@ import com.webcheckers.appl.PlayerServices;
  * gets set as the value for a session attribute, the valueBound() method gets called.
  * Any time that the attribute is removed, set to another value, or the session is
  * invalidated, the valueUnbound() method gets called.
- *
  */
 public class SessionTimeoutWatchdog implements HttpSessionBindingListener {
     private static final Logger LOG = Logger.getLogger(SessionTimeoutWatchdog.class.getName());
