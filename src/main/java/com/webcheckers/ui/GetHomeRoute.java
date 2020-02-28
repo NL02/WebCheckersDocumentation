@@ -6,13 +6,17 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.PlayerServices;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import spark.Session;
 import spark.TemplateEngine;
 
 import com.webcheckers.util.Message;
+
+import static spark.Spark.halt;
 
 /**
  * The UI Controller to GET the Home page.
@@ -31,10 +35,14 @@ public class GetHomeRoute implements Route {
   static final String NUM_PLAYERS_MSG = "There are %d players signed on.";
   static final String MESSAGE_ATTR = "message";
   static final String VIEW_NAME = "home.ftl";
+  static final String NEW_PLAYER_ATTR = "newPlayer";
 
   // Key in the session attribute map for the player who started the session
   static final String PLAYERSERVICES_KEY = "playerServices";
   static final String TIMEOUT_SESSION_KEY = "timeoutWatchdog";
+
+  // The length of the session timeout in seconds
+  static final int SESSION_TIMEOUT_PERIOD = 120;
 
   //
   // Attributes
@@ -73,12 +81,37 @@ public class GetHomeRoute implements Route {
     Map<String, Object> vm = new HashMap<>();
     vm.put(TITLE_ATTR, TITLE);
 
+    // retrieve the HTTP session
+    final Session httpSession = request.session();
+
+    // if this is a brand new browser session or a session that timed out
+    if(httpSession.attribute(PLAYERSERVICES_KEY) == null) {
+      // get the object that will provide client-specific services for this player
+      final PlayerServices playerService = playerLobby.newPlayerServices();
+      httpSession.attribute(PLAYERSERVICES_KEY, playerService);
+
+      // setup session timeout. The valueUnbound() method in the SessionTimeoutWatchdog will
+      // be called when the session is invalidated. The next invocation of this route will
+      // have a new Session object with no attributes.
+      httpSession.attribute(TIMEOUT_SESSION_KEY, new SessionTimeoutWatchdog(playerService));
+      httpSession.maxInactiveInterval(SESSION_TIMEOUT_PERIOD);
+      // render the Game Form view
+      vm.put(NEW_PLAYER_ATTR, true);
+
+      return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
+    }
+    else {
+      // there is a game already being played so redirect the user to the Game view
+      response.redirect(WebServer.GAME_URL);
+      halt();
+      return null;
+    }
+
     // display a user message in the Home page
     vm.put(MESSAGE_ATTR, WELCOME_MSG);
 
     Message num_players = Message.info(String.format(NUM_PLAYERS_MSG, playerLobby.getLiveCount())); //change 3 to numplayers from playerlobby
     vm.put( NUM_PLAYERS_ATTR, num_players);
-
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
