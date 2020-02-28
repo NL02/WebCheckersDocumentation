@@ -51,10 +51,9 @@ public class PostLoginRoute implements Route {
         final String password = request.queryParams(USER_PASS);
 
         // adds user to the map
-        boolean is_added = playerLobby.saveUser(username, password);
+        boolean is_added = playerLobby.saveUser(username);
 
         System.out.println(username);
-        System.out.println(password);
 
         response.redirect("/");
         return null;

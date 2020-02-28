@@ -14,7 +14,6 @@
             Please enter in your username and password.
             <br/>
             <p>Username: <input name="Username" /></p>
-            <p>Password: <input type="password" name="Password" /></p>
             <br/><br/>
             <button type="login">Login</button>
         </form>

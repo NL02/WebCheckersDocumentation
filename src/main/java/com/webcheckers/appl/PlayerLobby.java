@@ -1,5 +1,7 @@
 package com.webcheckers.appl;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
 import java.util.Map;
@@ -23,6 +25,7 @@ public class PlayerLobby {
     //
     // Attributes
     //
+    private ArrayList<Player> onlinePlayers = new ArrayList<>();
 
     // change Map to Map <username, Player>
     private Map <String, Player> userMap = new HashMap<>();
@@ -63,7 +66,7 @@ public class PlayerLobby {
         }
     }
 
-    public boolean saveUser(String username, String password) {
+    public boolean saveUser(String username) {
         //if( username == null && username.matches("^[a-zA-Z0-9]*$")){
         //    System.out.println("Not alphaNumeric/spaces");
         //    return false;
@@ -72,7 +75,7 @@ public class PlayerLobby {
             return false;
         }
         else{
-            Player player = new Player(username, password);
+            Player player = new Player(username);
             userMap.put(username, player);
             return true;
         }
