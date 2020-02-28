@@ -44,12 +44,15 @@ public class PostLoginRoute implements Route {
     public Object handle(Request request, Response response) {
         // start building the View-Model
         final Map<String, Object> vm = new HashMap<>();
+        final Session httpSession = request.session();
 
 
         ModelAndView mv;
 
         final String username = request.queryParams(USER_USER);
         final String password = request.queryParams(USER_PASS);
+
+        httpSession.attribute("currentUser", username);
 
         // adds user to the map
         boolean is_added = playerLobby.saveUser(username);
