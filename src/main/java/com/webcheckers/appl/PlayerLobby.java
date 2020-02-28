@@ -67,10 +67,14 @@ public class PlayerLobby {
     }
 
     public boolean saveUser(String username) {
-        //if( username == null && username.matches("^[a-zA-Z0-9]*$")){
-        //    System.out.println("Not alphaNumeric/spaces");
-        //    return false;
-        //}
+        if( username == null || !username.matches("^[a-zA-Z0-9]*$") || username.matches(".*\\s+.*")){
+            System.out.println("Not alphaNumeric/spaces");
+            return false;
+        }
+        if (username.length() <= 1) {
+            System.out.println("Not greater than one character");
+            return false;
+        }
         if (userMap.containsKey(username)) {
             return false;
         }
