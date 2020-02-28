@@ -79,6 +79,7 @@ public class GetHomeRoute implements Route {
     Message num_players = Message.info(String.format(NUM_PLAYERS_MSG, playerLobby.getLiveCount())); //change 3 to numplayers from playerlobby
     vm.put( NUM_PLAYERS_ATTR, num_players);
 
+
     // render the View
     return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
   }
