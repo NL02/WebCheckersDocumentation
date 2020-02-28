@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 
 import com.webcheckers.appl.PlayerServices;
+import com.webcheckers.appl.PlayerLobby;
 
 /**
  * Whenever an instance of a class that implements {@linkplain HttpSessionBindingListener}
@@ -28,6 +29,7 @@ public class SessionTimeoutWatchdog implements HttpSessionBindingListener {
     public void valueBound(HttpSessionBindingEvent event) {
         // ignore this event
         LOG.fine("Player session started.");
+        PlayerLobby.increment();
     }
 
     @Override
@@ -36,5 +38,6 @@ public class SessionTimeoutWatchdog implements HttpSessionBindingListener {
         playerServices.endSession();
         //
         LOG.fine("Player session ended.");
+        PlayerLobby.decrement();
     }
 }

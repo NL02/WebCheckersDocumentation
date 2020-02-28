@@ -26,6 +26,7 @@ public class PlayerLobby {
     // Attributes
     //
     private ArrayList<Player> onlinePlayers = new ArrayList<>();
+    private static int liveCount = 0;
 
     // change Map to Map <username, Player>
     private Map <String, Player> userMap = new HashMap<>();
@@ -87,6 +88,17 @@ public class PlayerLobby {
 
     //todo get list of active users
 
+    public static int getLiveCount() {
+        return liveCount;
+    }
+
+    public static void increment() {
+        liveCount++;
+    }
+
+    public static void decrement() {
+        liveCount--;
+    }
 
 
 }

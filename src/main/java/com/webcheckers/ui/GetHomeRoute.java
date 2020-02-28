@@ -84,6 +84,11 @@ public class GetHomeRoute implements Route {
     // retrieve the HTTP session
     final Session httpSession = request.session();
 
+    // display a user message in the Home page
+    vm.put(MESSAGE_ATTR, WELCOME_MSG);
+    Message num_players = Message.info(String.format(NUM_PLAYERS_MSG, playerLobby.getLiveCount())); //change 3 to numplayers from playerlobby
+    vm.put( NUM_PLAYERS_ATTR, num_players);
+
     // if this is a brand new browser session or a session that timed out
     if(httpSession.attribute(PLAYERSERVICES_KEY) == null) {
       // get the object that will provide client-specific services for this player
@@ -98,20 +103,14 @@ public class GetHomeRoute implements Route {
       // render the Game Form view
       vm.put(NEW_PLAYER_ATTR, true);
 
-      return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
+      return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
     }
-    else {
-      // there is a game already being played so redirect the user to the Game view
-      response.redirect(WebServer.GAME_URL);
-      halt();
-      return null;
-    }
-
-    // display a user message in the Home page
-    vm.put(MESSAGE_ATTR, WELCOME_MSG);
-
-    Message num_players = Message.info(String.format(NUM_PLAYERS_MSG, playerLobby.getLiveCount())); //change 3 to numplayers from playerlobby
-    vm.put( NUM_PLAYERS_ATTR, num_players);
+//    else {
+//      // there is a game already being played so redirect the user to the Game view
+//      response.redirect(WebServer.GAME_URL);
+//      halt();
+//      return null;
+//    }
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
