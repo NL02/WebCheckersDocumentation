@@ -5,7 +5,7 @@ public class BoardSquare {
     private boolean valid;
     private CheckersPiece piece;
 
-    protected BoardSquare(int index, boolean valid, CheckersPiece piece) {
+    public BoardSquare(int index, boolean valid, CheckersPiece piece) {
         this.cellIdx = index;
         this.valid = valid;
         this.piece = piece;

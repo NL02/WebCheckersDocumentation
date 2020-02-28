@@ -4,7 +4,7 @@ public class CheckersPiece {
     private Color color;
     private PieceType type;
 
-    protected CheckersPiece(Color c) {
+    public CheckersPiece(Color c) {
         color = c;
         type = PieceType.SINGLE;
     }
