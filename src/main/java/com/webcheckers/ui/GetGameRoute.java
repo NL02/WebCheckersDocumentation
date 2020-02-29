@@ -62,15 +62,15 @@ public class GetGameRoute implements Route {
      */
     public Object handle(Request request, Response response) {
         LOG.finer("GetGameRoute is invoked.");
-        Player currentPlayer = request.session().attribute("currentUser");
-        Player player2 = null;
+        Player playerWaiting = null;
+        Player playerSearching = null;
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Let's start the Game!");
         vm.put("gameID", 0);
-        vm.put("currentUser", currentPlayer);
+        vm.put("currentUser", request.session().attribute("currentUser"));
         vm.put("viewMode", "PLAY");
-        vm.put("redPlayer", player2);
-        vm.put("whitePlayer", currentPlayer);
+        vm.put("redPlayer", playerSearching);
+        vm.put("whitePlayer", playerWaiting);
         vm.put("activeColor", "RED");
         vm.put("board", new BoardView());
         // render the View
