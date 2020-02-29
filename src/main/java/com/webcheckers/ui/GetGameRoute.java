@@ -65,8 +65,10 @@ public class GetGameRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.finer("GetGameRoute is invoked.");
         Player me = request.session().attribute("currentUser");
-        String opponent = request.queryParams("Opponent");
+        //TODO: Get Opponent
+        String opponent = request.queryParams("opponent");
         Player opp = playerLobby.findPlayer(opponent);
+        //System.out.println("Opponent's name is: " + opponent);
         Player playerSearching;
         Player playerWaiting;
         if(me.status == Player.Status.WAITING) {
