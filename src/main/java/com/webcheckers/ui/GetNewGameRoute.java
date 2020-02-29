@@ -20,7 +20,7 @@ public class GetNewGameRoute implements Route {
     public Object handle(Request request, Response response) throws Exception {
         LOG.finer("GetNewGameRoute is invoked.");
         Player you = new Player("you");
-        Player currentPlayer = request.session().attribute("currentName");
+        Player currentPlayer = request.session().attribute("currentUser");
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Waiting for Opponent");
         vm.put("gameID", 0);
