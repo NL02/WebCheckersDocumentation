@@ -8,6 +8,8 @@ import java.util.Map;
 
 import com.webcheckers.model.CheckersGame;
 import com.webcheckers.model.Player;
+import com.webcheckers.ui.GetHomeRoute;
+import com.webcheckers.ui.PostLoginRoute;
 
 /**
  * The object to coordinate the state of the Web Application and keep site wide statistics.
@@ -67,27 +69,27 @@ public class PlayerLobby {
         }
     }
 
-    public boolean saveUser(Player newPlayer) {
+    public PostLoginRoute.AddUserStatus saveUser(Player newPlayer) {
         if( newPlayer.getName() == null || !newPlayer.getName().matches("^[a-zA-Z0-9]*$") || newPlayer.getName().matches(".*\\s+.*")){
             System.out.println("Not alphaNumeric/spaces");
-            return false;
+            return PostLoginRoute.AddUserStatus.INVLAID;
         }
         if (newPlayer.getName().length() < 1) {
             System.out.println("Not at least one character");
-            return false;
+            return PostLoginRoute.AddUserStatus.INVLAID;
         }
         if (userMap.containsKey(newPlayer.getName())) {
             if(userMap.get(newPlayer.getName()).getStatus() == Player.Status.OFFLINE){
-                return true;
+                return PostLoginRoute.AddUserStatus.SUCCESS;
             }
             else {
-                return false;
+                return PostLoginRoute.AddUserStatus.PICKANOTHER;
             }
         }
         else{
             userMap.put(newPlayer.getName(), newPlayer);
             increment();
-            return true;
+            return PostLoginRoute.AddUserStatus.SUCCESS;
         }
     }
 
