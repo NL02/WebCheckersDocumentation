@@ -30,7 +30,7 @@ public class GetGameRoute implements Route {
 
     private static final Message WHITE_PLAYER_MSG = Message.info("whitePlayer");
 
-    private static final Message ACTIVE_COLOR_MSG = Message.info("acitiveColor");
+    private static final Message ACTIVE_COLOR_MSG = Message.info("activeColor");
 
     private final TemplateEngine templateEngine;
 

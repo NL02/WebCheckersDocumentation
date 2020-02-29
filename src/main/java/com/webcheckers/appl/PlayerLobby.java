@@ -82,6 +82,7 @@ public class PlayerLobby {
         else{
             Player player = new Player(username);
             userMap.put(username, player);
+            increment();
             return true;
         }
     }
