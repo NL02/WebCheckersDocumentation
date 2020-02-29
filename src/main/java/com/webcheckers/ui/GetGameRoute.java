@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.model.Player;
+import com.webcheckers.ui.board.BoardView;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -63,7 +65,13 @@ public class GetGameRoute implements Route {
 
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Let's start the Game!");
-
+        vm.put("gameID", 0);
+        vm.put("currentUser", request.session().attribute("currentUser"));
+        vm.put("viewMode", "PLAY");
+        vm.put("redPlayer", new Player(""));
+        vm.put("whitePlayer", request.session().attribute("currentUser"));
+        vm.put("activeColor", "WHITE");
+        vm.put("board", new BoardView());
         // render the View
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }

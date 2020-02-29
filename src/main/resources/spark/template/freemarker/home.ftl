@@ -20,7 +20,7 @@
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl" />
 
-
+    <h1><a href="/game">New Game</h1>
     <!-- TODO: future content on the Home:
             to start games,
             spectating active games,
