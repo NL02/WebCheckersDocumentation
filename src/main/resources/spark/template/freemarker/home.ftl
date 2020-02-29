@@ -26,7 +26,7 @@
 
     <#if currentUser??>
         <h2><a href="/game">New Game</h2>
-      </#if>
+    </#if>
     <!-- TODO: future content on the Home:
             to start games,
             spectating active games,
