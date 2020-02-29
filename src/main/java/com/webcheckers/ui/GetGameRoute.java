@@ -62,7 +62,7 @@ public class GetGameRoute implements Route {
      */
     public Object handle(Request request, Response response) {
         LOG.finer("GetGameRoute is invoked.");
-        Player currentPlayer = new Player("You");
+        Player currentPlayer = request.session().attribute("currentUser");
         Player player2 = null;
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Let's start the Game!");
@@ -73,7 +73,6 @@ public class GetGameRoute implements Route {
         vm.put("whitePlayer", currentPlayer);
         vm.put("activeColor", "RED");
         vm.put("board", new BoardView());
-        currentPlayer.status = Player.Status.WAITING;
         // render the View
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
