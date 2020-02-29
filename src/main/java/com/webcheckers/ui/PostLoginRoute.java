@@ -52,7 +52,6 @@ public class PostLoginRoute implements Route {
             System.out.println("User not added");
         }
 
-
         response.redirect("/");
         return null;
     }
