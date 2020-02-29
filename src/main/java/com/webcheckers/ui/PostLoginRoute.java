@@ -1,10 +1,9 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import spark.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.webcheckers.appl.PlayerLobby;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -14,18 +13,15 @@ public class PostLoginRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(PostLoginRoute.class.getName());
 
-    private static final String USER_USER = "username";
-    private static final String USER_PASS = "password";
-    private static final String MESSAGE_ATTR = "message";
+    static final String USER_USER = "username";
 
-    private static final String ERROR_TYPE = "error";
-
+    static final String ERROR_TYPE = "error";
 
     //
     // Attributes
     //
-    private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
+    private final TemplateEngine templateEngine;
 
     public PostLoginRoute( PlayerLobby playerLobby, TemplateEngine templateEngine) {
         //validation
@@ -41,19 +37,21 @@ public class PostLoginRoute implements Route {
     //
     @Override
     public Object handle(Request request, Response response) {
-        // start building the View-Model
-        final Map<String, Object> vm = new HashMap<>();
+        final Session httpSession = request.session();
 
-
-        ModelAndView mv;
 
         final String username = request.queryParams(USER_USER);
-        final String password = request.queryParams(USER_PASS);
-
-        // adds user to the map
-        boolean is_added = playerLobby.saveUser(username);
-
         System.out.println(username);
+
+        boolean is_added = playerLobby.saveUser(username);
+        if(is_added){
+            PlayerLobby.increment();
+            httpSession.attribute("currentUser", new Player(username));
+        }
+        else{
+            System.out.println("User not added");
+        }
+
 
         response.redirect("/");
         return null;

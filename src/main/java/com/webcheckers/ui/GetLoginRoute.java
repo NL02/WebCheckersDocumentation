@@ -42,6 +42,7 @@ public class GetLoginRoute implements Route {
         // display login page title
         vm.put(TITLE_ATTR, TITLE);
 
+
         // render the view
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
