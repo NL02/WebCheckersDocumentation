@@ -108,7 +108,9 @@ public class PlayerLobby {
     public ArrayList<Player> getWaitingPlayer() {
         userMap.forEach((s, player) -> {
             if(player.getStatus() == Player.Status.WAITING) {
-                waitingPlayers.add(player);
+                if (!waitingPlayers.contains(player)) {
+                    waitingPlayers.add(player);
+                }
             }
         });
         return waitingPlayers;
