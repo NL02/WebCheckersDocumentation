@@ -21,6 +21,7 @@
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl" />
 
+    <!-- Provide list of logged-in users -->
     <#list playerList as player>
         <p>${player.name}</p>
     </#list>

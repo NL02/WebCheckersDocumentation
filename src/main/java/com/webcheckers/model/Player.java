@@ -2,7 +2,7 @@ package com.webcheckers.model;
 
 public class Player {
     //private final int playerID; // Internal ID constructed by hashing player info
-    private final String name;
+    public final String name;
     private boolean status;
 
     /**
