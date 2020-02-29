@@ -95,7 +95,7 @@ public class GetHomeRoute implements Route {
     vm.put(CURRENT_USER_ATTR, httpSession.attribute("currentUser"));
 
     // list all logged-in players
-    vm.put(PLAYER_LIST_ATTR, playerLobby.getOnlinePlayers());
+    vm.put(PLAYER_LIST_ATTR, playerLobby.getWaitingPlayer());
 
     // if this is a brand new browser session or a session that timed out
     if(httpSession.attribute(PLAYERSERVICES_KEY) == null) {
