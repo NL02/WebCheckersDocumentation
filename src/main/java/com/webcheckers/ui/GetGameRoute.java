@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.board.BoardView;
 import spark.ModelAndView;
@@ -36,15 +37,16 @@ public class GetGameRoute implements Route {
 
     private final TemplateEngine templateEngine;
 
-
+    private final PlayerLobby playerLobby;
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
      *
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public GetGameRoute(final TemplateEngine templateEngine) {
+    public GetGameRoute(PlayerLobby playerLobby, TemplateEngine templateEngine) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
+        this.playerLobby = Objects.requireNonNull(playerLobby, "PlayerLobby is required");
         //
         LOG.config("GetGameRoute is initialized.");
 
@@ -63,16 +65,17 @@ public class GetGameRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.finer("GetGameRoute is invoked.");
         Player me = request.session().attribute("currentUser");
-        Player opponent = null;
+        String opponent = request.queryParams("Opponent");
+        Player opp = playerLobby.findPlayer(opponent);
         Player playerSearching;
         Player playerWaiting;
         if(me.status == Player.Status.WAITING) {
             playerWaiting = me;
-            playerSearching = opponent;
+            playerSearching = opp;
         }
         else{
             playerSearching = me;
-            playerWaiting = opponent;
+            playerWaiting = opp;
         }
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Let's start the Game!");

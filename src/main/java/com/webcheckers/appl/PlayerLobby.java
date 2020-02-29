@@ -126,4 +126,8 @@ public class PlayerLobby {
             return false;
         }
     }
+
+    public Player findPlayer(String username){
+        return userMap.getOrDefault(username, null);
+    }
 }
