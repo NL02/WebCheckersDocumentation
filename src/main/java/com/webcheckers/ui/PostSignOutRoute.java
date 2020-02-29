@@ -33,12 +33,12 @@ public class PostSignOutRoute implements Route{
         final Session httpSession = request.session();
 
         Player currentPlayer = httpSession.attribute("currentUser");
-        boolean is_removed = playerLobby.removeUser(currentPlayer.getName());
+        boolean is_removed = playerLobby.removeUser(currentPlayer);
         if(is_removed){
             PlayerLobby.decrement();
         }
         else{
-            System.out.println("User doesn't exist in map");
+            System.out.println("User wasn't online");
         }
         currentPlayer.status = Player.Status.OFFLINE;
         httpSession.attribute("currentUser", null);

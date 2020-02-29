@@ -25,7 +25,7 @@ public class PlayerLobby {
     //
     // Attributes
     //
-    private ArrayList<Player> onlinePlayers = new ArrayList<>();
+    private ArrayList<Player> waitingPlayers = new ArrayList<>();
     private static int liveCount = 0;
 
     // change Map to Map <username, Player>
@@ -77,7 +77,12 @@ public class PlayerLobby {
             return false;
         }
         if (userMap.containsKey(username)) {
-            return false;
+            if(userMap.get(username).getStatus() == Player.Status.OFFLINE){
+                return true;
+            }
+            else {
+                return false;
+            }
         }
         else{
             Player player = new Player(username);
@@ -101,19 +106,19 @@ public class PlayerLobby {
         liveCount--;
     }
 
-    public ArrayList<Player> getOnlinePlayers() {
+    public ArrayList<Player> getWaitingPlayer() {
         userMap.forEach((s, player) -> {
             if(player.getStatus() == Player.Status.WAITING) {
-                onlinePlayers.add(player);
+                waitingPlayers.add(player);
             }
         });
-        return onlinePlayers;
+        return waitingPlayers;
     }
 
-    public boolean removeUser(String username){
-        // checking if user exists in map just in case
-        if(userMap.containsKey(username)){
-            userMap.remove(username);
+    public boolean removeUser(Player player){
+        // checking if user exists in array just in case
+        if(waitingPlayers.contains(player)){
+            waitingPlayers.remove(player);
             return true;
         }
         else{
