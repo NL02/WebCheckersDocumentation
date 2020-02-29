@@ -3,6 +3,7 @@ package com.webcheckers.model;
 public class Player {
     //private final int playerID; // Internal ID constructed by hashing player info
     private final String username;
+    // whether or not the player is active
     private boolean status;
 
     /**
@@ -20,11 +21,11 @@ public class Player {
     //   return playerID;
     //}
 
-    private String getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    private boolean getStatus(){
+    public boolean getStatus(){
         return status;
     }
 

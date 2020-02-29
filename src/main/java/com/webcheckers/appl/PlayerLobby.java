@@ -100,5 +100,12 @@ public class PlayerLobby {
         liveCount--;
     }
 
-
+    public ArrayList<Player> getOnlinePlayers() {
+        userMap.forEach((s, player) -> {
+            if(player.getStatus() == true) {
+                onlinePlayers.add(player);
+            }
+        });
+        return onlinePlayers;
+    }
 }

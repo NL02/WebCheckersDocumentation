@@ -100,6 +100,7 @@ public class GetHomeRoute implements Route {
       // have a new Session object with no attributes.
       httpSession.attribute(TIMEOUT_SESSION_KEY, new SessionTimeoutWatchdog(playerService));
       httpSession.maxInactiveInterval(SESSION_TIMEOUT_PERIOD);
+
       // render the Game Form view
       vm.put(NEW_PLAYER_ATTR, true);
 
