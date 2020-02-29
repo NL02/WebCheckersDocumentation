@@ -15,13 +15,18 @@
   <!-- Provide a navigation bar -->
   <#include "nav-bar.ftl" />
 
-
   <div class="body">
 
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl" />
 
+    <#list playerList as player>
+        <p>${player.name}</p>
+    </#list>
 
+    <#if currentUser??>
+        <h2><a href="/game">New Game</h2>
+      </#if>
     <!-- TODO: future content on the Home:
             to start games,
             spectating active games,
