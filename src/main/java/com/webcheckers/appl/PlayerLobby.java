@@ -10,7 +10,7 @@ import com.webcheckers.model.CheckersGame;
 import com.webcheckers.model.Player;
 
 /**
- * The object to coordinate the state of the Web Application and keep sitewide statistics.
+ * The object to coordinate the state of the Web Application and keep site wide statistics.
  *
  * This class is an example of the Pure Fabrication principle.
  *
@@ -72,8 +72,8 @@ public class PlayerLobby {
             System.out.println("Not alphaNumeric/spaces");
             return false;
         }
-        if (username.length() <= 1) {
-            System.out.println("Not greater than one character");
+        if (username.length() < 1) {
+            System.out.println("Not at least one character");
             return false;
         }
         if (userMap.containsKey(username)) {
@@ -82,6 +82,7 @@ public class PlayerLobby {
         else{
             Player player = new Player(username);
             userMap.put(username, player);
+            increment();
             return true;
         }
     }
@@ -100,5 +101,23 @@ public class PlayerLobby {
         liveCount--;
     }
 
+    public ArrayList<Player> getOnlinePlayers() {
+        userMap.forEach((s, player) -> {
+            if(player.getStatus() == true) {
+                onlinePlayers.add(player);
+            }
+        });
+        return onlinePlayers;
+    }
 
+    public boolean removeUser(String username){
+        // checking if user exists in map just in case
+        if(userMap.containsKey(username)){
+            userMap.remove(username);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

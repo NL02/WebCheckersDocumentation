@@ -29,7 +29,6 @@ public class SessionTimeoutWatchdog implements HttpSessionBindingListener {
     public void valueBound(HttpSessionBindingEvent event) {
         // ignore this event
         LOG.fine("Player session started.");
-        PlayerLobby.increment();
     }
 
     @Override
@@ -38,6 +37,5 @@ public class SessionTimeoutWatchdog implements HttpSessionBindingListener {
         playerServices.endSession();
         //
         LOG.fine("Player session ended.");
-        PlayerLobby.decrement();
     }
 }

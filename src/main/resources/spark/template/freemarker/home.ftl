@@ -15,10 +15,15 @@
   <!-- Provide a navigation bar -->
   <#include "nav-bar.ftl" />
 
+
   <div class="body">
 
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl" />
+
+    <#list playerList as player>
+        <p>${player.name}</p>
+    </#list>
 
 
     <!-- TODO: future content on the Home:
