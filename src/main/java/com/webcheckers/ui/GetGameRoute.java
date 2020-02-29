@@ -68,9 +68,9 @@ public class GetGameRoute implements Route {
         vm.put("gameID", 0);
         vm.put("currentUser", request.session().attribute("currentUser"));
         vm.put("viewMode", "PLAY");
-        vm.put("redPlayer", new Player(""));
+        vm.put("redPlayer", new Player("Waiting for Player"));
         vm.put("whitePlayer", request.session().attribute("currentUser"));
-        vm.put("activeColor", "WHITE");
+        vm.put("activeColor", "RED");
         vm.put("board", new BoardView());
         // render the View
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
