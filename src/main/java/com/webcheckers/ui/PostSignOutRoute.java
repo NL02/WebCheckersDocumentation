@@ -40,7 +40,7 @@ public class PostSignOutRoute implements Route{
         else{
             System.out.println("User doesn't exist in map");
         }
-
+        currentPlayer.status = Player.Status.OFFLINE;
         httpSession.attribute("currentUser", null);
 
         response.redirect("/");

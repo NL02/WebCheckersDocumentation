@@ -3,7 +3,14 @@ package com.webcheckers.model;
 public class Player {
     //private final int playerID; // Internal ID constructed by hashing player info
     public final String name;
-    private boolean status;
+    public Status status;
+
+    public enum Status{
+        OFFLINE, //Player is not online
+        SEARCHING, //Player is not in a game, nor looking for a game
+        WAITING, //Player has created a new game and is waiting for
+        INGAME; //Player is currently in a game or spectating
+    }
 
     /**
      * Construct a Player and set its fields.
@@ -12,7 +19,7 @@ public class Player {
      */
     public Player(String username) {
         this.name = username;
-        this.status = true;
+        this.status = Status.SEARCHING;
         //playerID = username.hashCode() + password.hashCode();
     }
 
@@ -24,7 +31,7 @@ public class Player {
         return name;
     }
 
-    public boolean getStatus(){
+    public Status getStatus(){
         return status;
     }
 

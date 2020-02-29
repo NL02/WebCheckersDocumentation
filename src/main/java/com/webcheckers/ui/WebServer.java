@@ -54,9 +54,10 @@ public class WebServer {
    * The URL pattern to request the Home page.
    */
   public static final String HOME_URL = "/";
-  public static final String LOGIN_URL = "signin";
-  public static final String GAME_URL = "game";
-  public static final String LOGOUT_URL = "signout";
+  public static final String LOGIN_URL = "/signin";
+  public static final String GAME_URL = "/game";
+  public static final String LOGOUT_URL = "/signout";
+  public static final String NEW_GAME_URL = "/newgame";
 
   //
   // Attributes
@@ -146,6 +147,7 @@ public class WebServer {
     get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
     get(LOGIN_URL, new GetLoginRoute(playerLobby, templateEngine));
     get(GAME_URL, new GetGameRoute(templateEngine));
+    get(NEW_GAME_URL, new GetNewGameRoute(templateEngine));
 
     // Post a Login attempt.
     post(LOGIN_URL, new PostLoginRoute(playerLobby, templateEngine));

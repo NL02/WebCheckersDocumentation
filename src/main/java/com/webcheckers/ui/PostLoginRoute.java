@@ -41,8 +41,12 @@ public class PostLoginRoute implements Route {
 
 
         final String username = request.queryParams(USER_USER);
-        System.out.println(username);
+        LOG.fine(username);
 
+        /*TODO
+        ERROR CHECK USERNAME
+        CHECK TO SEE IF USER HAS LOGGED IN BEFORE
+         */
         boolean is_added = playerLobby.saveUser(username);
         if(is_added){
             PlayerLobby.increment();

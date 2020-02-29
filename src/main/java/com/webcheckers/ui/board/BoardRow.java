@@ -6,7 +6,7 @@ public class BoardRow implements Iterable<BoardSquare> {
     private static final int NUM_SQUARES = 8;
 
     private final BoardSquare[] squares;
-    private final int rowIndex;
+    private final int index;
 
     /**
      * Constructs a new BoardRow and the BoardSquares it contains.
@@ -14,10 +14,14 @@ public class BoardRow implements Iterable<BoardSquare> {
      */
     public BoardRow(int index) {
         squares = new BoardSquare[NUM_SQUARES];
-        this.rowIndex = index;
+        this.index = index;
         for (int i = 0; i < NUM_SQUARES; i++) {
-            squares[i] = new BoardSquare(i,(rowIndex - i) % 2 == 0, makePiece(i));
+            squares[i] = new BoardSquare(i,(index - i) % 2 == 0, makePiece(i));
         }
+    }
+    
+    public int getIndex() {
+        return this.index;
     }
 
     /**
@@ -29,12 +33,12 @@ public class BoardRow implements Iterable<BoardSquare> {
      */
     private CheckersPiece makePiece(int i) {
         // Determine if a square can start with a piece; return null if not
-        if ((rowIndex - i) % 2 != 0 || (rowIndex > 2 && rowIndex < 5)) {
+        if ((index - i) % 2 != 0 || (index > 2 && index < 5)) {
             return null;
         }
         // Determine the right color and return a piece of that color
         else {
-            return new CheckersPiece(rowIndex < 3 ? Color.WHITE : Color.RED);
+            return new CheckersPiece(index < 3 ? Color.WHITE : Color.RED);
         }
     }
 

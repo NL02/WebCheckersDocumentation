@@ -103,7 +103,7 @@ public class PlayerLobby {
 
     public ArrayList<Player> getOnlinePlayers() {
         userMap.forEach((s, player) -> {
-            if(player.getStatus() == true) {
+            if(player.getStatus() == Player.Status.WAITING) {
                 onlinePlayers.add(player);
             }
         });
