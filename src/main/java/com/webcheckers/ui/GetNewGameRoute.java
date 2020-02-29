@@ -18,7 +18,7 @@ public class GetNewGameRoute implements Route {
     }
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        LOG.finer("GetGameRoute is invoked.");
+        LOG.finer("GetNewGameRoute is invoked.");
         Player currentPlayer = request.session().attribute("currentUser");
 
         Map<String, Object> vm = new HashMap<>();
