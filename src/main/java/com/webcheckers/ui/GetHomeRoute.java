@@ -36,6 +36,7 @@ public class GetHomeRoute implements Route {
   static final String MESSAGE_ATTR = "message";
   static final String VIEW_NAME = "home.ftl";
   static final String NEW_PLAYER_ATTR = "newPlayer";
+  static final String PLAYER_LIST = "playerList";
 
   // Key in the session attribute map for the player who started the session
   static final String PLAYERSERVICES_KEY = "playerServices";
@@ -92,6 +93,7 @@ public class GetHomeRoute implements Route {
     // display navbar
     vm.put("currentUser", httpSession.attribute("currentUser"));
 
+    vm.put(PLAYER_LIST, playerLobby.getOnlinePlayers());
     // if this is a brand new browser session or a session that timed out
     if(httpSession.attribute(PLAYERSERVICES_KEY) == null) {
       // get the object that will provide client-specific services for this player
