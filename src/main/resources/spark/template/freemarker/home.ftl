@@ -24,7 +24,7 @@
     <#include "message.ftl" />
 
     <#list playerList as player>
-        <p>${player.name}</p>
+        <p><a href="/game>${player.name}</a></p>
     </#list>
 
     <!-- TODO: future content on the Home:
