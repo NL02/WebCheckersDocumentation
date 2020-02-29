@@ -62,7 +62,7 @@ public class GetGameRoute implements Route {
      */
     public Object handle(Request request, Response response) {
         LOG.finer("GetGameRoute is invoked.");
-        Player currentPlayer = request.session().attribute("currentUser");
+        Player currentPlayer = new Player("You");
         Player player2 = null;
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Let's start the Game!");
