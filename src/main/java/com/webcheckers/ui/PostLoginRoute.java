@@ -47,10 +47,11 @@ public class PostLoginRoute implements Route {
         ERROR CHECK USERNAME
         CHECK TO SEE IF USER HAS LOGGED IN BEFORE
          */
-        boolean is_added = playerLobby.saveUser(username);
+        Player newPlayer = new Player(username);
+
+        boolean is_added = playerLobby.saveUser(newPlayer);
         if(is_added){
-            PlayerLobby.increment();
-            httpSession.attribute("currentUser", new Player(username));
+            httpSession.attribute("currentUser", newPlayer);
         }
         else{
             System.out.println("User not added");
