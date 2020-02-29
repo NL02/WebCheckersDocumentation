@@ -35,6 +35,4 @@ public class Player {
         return status;
     }
 
-    //todo: get password?
-    //todo: hash code is causing problems so I commented it out
 }
