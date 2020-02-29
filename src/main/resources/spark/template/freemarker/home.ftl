@@ -15,6 +15,7 @@
   <!-- Provide a navigation bar -->
   <#include "nav-bar.ftl" />
 
+
   <div class="body">
 
     <!-- Provide a message to the user, if supplied. -->
