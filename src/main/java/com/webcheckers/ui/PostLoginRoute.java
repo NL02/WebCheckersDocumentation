@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class PostLoginRoute implements Route {
 
-    // Values used in the view-model map for rendering the post login view after a login attemp
+    // Values used in the view-model map for rendering the post login view after a login attempt
 
     private static final Logger LOG = Logger.getLogger(PostLoginRoute.class.getName());
 
@@ -54,6 +54,9 @@ public class PostLoginRoute implements Route {
 
         // adds user to the map
         boolean is_added = playerLobby.saveUser(username);
+        if(is_added){
+            PlayerLobby.increment();
+        }
 
         httpSession.attribute("currentUser", new Player(username));
 

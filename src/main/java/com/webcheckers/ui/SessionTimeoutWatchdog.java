@@ -37,6 +37,5 @@ public class SessionTimeoutWatchdog implements HttpSessionBindingListener {
         playerServices.endSession();
         //
         LOG.fine("Player session ended.");
-        PlayerLobby.decrement();
     }
 }
