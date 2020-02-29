@@ -19,15 +19,14 @@ public class GetNewGameRoute implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         LOG.finer("GetNewGameRoute is invoked.");
-        Player you = new Player("you");
         Player currentPlayer = request.session().attribute("currentUser");
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Waiting for Opponent");
         vm.put("gameID", 0);
-        vm.put("currentUser", you);
+        vm.put("currentUser", currentPlayer);
         vm.put("viewMode", "PLAY");
         vm.put("redPlayer", new Player("Waiting for Player"));
-        vm.put("whitePlayer", you);
+        vm.put("whitePlayer", currentPlayer);
         vm.put("activeColor", "RED");
         vm.put("board", new BoardView());
         currentPlayer.status = Player.Status.WAITING;

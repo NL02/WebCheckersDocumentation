@@ -67,17 +67,17 @@ public class PlayerLobby {
         }
     }
 
-    public boolean saveUser(String username) {
-        if( username == null || !username.matches("^[a-zA-Z0-9]*$") || username.matches(".*\\s+.*")){
+    public boolean saveUser(Player newPlayer) {
+        if( newPlayer.getName() == null || !newPlayer.getName().matches("^[a-zA-Z0-9]*$") || newPlayer.getName().matches(".*\\s+.*")){
             System.out.println("Not alphaNumeric/spaces");
             return false;
         }
-        if (username.length() < 1) {
+        if (newPlayer.getName().length() < 1) {
             System.out.println("Not at least one character");
             return false;
         }
-        if (userMap.containsKey(username)) {
-            if(userMap.get(username).getStatus() == Player.Status.OFFLINE){
+        if (userMap.containsKey(newPlayer.getName())) {
+            if(userMap.get(newPlayer.getName()).getStatus() == Player.Status.OFFLINE){
                 return true;
             }
             else {
@@ -85,8 +85,7 @@ public class PlayerLobby {
             }
         }
         else{
-            Player player = new Player(username);
-            userMap.put(username, player);
+            userMap.put(newPlayer.getName(), newPlayer);
             increment();
             return true;
         }
@@ -109,7 +108,9 @@ public class PlayerLobby {
     public ArrayList<Player> getWaitingPlayer() {
         userMap.forEach((s, player) -> {
             if(player.getStatus() == Player.Status.WAITING) {
-                waitingPlayers.add(player);
+                if (!waitingPlayers.contains(player)) {
+                    waitingPlayers.add(player);
+                }
             }
         });
         return waitingPlayers;
