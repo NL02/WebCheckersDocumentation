@@ -85,8 +85,7 @@ public class PlayerLobby {
             }
         }
         else{
-            Player player = new Player(newPlayer.getName());
-            userMap.put(newPlayer.getName(), player);
+            userMap.put(newPlayer.getName(), newPlayer);
             increment();
             return true;
         }
