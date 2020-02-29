@@ -103,6 +103,8 @@ public class GetHomeRoute implements Route {
       // render the Game Form view
       vm.put(NEW_PLAYER_ATTR, true);
 
+      vm.put("currentUser", httpSession.attribute("currentUser"));
+
       return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
     }
 //    else {

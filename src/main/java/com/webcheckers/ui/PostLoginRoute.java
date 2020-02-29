@@ -44,6 +44,7 @@ public class PostLoginRoute implements Route {
     public Object handle(Request request, Response response) {
         // start building the View-Model
         final Map<String, Object> vm = new HashMap<>();
+        final Session httpSession = request.session();
 
 
         ModelAndView mv;
@@ -51,12 +52,15 @@ public class PostLoginRoute implements Route {
         final String username = request.queryParams(USER_USER);
         final String password = request.queryParams(USER_PASS);
 
+        // httpSession.attribute("currentUser", username);
+        vm.put("currentUser", username);
+
         // adds user to the map
         boolean is_added = playerLobby.saveUser(username);
 
         System.out.println(username);
 
         response.redirect("/");
-        return null;
+        return templateEngine.render(new ModelAndView(vm, "nav-bar.ftl"));
     }
 }
