@@ -22,7 +22,7 @@ public class GetNewGameRoute implements Route {
         Player currentPlayer = request.session().attribute("currentUser");
 
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Let's start the Game!");
+        vm.put("title", "Waiting for Opponent");
         vm.put("gameID", 0);
         vm.put("currentUser", currentPlayer);
         vm.put("viewMode", "PLAY");
