@@ -30,7 +30,6 @@ public class PostSignOutRoute implements Route{
     //
     @Override
     public Object handle(Request request, Response response){
-        // start building the View-Model
         final Session httpSession = request.session();
 
         Player currentPlayer = httpSession.attribute("currentUser");
