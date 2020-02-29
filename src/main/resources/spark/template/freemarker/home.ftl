@@ -18,7 +18,7 @@
   <div class="body">
 
   <#if currentUser??>
-          <h2><a href="/game">New Game</a></h2>
+          <h2><a href="/newgame">New Game</a></h2>
         </#if>
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl" />
