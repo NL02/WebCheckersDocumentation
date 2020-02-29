@@ -19,16 +19,18 @@ public class GetNewGameRoute implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         LOG.finer("GetGameRoute is invoked.");
+        Player currentPlayer = request.session().attribute("currentUser");
 
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Let's start the Game!");
         vm.put("gameID", 0);
-        vm.put("currentUser", request.session().attribute("currentUser"));
+        vm.put("currentUser", currentPlayer);
         vm.put("viewMode", "PLAY");
         vm.put("redPlayer", new Player("Waiting for Player"));
-        vm.put("whitePlayer", request.session().attribute("currentUser"));
+        vm.put("whitePlayer", currentPlayer);
         vm.put("activeColor", "RED");
         vm.put("board", new BoardView());
+        currentPlayer.status = Player.Status.WAITING;
         // render the View
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
