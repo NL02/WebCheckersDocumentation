@@ -109,4 +109,15 @@ public class PlayerLobby {
         });
         return onlinePlayers;
     }
+
+    public boolean removeUser(String username){
+        // checking if user exists in map just in case
+        if(userMap.containsKey(username)){
+            userMap.remove(username);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
