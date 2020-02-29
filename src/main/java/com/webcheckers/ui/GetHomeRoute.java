@@ -89,6 +89,9 @@ public class GetHomeRoute implements Route {
     Message num_players = Message.info(String.format(NUM_PLAYERS_MSG, playerLobby.getLiveCount())); //change 3 to numplayers from playerlobby
     vm.put( NUM_PLAYERS_ATTR, num_players);
 
+    // display navbar
+    vm.put("currentUser", httpSession.attribute("currentUser"));
+
     // if this is a brand new browser session or a session that timed out
     if(httpSession.attribute(PLAYERSERVICES_KEY) == null) {
       // get the object that will provide client-specific services for this player
@@ -103,8 +106,6 @@ public class GetHomeRoute implements Route {
 
       // render the Game Form view
       vm.put(NEW_PLAYER_ATTR, true);
-
-      vm.put("currentUser", httpSession.attribute("currentUser"));
 
       return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
     }

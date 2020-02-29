@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -46,21 +47,19 @@ public class PostLoginRoute implements Route {
         final Map<String, Object> vm = new HashMap<>();
         final Session httpSession = request.session();
 
-
         ModelAndView mv;
 
         final String username = request.queryParams(USER_USER);
         final String password = request.queryParams(USER_PASS);
 
-        // httpSession.attribute("currentUser", username);
-        vm.put("currentUser", username);
-
         // adds user to the map
         boolean is_added = playerLobby.saveUser(username);
+
+        httpSession.attribute("currentUser", new Player(username));
 
         System.out.println(username);
 
         response.redirect("/");
-        return templateEngine.render(new ModelAndView(vm, "nav-bar.ftl"));
+        return null;
     }
 }
