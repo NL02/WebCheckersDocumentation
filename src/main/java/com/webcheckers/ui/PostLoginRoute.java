@@ -1,9 +1,13 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import com.webcheckers.appl.PlayerLobby;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -14,8 +18,15 @@ public class PostLoginRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostLoginRoute.class.getName());
 
     static final String USER_USER = "username";
+    static final String MESSAGE_ATTR = "message";
+    static final String INVALID_USERNAME = "Usernames must have at least one alphanumeric character";
+    static final String PICK_ANOTHER_USERNAME = "Another player is using that name, please pick another one";
 
-    static final String ERROR_TYPE = "error";
+    public enum AddUserStatus{
+        INVLAID, // if the player picks a name that is less than one character or
+        PICKANOTHER, // if the player picks a name that is already in use
+        SUCCESS; // successfully picked a username
+    }
 
     //
     // Attributes
@@ -37,24 +48,30 @@ public class PostLoginRoute implements Route {
     //
     @Override
     public Object handle(Request request, Response response) {
-        final Session httpSession = request.session();
+        Map<String, Object> vm = new HashMap<>();
+        vm.put("title", "Bad Login");
 
+        final Session httpSession = request.session();
 
         final String username = request.queryParams(USER_USER);
         LOG.fine(username);
 
-        /*TODO
-        ERROR CHECK USERNAME
-        CHECK TO SEE IF USER HAS LOGGED IN BEFORE
-         */
         Player newPlayer = new Player(username);
 
-        boolean is_added = playerLobby.saveUser(newPlayer);
-        if(is_added){
+        AddUserStatus is_added = playerLobby.saveUser(newPlayer);
+
+        if(is_added == AddUserStatus.SUCCESS){
             httpSession.attribute("currentUser", newPlayer);
         }
+        else if (is_added == AddUserStatus.INVLAID){
+            Message error = Message.error(INVALID_USERNAME);
+            vm.put(MESSAGE_ATTR, error);
+            return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
+        }
         else{
-            System.out.println("User not added");
+            Message error = Message.error(PICK_ANOTHER_USERNAME);
+            vm.put(MESSAGE_ATTR, error);
+            return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
         }
 
         response.redirect("/");

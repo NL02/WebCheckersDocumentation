@@ -13,6 +13,10 @@
         <form action="./signin" method="POST">
             Please enter in your username and password.
             <br/>
+            <#if message??>
+                <div id="message" class="${message.type}">${message.text}</div>
+                </br>
+            </#if>
             <p>Username: <input name="username" /></p>
             <br/><br/>
             <button type="login">Login</button>
