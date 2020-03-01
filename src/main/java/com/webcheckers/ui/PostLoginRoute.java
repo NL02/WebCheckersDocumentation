@@ -37,6 +37,11 @@ public class PostLoginRoute implements Route {
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
 
+    /**
+     * Create the Spark Route (UI controller) to handle all {@code POST /} HTTP requests.
+     * @param playerLobby
+     * @param templateEngine
+     */
     public PostLoginRoute( PlayerLobby playerLobby, TemplateEngine templateEngine) {
         //validation
         Objects.requireNonNull(templateEngine,"templateEngine must not be null");

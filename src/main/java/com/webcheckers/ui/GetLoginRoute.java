@@ -21,19 +21,28 @@ public class GetLoginRoute implements Route {
     static final String TITLE_ATTR = "title";
     static final String TITLE = "Please Login";
     static final String VIEW_NAME = "signin.ftl";
-
-
     private static final Logger LOG = Logger.getLogger(GetLoginRoute.class.getName());
-
     private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
 
+    /**
+     * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
+     *
+     * @param templateEngine
+     *   the HTML template rendering engine
+     */
     public GetLoginRoute(PlayerLobby playerLobby, final TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
         this.playerLobby = playerLobby;
         LOG.config("GetLoginRoute is initialized.");
     }
 
+    /**
+     *  Renders Login Psgr
+     * @param request http request
+     * @param response http response
+     * @return the rendered HTML for the Home page
+     */
     public Object handle(Request request, Response response) {
         LOG.finer("GetLoginRoute is invoked.");
 
