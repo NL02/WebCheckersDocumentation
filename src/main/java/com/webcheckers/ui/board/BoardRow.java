@@ -12,11 +12,11 @@ public class BoardRow implements Iterable<BoardSquare> {
      * Constructs a new BoardRow and the BoardSquares it contains.
      * @param index Index of this row on the board.
      */
-    public BoardRow(int index) {
+    public BoardRow(int index, Color playerColor) {
         squares = new BoardSquare[NUM_SQUARES];
         this.index = index;
         for (int i = 0; i < NUM_SQUARES; i++) {
-            squares[i] = new BoardSquare(i,(index - i) % 2 != 0, makePiece(i));
+            squares[i] = new BoardSquare(i,(index - i) % 2 != 0, makePiece(i, playerColor));
         }
     }
     
@@ -31,14 +31,14 @@ public class BoardRow implements Iterable<BoardSquare> {
      * @param i Index of the square in the row
      * @return null if ineligible space, otherwise white or red piece
      */
-    private CheckersPiece makePiece(int i) {
+    private CheckersPiece makePiece(int i, Color playerColor) {
         // Determine if a square can start with a piece; return null if not
         if ((index - i) % 2 == 0 || (index > 2 && index < 5)) {
             return null;
         }
         // Determine the right color and return a piece of that color
         else {
-            return new CheckersPiece(index < 3 ? Color.WHITE : Color.RED);
+            return new CheckersPiece(index < 3 ? (playerColor == Color.WHITE ? Color.RED : Color.WHITE) : playerColor);
         }
     }
 

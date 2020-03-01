@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.board.BoardView;
+import com.webcheckers.ui.board.Color;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -102,7 +103,7 @@ public class GetGameRoute implements Route {
         vm.put(RED_PLAYER_ATTR, playerSearching);
         vm.put(WHITE_PLAYER_ATTR, playerWaiting);
         vm.put(ACTIVE_COLOR_ATTR, ACTIVE_COLOR);
-        vm.put(BOARD_ATTR, new BoardView());
+        vm.put(BOARD_ATTR, new BoardView(Color.RED));
         // render the View
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }

@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.board.BoardView;
+import com.webcheckers.ui.board.Color;
 import spark.*;
 
 import java.util.HashMap;
@@ -45,7 +46,7 @@ public class GetNewGameRoute implements Route {
         vm.put(RED_PLAYER_ATTR, new Player("Waiting for Player"));
         vm.put(WHITE_PLAYER_ATTR, currentPlayer);
         vm.put(ACTIVE_COLOR_ATTR, ACTIVE_COLOR);
-        vm.put(BOARD_ATTR, new BoardView());
+        vm.put(BOARD_ATTR, new BoardView(Color.WHITE));
         currentPlayer.status = Player.Status.WAITING;
         // render the View
         //TODO: SET PLAYER TO SEARCHING IF THEY GO TO HOME PAGE

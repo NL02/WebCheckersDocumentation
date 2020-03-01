@@ -7,10 +7,10 @@ public class BoardView implements Iterable<BoardRow> {
 
     private final BoardRow[] rows;
 
-    public BoardView() {
+    public BoardView(Color playerColor) {
         rows = new BoardRow[NUM_ROWS];
         for (int i = 0; i < NUM_ROWS; i++) {
-            rows[i] = new BoardRow(i);
+            rows[i] = new BoardRow(i, playerColor);
         }
     }
 
