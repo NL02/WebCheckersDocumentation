@@ -17,14 +17,19 @@
   <div class="body">
 
   <#if currentUser??>
-          <h2><a href="/newgame">New Game</a></h2>
-        </#if>
+    <h2><a href="/newgame">New Game</a></h2>
+  </#if>
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl" />
 
+  <#if currentUser??>
     <#list playerList as player>
-        <p><a href="/game">${player.name}</a></p>
+        <p><a href="/game" name = "opponent">${player.name}</a></p>
     </#list>
+  </#if>
+
+
+
 
     <!-- TODO: future content on the Home:
             to start games,

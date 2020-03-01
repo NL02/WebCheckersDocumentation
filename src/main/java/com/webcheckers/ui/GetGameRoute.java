@@ -68,7 +68,7 @@ public class GetGameRoute implements Route {
         //TODO: Get Opponent
         String opponent = request.queryParams("opponent");
         Player opp = playerLobby.findPlayer(opponent);
-        //System.out.println("Opponent's name is: " + opponent);
+        System.out.println("Opponent's name is: " + opponent);
         Player playerSearching;
         Player playerWaiting;
         if(me.status == Player.Status.WAITING) {
