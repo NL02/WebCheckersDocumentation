@@ -16,7 +16,7 @@ public class BoardRow implements Iterable<BoardSquare> {
         squares = new BoardSquare[NUM_SQUARES];
         this.index = index;
         for (int i = 0; i < NUM_SQUARES; i++) {
-            squares[i] = new BoardSquare(i,(index - i) % 2 == 0, makePiece(i));
+            squares[i] = new BoardSquare(i,(index - i) % 2 != 0, makePiece(i));
         }
     }
     
@@ -33,7 +33,7 @@ public class BoardRow implements Iterable<BoardSquare> {
      */
     private CheckersPiece makePiece(int i) {
         // Determine if a square can start with a piece; return null if not
-        if ((index - i) % 2 != 0 || (index > 2 && index < 5)) {
+        if ((index - i) % 2 == 0 || (index > 2 && index < 5)) {
             return null;
         }
         // Determine the right color and return a piece of that color
