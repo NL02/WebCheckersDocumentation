@@ -20,17 +20,20 @@ public class SessionTimeoutWatchdog implements HttpSessionBindingListener {
 
     private final PlayerServices playerServices;
 
+    //creates new watchdog
     public SessionTimeoutWatchdog(final PlayerServices playerServices) {
         LOG.fine("Watch dog created.");
         this.playerServices = Objects.requireNonNull(playerServices);
     }
 
+    //creates session
     @Override
     public void valueBound(HttpSessionBindingEvent event) {
         // ignore this event
         LOG.fine("Player session started.");
     }
 
+    //ends session
     @Override
     public void valueUnbound(HttpSessionBindingEvent event) {
         // the session is being terminated do some cleanup

@@ -31,9 +31,23 @@ public class GetNewGameRoute implements Route {
     //
     private final TemplateEngine templateEngine;
 
+    /**
+     * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
+     *
+     * @param templateEngine
+     *   the HTML template rendering engine
+     */
     GetNewGameRoute(TemplateEngine templateEngine){
         this.templateEngine = templateEngine;
     }
+
+    /**
+     * creates a new chess game and renders the board
+     * @param request http request
+     * @param response http response
+     * @return the rendered HTML for the Home page
+     * @throws Exception
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
         LOG.finer("GetNewGameRoute is invoked.");

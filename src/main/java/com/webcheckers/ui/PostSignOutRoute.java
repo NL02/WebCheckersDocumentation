@@ -19,6 +19,11 @@ public class PostSignOutRoute implements Route{
     private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
 
+    /**
+     * Create the Spark Route (UI controller) to handle all {@code POST /} HTTP requests.
+     * @param playerLobby
+     * @param templateEngine
+     */
     public PostSignOutRoute( PlayerLobby playerLobby, TemplateEngine templateEngine){
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
