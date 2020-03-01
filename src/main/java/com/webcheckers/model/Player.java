@@ -7,6 +7,9 @@ public class Player {
     public String gameURL;
     public int playerID;
 
+    /**
+     * Status - enums for the current state of the player
+     */
     public enum Status{
         OFFLINE, //Player is not online
         SEARCHING, //Player is not in a game, nor looking for a game
@@ -30,14 +33,28 @@ public class Player {
     //   return playerID;
     //}
 
+    /**
+     * getName returns the name of the player instance
+     * @return player name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * getStatus returns the status of the player
+     * @return (enum) Status
+     */
     public Status getStatus(){
         return status;
     }
 
+    /**
+     * checks if the given object is equal (has the name username) as this player instance
+     *
+     * @param obj Object to check
+     * @return boolean based on whether or not obj has the same username as this instance of player
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == this){
