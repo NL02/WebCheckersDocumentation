@@ -29,6 +29,7 @@ public class PlayerLobby {
     //
     private ArrayList<Player> waitingPlayers = new ArrayList<>();
     private static int liveCount = 0;
+    private ArrayList<Player> onlinePlayers = new ArrayList<>();
 
     // change Map to Map <username, Player>
     private Map <String, Player> userMap = new HashMap<>();
@@ -107,6 +108,7 @@ public class PlayerLobby {
         liveCount--;
     }
 
+
     public ArrayList<Player> getWaitingPlayer() {
         userMap.forEach((s, player) -> {
             if(player.getStatus() == Player.Status.WAITING) {
@@ -120,13 +122,17 @@ public class PlayerLobby {
 
     public boolean removeUser(Player player){
         // checking if user exists in array just in case
-        if(waitingPlayers.contains(player)){
-            waitingPlayers.remove(player);
-            return true;
+        for(int i = 0; i < onlinePlayers.size(); i ++) {
+            if (onlinePlayers.get(i).equals(player)) {
+                onlinePlayers.remove(player);
+                return true;
+            }
         }
-        else{
-            return false;
-        }
+        return false;
+    }
+
+    public void addOnlinePlayer(Player player){
+        onlinePlayers.add(player);
     }
 
     public Player findPlayer(String username){

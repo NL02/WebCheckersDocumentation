@@ -97,7 +97,7 @@ public class GetGameRoute implements Route {
         }
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
-        vm.put(GAMEID_ATTR, 0);
+        vm.put(GAMEID_ATTR, me.playerID);
         vm.put(CURRENT_USER_ATTR, me);
         vm.put(VIEW_MODE_ATTR, VIEW_MODE);
         vm.put(RED_PLAYER_ATTR, playerSearching);
