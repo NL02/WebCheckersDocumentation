@@ -48,6 +48,7 @@ public class GetHomeRoute implements Route {
 
   //
   // Attributes
+  //
 
   private final PlayerLobby playerLobby;
   private final TemplateEngine templateEngine;

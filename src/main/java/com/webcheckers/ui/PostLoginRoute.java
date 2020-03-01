@@ -13,14 +13,17 @@ import java.util.logging.Logger;
 
 public class PostLoginRoute implements Route {
 
-    // Values used in the view-model map for rendering the post login view after a login attemp
-
     private static final Logger LOG = Logger.getLogger(PostLoginRoute.class.getName());
 
+    // Values used in the view-model map for rendering the post login view after a login attempt
     static final String USER_USER = "username";
     static final String MESSAGE_ATTR = "message";
     static final String INVALID_USERNAME = "Usernames must have at least one alphanumeric character";
     static final String PICK_ANOTHER_USERNAME = "Another player is using that name, please pick another one";
+    static final String TITLE_ATTR = "title";
+    static final String CURRENT_USER_ATTR = "currentUser";
+    static final String VIEW_NAME = "signin.ftl";
+
 
     public enum AddUserStatus{
         INVLAID, // if the player picks a name that is less than one character or
@@ -49,7 +52,7 @@ public class PostLoginRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Bad Login");
+        vm.put(TITLE_ATTR, "Bad Login");
 
         final Session httpSession = request.session();
 
@@ -61,17 +64,17 @@ public class PostLoginRoute implements Route {
         AddUserStatus is_added = playerLobby.saveUser(newPlayer);
 
         if(is_added == AddUserStatus.SUCCESS){
-            httpSession.attribute("currentUser", newPlayer);
+            httpSession.attribute(CURRENT_USER_ATTR, newPlayer);
         }
         else if (is_added == AddUserStatus.INVLAID){
             Message error = Message.error(INVALID_USERNAME);
             vm.put(MESSAGE_ATTR, error);
-            return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
+            return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
         }
         else{
             Message error = Message.error(PICK_ANOTHER_USERNAME);
             vm.put(MESSAGE_ATTR, error);
-            return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
+            return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
         }
 
         response.redirect("/");

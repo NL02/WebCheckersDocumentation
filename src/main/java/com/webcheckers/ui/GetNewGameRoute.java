@@ -11,6 +11,23 @@ import java.util.logging.Logger;
 public class GetNewGameRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(GetNewGameRoute.class.getName());
+
+    // Values used in the view-model map for rendering the home view.
+    static final String TITLE_ATTR = "title";
+    static final String TITLE = "Waiting for Opponent";
+    static final String GAMEID_ATTR = "gameID";
+    static final String CURRENT_USER_ATTR = "currentUser";
+    static final String VIEW_MODE_ATTR = "viewMode";
+    static final String VIEW_MODE = "PLAY";
+    static final String RED_PLAYER_ATTR = "redPlayer";
+    static final String WHITE_PLAYER_ATTR = "whitePlayer";
+    static final String ACTIVE_COLOR_ATTR = "activeColor";
+    static final String ACTIVE_COLOR = "RED";
+    static final String BOARD_ATTR = "board";
+
+    //
+    // Attributes
+    //
     private final TemplateEngine templateEngine;
 
     GetNewGameRoute(TemplateEngine templateEngine){
@@ -21,14 +38,14 @@ public class GetNewGameRoute implements Route {
         LOG.finer("GetNewGameRoute is invoked.");
         Player currentPlayer = request.session().attribute("currentUser");
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Waiting for Opponent");
-        vm.put("gameID", 0);
-        vm.put("currentUser", currentPlayer);
-        vm.put("viewMode", "PLAY");
-        vm.put("redPlayer", new Player("Waiting for Player"));
-        vm.put("whitePlayer", currentPlayer);
-        vm.put("activeColor", "RED");
-        vm.put("board", new BoardView());
+        vm.put(TITLE_ATTR, TITLE);
+        vm.put(GAMEID_ATTR, 0);
+        vm.put(CURRENT_USER_ATTR, currentPlayer);
+        vm.put(VIEW_MODE_ATTR, VIEW_MODE);
+        vm.put(RED_PLAYER_ATTR, new Player("Waiting for Player"));
+        vm.put(WHITE_PLAYER_ATTR, currentPlayer);
+        vm.put(ACTIVE_COLOR_ATTR, ACTIVE_COLOR);
+        vm.put(BOARD_ATTR, new BoardView());
         currentPlayer.status = Player.Status.WAITING;
         // render the View
         //TODO: SET PLAYER TO SEARCHING IF THEY GO TO HOME PAGE

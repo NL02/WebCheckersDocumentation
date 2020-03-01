@@ -35,8 +35,23 @@ public class GetGameRoute implements Route {
 
     private static final Message ACTIVE_COLOR_MSG = Message.info("activeColor");
 
-    private final TemplateEngine templateEngine;
+    // Values used in the view-model map for rendering the home view.
+    static final String TITLE_ATTR = "title";
+    static final String TITLE = "Let's start the Game!";
+    static final String GAMEID_ATTR = "gameID";
+    static final String CURRENT_USER_ATTR = "currentUser";
+    static final String VIEW_MODE_ATTR = "viewMode";
+    static final String VIEW_MODE = "PLAY";
+    static final String RED_PLAYER_ATTR = "redPlayer";
+    static final String WHITE_PLAYER_ATTR = "whitePlayer";
+    static final String ACTIVE_COLOR_ATTR = "activeColor";
+    static final String ACTIVE_COLOR = "RED";
+    static final String BOARD_ATTR = "board";
 
+    //
+    // Attributes
+    //
+    private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
@@ -80,14 +95,14 @@ public class GetGameRoute implements Route {
             playerWaiting = opp;
         }
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Let's start the Game!");
-        vm.put("gameID", 0);
-        vm.put("currentUser", me);
-        vm.put("viewMode", "PLAY");
-        vm.put("redPlayer", playerSearching);
-        vm.put("whitePlayer", playerWaiting);
-        vm.put("activeColor", "RED");
-        vm.put("board", new BoardView());
+        vm.put(TITLE_ATTR, TITLE);
+        vm.put(GAMEID_ATTR, 0);
+        vm.put(CURRENT_USER_ATTR, me);
+        vm.put(VIEW_MODE_ATTR, VIEW_MODE);
+        vm.put(RED_PLAYER_ATTR, playerSearching);
+        vm.put(WHITE_PLAYER_ATTR, playerWaiting);
+        vm.put(ACTIVE_COLOR_ATTR, ACTIVE_COLOR);
+        vm.put(BOARD_ATTR, new BoardView());
         // render the View
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
