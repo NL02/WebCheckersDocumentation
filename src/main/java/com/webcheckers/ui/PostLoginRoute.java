@@ -19,8 +19,8 @@ public class PostLoginRoute implements Route {
 
     static final String USER_USER = "username";
     static final String MESSAGE_ATTR = "message";
-    static final Message INVALIDUSERNAME = Message.info("Usernames must have at least one alphanumeric character");
-    static final Message PICKANOTHERUSERNAME = Message.info("Another player is using that name, please pick another one");
+    static final String INVALID_USERNAME = "Usernames must have at least one alphanumeric character";
+    static final String PICK_ANOTHER_USERNAME = "Another player is using that name, please pick another one";
 
     public enum AddUserStatus{
         INVLAID, // if the player picks a name that is less than one character or
@@ -49,6 +49,7 @@ public class PostLoginRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
+        vm.put("title", "Bad Login");
 
         final Session httpSession = request.session();
 
@@ -63,12 +64,14 @@ public class PostLoginRoute implements Route {
             httpSession.attribute("currentUser", newPlayer);
         }
         else if (is_added == AddUserStatus.INVLAID){
-            vm.put(MESSAGE_ATTR, INVALIDUSERNAME);
-            response.redirect("/signin");
+            Message error = Message.error(INVALID_USERNAME);
+            vm.put(MESSAGE_ATTR, error);
+            return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
         }
         else{
-            vm.put(MESSAGE_ATTR, PICKANOTHERUSERNAME);
-            response.redirect("/signin");
+            Message error = Message.error(PICK_ANOTHER_USERNAME);
+            vm.put(MESSAGE_ATTR, error);
+            return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
         }
 
         response.redirect("/");
