@@ -54,12 +54,14 @@ public class PostLoginRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, "Bad Login");
 
+
         final Session httpSession = request.session();
 
         final String username = request.queryParams(USER_USER);
         LOG.fine(username);
 
         Player newPlayer = new Player(username);
+        playerLobby.addOnlinePlayer(newPlayer);
 
         AddUserStatus is_added = playerLobby.saveUser(newPlayer);
 

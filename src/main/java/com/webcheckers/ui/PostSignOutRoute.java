@@ -41,6 +41,8 @@ public class PostSignOutRoute implements Route{
         }
         else{
             System.out.println("User wasn't online");
+            System.out.println(currentPlayer.getName());
+
         }
         currentPlayer.status = Player.Status.OFFLINE;
         httpSession.attribute(CURRENT_USER_ATTR, null);

@@ -4,6 +4,8 @@ public class Player {
     //private final int playerID; // Internal ID constructed by hashing player info
     public final String name;
     public Status status;
+    public String gameURL;
+    public int playerID;
 
     public enum Status{
         OFFLINE, //Player is not online
@@ -20,7 +22,8 @@ public class Player {
     public Player(String username) {
         this.name = username;
         this.status = Status.SEARCHING;
-        //playerID = username.hashCode() + password.hashCode();
+        playerID = username.hashCode();
+        this.gameURL = "/game" + playerID;
     }
 
     //private int getPlayerID() {
@@ -35,4 +38,15 @@ public class Player {
         return status;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this){
+            return true;
+        }
+        else if (!(obj instanceof Player)){
+            return false;
+        }
+        final Player that = (Player) obj;
+        return this.name == that.getName();
+    }
 }
