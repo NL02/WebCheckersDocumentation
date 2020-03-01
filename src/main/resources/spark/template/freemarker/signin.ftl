@@ -11,7 +11,7 @@
     <div class="body">
 
         <form action="./signin" method="POST">
-            Please enter in your username and password.
+            Please enter in your username.
             <br/>
             <#if message??>
                 <div id="message" class="${message.type}">${message.text}</div>
