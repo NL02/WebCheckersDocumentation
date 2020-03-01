@@ -81,6 +81,7 @@ public class PlayerLobby {
         }
         if (userMap.containsKey(newPlayer.getName())) {
             if(userMap.get(newPlayer.getName()).getStatus() == Player.Status.OFFLINE){
+                increment();
                 return PostLoginRoute.AddUserStatus.SUCCESS;
             }
             else {
