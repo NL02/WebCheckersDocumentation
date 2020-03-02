@@ -11,6 +11,18 @@ public class CheckersPiece {
     private Color color;    // Color of this piece, red or white
     private PieceType type; // Type of piece, single or king
 
+    // Enum representing the two possible colors of pieces.
+    public enum Color {
+        WHITE,
+        RED;
+    }
+
+    // Enum representing the two types of pieces.
+    public enum PieceType {
+        SINGLE,
+        KING;
+    }
+
     /**
      * Constructs a new CheckersPiece.
      *
