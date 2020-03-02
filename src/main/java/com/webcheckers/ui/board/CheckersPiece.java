@@ -51,19 +51,10 @@ public class CheckersPiece {
         return this.type;
     }
 
-    /* Old and not needed for Sprint 1
-
-    public void becomeKing() {
-        this.isKing = true;
-    }
-
-    public CheckersPiece duplicate() {
-        CheckersPiece copy = new CheckersPiece(this.color);
-        if (this.isKing) {
-            copy.becomeKing();
-        }
-        return copy;
-    }
-
+    /**
+     * Changes this piece to a King.
      */
+    public void kingMe(){
+        this.type = PieceType.KING;
+    }
 }
