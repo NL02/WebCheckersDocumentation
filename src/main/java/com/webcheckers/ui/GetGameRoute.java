@@ -86,7 +86,6 @@ public class GetGameRoute implements Route {
         //TODO: Get Opponent
         String opponent = request.queryParams("opponent");
         Player opp = playerLobby.findPlayer(opponent);
-        System.out.println("Opponent's name is: " + opponent);
         Player playerSearching;
         Player playerWaiting;
         if(me.status == Player.Status.WAITING) {
@@ -111,5 +110,9 @@ public class GetGameRoute implements Route {
         // render the View
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
+
+    private void putInGame(Request request, Response response, Player whitePlayer, Player redPlayer){
+
+        }
 
 }

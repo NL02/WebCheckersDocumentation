@@ -80,11 +80,11 @@ public class PlayerLobby {
      */
     public PostLoginRoute.AddUserStatus saveUser(Player newPlayer) {
         if( newPlayer.getName() == null || !newPlayer.getName().matches("^[a-zA-Z0-9]*$") || newPlayer.getName().matches(".*\\s+.*")){
-            System.out.println("Not alphaNumeric/spaces");
+            LOG.fine("Not alphaNumeric/spaces");
             return PostLoginRoute.AddUserStatus.INVLAID;
         }
         if (newPlayer.getName().length() < 1) {
-            System.out.println("Not at least one character");
+            LOG.fine("Not at least one character");
             return PostLoginRoute.AddUserStatus.INVLAID;
         }
         if (userMap.containsKey(newPlayer.getName())) {

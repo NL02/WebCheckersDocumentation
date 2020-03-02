@@ -70,11 +70,4 @@ public class GetNewGameRoute implements Route {
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
 
-    private void putInGame(Request request, Response response){
-        Player currentPlayer = request.session().attribute("currentUser");
-        if(currentPlayer.status == Player.Status.INGAME){
-            response.redirect("/game");
-            halt();
-        }
-    }
 }
