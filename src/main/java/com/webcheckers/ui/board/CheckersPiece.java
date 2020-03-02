@@ -4,6 +4,17 @@ public class CheckersPiece {
     private Color color;
     private PieceType type;
 
+    public enum PieceType {
+        SINGLE,
+        KING;
+    }
+
+    public enum Color {
+        WHITE,
+        RED;
+    }
+
+
     public CheckersPiece(Color c) {
         color = c;
         type = PieceType.SINGLE;
