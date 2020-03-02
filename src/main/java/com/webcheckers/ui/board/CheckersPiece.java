@@ -1,29 +1,40 @@
 package com.webcheckers.ui.board;
 
+/**
+ * View component for checkers pieces. Temporarily holding model-tier information until model-tier board classes
+ * are added.
+ *
+ * @author Wyatt Holcombe
+ */
 public class CheckersPiece {
-    private Color color;
-    private PieceType type;
 
-    public enum PieceType {
-        SINGLE,
-        KING;
-    }
+    private Color color;    // Color of this piece, red or white
+    private PieceType type; // Type of piece, single or king
 
-    public enum Color {
-        WHITE,
-        RED;
-    }
-
-
+    /**
+     * Constructs a new CheckersPiece.
+     *
+     * @param c Color of piece
+     */
     public CheckersPiece(Color c) {
         color = c;
         type = PieceType.SINGLE;
     }
 
+    /**
+     * Returns the color of this piece.
+     *
+     * @return RED or WHITE
+     */
     public Color getColor() {
         return this.color;
     }
 
+    /**
+     * Returns the type of this piece.
+     *
+     * @return SINGLE or KING
+     */
     public PieceType getType() {
         return this.type;
     }

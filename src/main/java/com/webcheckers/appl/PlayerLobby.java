@@ -27,8 +27,10 @@ public class PlayerLobby {
     //
     // Attributes
     //
+
     private ArrayList<Player> waitingPlayers = new ArrayList<>();
     private static int liveCount = 0;
+    private ArrayList<Player> onlinePlayers = new ArrayList<>();
 
     // change Map to Map <username, Player>
     private Map <String, Player> userMap = new HashMap<>();
@@ -61,7 +63,7 @@ public class PlayerLobby {
     }
 
     /**
-     * Collect sitewide statistics when a game is finished.
+     * Collect site wide statistics when a game is finished.
      */
     public void gameFinished(){
         synchronized(this){
@@ -69,6 +71,13 @@ public class PlayerLobby {
         }
     }
 
+    /**
+     * saveUser takes in a user, checks if they are in the userMap, adds them if they are not, or changes their status to
+     * SEARCHING if no other user is using that username
+     *
+     * @param newPlayer - player to add to map/set to SEARCHING
+     * @return - addUserStatus enum based on whether or not the user was added
+     */
     public PostLoginRoute.AddUserStatus saveUser(Player newPlayer) {
         if( newPlayer.getName() == null || !newPlayer.getName().matches("^[a-zA-Z0-9]*$") || newPlayer.getName().matches(".*\\s+.*")){
             System.out.println("Not alphaNumeric/spaces");
@@ -80,6 +89,8 @@ public class PlayerLobby {
         }
         if (userMap.containsKey(newPlayer.getName())) {
             if(userMap.get(newPlayer.getName()).getStatus() == Player.Status.OFFLINE){
+                newPlayer.status = Player.Status.SEARCHING;
+                increment();
                 return PostLoginRoute.AddUserStatus.SUCCESS;
             }
             else {
@@ -93,20 +104,33 @@ public class PlayerLobby {
         }
     }
 
-    //todo get list of active users
-
+    /**
+     * getLiveCount get's the number of players that are logged in
+     * @return number of players that are logged in
+     */
     public static int getLiveCount() {
         return liveCount;
     }
 
+    /**
+     * increment increments the liveCount (number of players online)
+     */
     public static void increment() {
         liveCount++;
     }
 
+    /**
+     * decrement decrements the liveCount (number of players online)
+     */
     public static void decrement() {
         liveCount--;
     }
 
+    /**
+     * getWaitingPlayer get's the players who's status is set to WAITING and adds them to waitingPlayers
+     *
+     * @return waitingPlayers array List
+     */
     public ArrayList<Player> getWaitingPlayer() {
         userMap.forEach((s, player) -> {
             if(player.getStatus() == Player.Status.WAITING) {
@@ -118,17 +142,38 @@ public class PlayerLobby {
         return waitingPlayers;
     }
 
+    /**
+     * removeUser removes a user from the list of online players (onlinePlayers)
+     *
+     * @param player player instance to be removed from onlinePlayers
+     * @return boolean based on whether or not the remove was successful
+     */
     public boolean removeUser(Player player){
         // checking if user exists in array just in case
-        if(waitingPlayers.contains(player)){
-            waitingPlayers.remove(player);
-            return true;
+        for(int i = 0; i < onlinePlayers.size(); i ++) {
+            if (onlinePlayers.get(i).equals(player)) {
+                onlinePlayers.remove(player);
+                return true;
+            }
         }
-        else{
-            return false;
-        }
+        return false;
     }
 
+    /**
+     * addOnlinePlayer adds a player to the onlinePlayers list
+     *
+     * @param player player instance to be added
+     */
+    public void addOnlinePlayer(Player player){
+        onlinePlayers.add(player);
+    }
+
+    /**
+     * findPlayer looks to see if a player with the given username is in the userMap, default is null if it is not
+     *
+     * @param username username of player to check for
+     * @return player from map or null if not present
+     */
     public Player findPlayer(String username){
         return userMap.getOrDefault(username, null);
     }
