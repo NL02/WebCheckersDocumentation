@@ -17,6 +17,8 @@ import spark.TemplateEngine;
 
 import com.webcheckers.util.Message;
 
+import static spark.Spark.halt;
+
 
 public class GetGameRoute implements Route {
 
@@ -95,6 +97,8 @@ public class GetGameRoute implements Route {
             playerSearching = me;
             playerWaiting = opp;
         }
+        me.status = Player.Status.INGAME;
+        opp.status = Player.Status.INGAME;
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
         vm.put(GAMEID_ATTR, me.playerID);

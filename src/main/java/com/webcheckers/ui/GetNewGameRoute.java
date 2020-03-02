@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import static spark.Spark.halt;
+
 public class GetNewGameRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(GetNewGameRoute.class.getName());
@@ -66,5 +68,13 @@ public class GetNewGameRoute implements Route {
         //TODO: SET PLAYER TO SEARCHING IF THEY GO TO HOME PAGE
         //TODO: FIGURE OUT HOW TO SEND A PLAYER TO /game FROM /newgame
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+    }
+
+    private void putInGame(Request request, Response response){
+        Player currentPlayer = request.session().attribute("currentUser");
+        if(currentPlayer.status == Player.Status.INGAME){
+            response.redirect("/game");
+            halt();
+        }
     }
 }

@@ -24,7 +24,7 @@
 
   <#if currentUser??>
     <#list playerList as player>
-        <p><a href="/game" name = "opponent">${player.name}</a></p>
+        <p><a href="/game?opponent=${player.name}">${player.name}</a></p>
     </#list>
   </#if>
 
