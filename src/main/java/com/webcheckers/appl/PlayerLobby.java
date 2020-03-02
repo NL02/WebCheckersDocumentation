@@ -99,6 +99,7 @@ public class PlayerLobby {
         }
         else{
             userMap.put(newPlayer.getName(), newPlayer);
+            increment();
             return PostLoginRoute.AddUserStatus.SUCCESS;
         }
     }
