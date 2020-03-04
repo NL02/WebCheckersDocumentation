@@ -87,20 +87,13 @@ public class GetGameRoute implements Route {
         Player me = request.session().attribute("currentUser");
         String opponent = request.queryParams("opponent");
         CheckersGame game;
-        // Get the game shared between us
-        if(opponent == null){
-            // If I started the game
-            game = PlayerLobby.getGame(me.name);
-        }
-        else {
-            // If my opponent started the game
+        if(me.status == Player.Status.SEARCHING){
             game = PlayerLobby.getGame(opponent);
-        }
-        // Add me to the game if I'm not there already
-        if(game.getRedPlayer() == null) {
             game.addRedPlayer(me);
         }
-        // Get players
+        else{
+            game = PlayerLobby.getGame(me.name);
+        }
         Player redPlayer = game.getRedPlayer();
         Player whitePlayer = game.getWhitePlayer();
         redPlayer.status = Player.Status.INGAME;

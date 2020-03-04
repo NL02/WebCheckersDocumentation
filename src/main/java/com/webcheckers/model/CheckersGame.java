@@ -31,15 +31,15 @@ public class CheckersGame {
         this.board = new CheckerBoard();
     }
 
-    public void addRedPlayer(Player redPlayer){
+    public synchronized void addRedPlayer(Player redPlayer){
         this.redPlayer = redPlayer;
     }
 
-    public Player getRedPlayer() {
+    public synchronized Player getRedPlayer() {
         return redPlayer;
     }
 
-    public Player getWhitePlayer() {
+    public synchronized Player getWhitePlayer() {
         return whitePlayer;
     }
 }
