@@ -35,18 +35,6 @@ public class PlayerServices {
         this.lobby = lobby;
     }
 
-    /**
-     * Get the current game that the player is playing. Create one if a game has not been started.
-     *
-     * @return CheckersGame
-     *    the current game being played
-     */
-    public synchronized CheckersGame currentGame() {
-        if(game == null) {
-            game = lobby.getGame();
-        }
-        return game;
-    }
 
     /**
      * Indicates that the player is finished with this game.

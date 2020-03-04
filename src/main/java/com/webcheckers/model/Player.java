@@ -14,7 +14,7 @@ public class Player {
         OFFLINE, //Player is not online
         SEARCHING, //Player is not in a game, nor looking for a game
         WAITING, //Player has created a new game and is waiting for
-        INGAME; //Player is currently in a game or spectating
+        INGAME //Player is currently in a game or spectating
     }
 
     /**

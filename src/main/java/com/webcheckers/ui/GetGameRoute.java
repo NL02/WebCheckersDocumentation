@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.CheckersGame;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.board.BoardView;
 import com.webcheckers.ui.board.Color;
@@ -82,37 +83,43 @@ public class GetGameRoute implements Route {
      */
     public Object handle(Request request, Response response) {
         LOG.finer("GetGameRoute is invoked.");
+        //Get myself, and my opponent
         Player me = request.session().attribute("currentUser");
-        //TODO: Get Opponent
         String opponent = request.queryParams("opponent");
-        Player opp = playerLobby.findPlayer(opponent);
-        Player playerSearching;
-        Player playerWaiting;
-        if(me.status == Player.Status.WAITING) {
-            playerWaiting = me;
-            playerSearching = opp;
+        CheckersGame game;
+        // Get the game shared between us
+        if(opponent == null){
+            // If I started the game
+            game = PlayerLobby.getGame(me.name);
         }
-        else{
-            playerSearching = me;
-            playerWaiting = opp;
+        else {
+            // If my opponent started the game
+            game = PlayerLobby.getGame(opponent);
         }
-        me.status = Player.Status.INGAME;
-        opp.status = Player.Status.INGAME;
+        // Add me to the game if I'm not there already
+        if(game.getRedPlayer() == null) {
+            game.addRedPlayer(me);
+        }
+        // Get players
+        Player redPlayer = game.getRedPlayer();
+        Player whitePlayer = game.getWhitePlayer();
+        // Add Objects to the view
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
         vm.put(GAMEID_ATTR, me.playerID);
         vm.put(CURRENT_USER_ATTR, me);
         vm.put(VIEW_MODE_ATTR, VIEW_MODE);
-        vm.put(RED_PLAYER_ATTR, playerSearching);
-        vm.put(WHITE_PLAYER_ATTR, playerWaiting);
+        vm.put(RED_PLAYER_ATTR, redPlayer);
+        vm.put(WHITE_PLAYER_ATTR, whitePlayer);
         vm.put(ACTIVE_COLOR_ATTR, ACTIVE_COLOR);
-        vm.put(BOARD_ATTR, new BoardView(Color.RED));
+        // Determine my POV
+        if(me == redPlayer) {
+            vm.put(BOARD_ATTR, new BoardView(Color.RED));
+        }
+        else{
+            vm.put(BOARD_ATTR, new BoardView(Color.WHITE));
+        }
         // render the View
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
-
-    private void putInGame(Request request, Response response, Player whitePlayer, Player redPlayer){
-
-        }
-
 }

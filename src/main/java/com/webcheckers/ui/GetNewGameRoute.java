@@ -1,8 +1,10 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.board.BoardView;
 import com.webcheckers.ui.board.Color;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -53,7 +55,9 @@ public class GetNewGameRoute implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         LOG.finer("GetNewGameRoute is invoked.");
+        // Get me
         Player currentPlayer = request.session().attribute("currentUser");
+        // Add Objects to the POV
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
         vm.put(GAMEID_ATTR, 0);
@@ -63,11 +67,17 @@ public class GetNewGameRoute implements Route {
         vm.put(WHITE_PLAYER_ATTR, currentPlayer);
         vm.put(ACTIVE_COLOR_ATTR, ACTIVE_COLOR);
         vm.put(BOARD_ATTR, new BoardView(Color.WHITE));
-        currentPlayer.status = Player.Status.WAITING;
+        // Update my status
+        if(currentPlayer.status != Player.Status.INGAME) {
+            currentPlayer.status = Player.Status.WAITING;
+        }
+        // Start a game so opponents ca search for me
+        PlayerLobby.newGame(currentPlayer);
+
         // render the View
         //TODO: SET PLAYER TO SEARCHING IF THEY GO TO HOME PAGE
         //TODO: FIGURE OUT HOW TO SEND A PLAYER TO /game FROM /newgame
-        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+        return templateEngine.render(new ModelAndView(vm , "new_game.ftl"));
     }
 
 }

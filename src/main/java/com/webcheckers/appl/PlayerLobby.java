@@ -35,6 +35,7 @@ public class PlayerLobby {
     // change Map to Map <username, Player>
     private Map <String, Player> userMap = new HashMap<>();
     private int totalGames = 0;
+    private static Map<String, CheckersGame> activeGames = new HashMap<>();
 
     //
     // Public methods
@@ -58,8 +59,8 @@ public class PlayerLobby {
      * @return
      *   A new {@link CheckersGame}
      */
-    public CheckersGame getGame(){
-        return new CheckersGame();
+    public static CheckersGame getGame(String whitePlayer){
+        return activeGames.getOrDefault(whitePlayer, null);
     }
 
     /**
@@ -157,6 +158,10 @@ public class PlayerLobby {
             }
         }
         return false;
+    }
+
+    public static void newGame(Player whitePlayer){
+        activeGames.put(whitePlayer.name, new CheckersGame(whitePlayer, null));
     }
 
     /**
