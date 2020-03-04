@@ -27,7 +27,6 @@
     
     <#include "nav-bar.ftl" />
     <div class="body">
-    <h2>${Status}</h2>
       <div id="help_text" class="INFO"></div>
 
       <div>
