@@ -89,7 +89,7 @@ public class PlayerLobby {
             return PostLoginRoute.AddUserStatus.INVLAID;
         }
         if (userMap.containsKey(newPlayer.getName())) {
-            if(userMap.get(newPlayer.getName()).getStatus() == Player.Status.OFFLINE){
+            if(userMap.get(newPlayer.getName()).status == Player.Status.OFFLINE){
                 newPlayer.status = Player.Status.SEARCHING;
                 increment();
                 return PostLoginRoute.AddUserStatus.SUCCESS;
@@ -134,7 +134,7 @@ public class PlayerLobby {
      */
     public ArrayList<Player> getWaitingPlayer() {
         userMap.forEach((s, player) -> {
-            if(player.getStatus() == Player.Status.WAITING) {
+            if(player.status == Player.Status.WAITING) {
                 if (!waitingPlayers.contains(player)) {
                     waitingPlayers.add(player);
                 }

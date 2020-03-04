@@ -71,8 +71,12 @@ public class GetNewGameRoute implements Route {
         if(currentPlayer.status != Player.Status.INGAME) {
             currentPlayer.status = Player.Status.WAITING;
         }
+        vm.put("Status", currentPlayer.status.toString());
         // Start a game so opponents ca search for me
-        PlayerLobby.newGame(currentPlayer);
+        if(PlayerLobby.getGame(currentPlayer.name) == null) {
+            PlayerLobby.newGame(currentPlayer);
+            currentPlayer.startGame(PlayerLobby.getGame(currentPlayer.name));
+        }
 
         // render the View
         //TODO: SET PLAYER TO SEARCHING IF THEY GO TO HOME PAGE

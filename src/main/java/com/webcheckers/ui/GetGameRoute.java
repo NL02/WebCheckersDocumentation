@@ -103,6 +103,8 @@ public class GetGameRoute implements Route {
         // Get players
         Player redPlayer = game.getRedPlayer();
         Player whitePlayer = game.getWhitePlayer();
+        redPlayer.status = Player.Status.INGAME;
+        whitePlayer.status = Player.Status.INGAME;
         // Add Objects to the view
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);

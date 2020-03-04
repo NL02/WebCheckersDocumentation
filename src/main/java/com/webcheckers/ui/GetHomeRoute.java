@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.PlayerServices;
+import com.webcheckers.model.Player;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -122,6 +123,10 @@ public class GetHomeRoute implements Route {
 //      return null;
 //    }
 
+    Player currentUser = request.session().attribute("currentUser");
+    if(currentUser != null && currentUser.status != Player.Status.SEARCHING) {
+      currentUser.status = Player.Status.SEARCHING;
+    }
     // render the View
     return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
   }

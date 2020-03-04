@@ -4,7 +4,7 @@ public class Player {
     //private final int playerID; // Internal ID constructed by hashing player info
     public final String name;
     public Status status;
-    public String gameURL;
+    public CheckersGame game;
     public int playerID;
 
     /**
@@ -26,12 +26,15 @@ public class Player {
         this.name = username;
         this.status = Status.SEARCHING;
         playerID = username.hashCode();
-        this.gameURL = "/game" + playerID;
     }
 
     //private int getPlayerID() {
     //   return playerID;
     //}
+
+    public void startGame(CheckersGame game){
+        this.game = game;
+    }
 
     /**
      * getName returns the name of the player instance
@@ -39,14 +42,6 @@ public class Player {
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * getStatus returns the status of the player
-     * @return (enum) Status
-     */
-    public Status getStatus(){
-        return status;
     }
 
     /**

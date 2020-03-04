@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <#if Status == "INGAME">
+    <meta http-equiv="refresh" content="0; url=/game"></meta>
+  </#if>
+  <meta http-equiv="refresh" content="4"></meta>
   <title>${title} | Web Checkers</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/game.css">
@@ -23,7 +27,7 @@
     
     <#include "nav-bar.ftl" />
     <div class="body">
-
+    <h2>${Status}</h2>
       <div id="help_text" class="INFO"></div>
 
       <div>
