@@ -8,13 +8,10 @@ import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
-
-import static spark.Spark.halt;
 
 public class GetNewGameRoute implements Route {
 
-    private static final Logger LOG = Logger.getLogger(GetNewGameRoute.class.getName());
+//    private static final Logger LOG = Logger.getLogger(GetNewGameRoute.class.getName());
 
     // Values used in the view-model map for rendering the home view.
     static final String TITLE_ATTR = "title";
@@ -53,7 +50,7 @@ public class GetNewGameRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        LOG.finer("GetNewGameRoute is invoked.");
+//        LOG.finer("GetNewGameRoute is invoked.");
         // Get me
         Player currentPlayer = request.session().attribute("currentUser");
         // Add Objects to the POV
@@ -80,7 +77,7 @@ public class GetNewGameRoute implements Route {
         // render the View
         //TODO: SET PLAYER TO SEARCHING IF THEY GO TO HOME PAGE
         //TODO: FIGURE OUT HOW TO SEND A PLAYER TO /game FROM /newgame
-        return templateEngine.render(new ModelAndView(vm , "new_game.ftl"));
+        return templateEngine.render( new ModelAndView(vm , "game.ftl"));
     }
 
 }
