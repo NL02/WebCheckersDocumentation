@@ -1,5 +1,8 @@
 package com.webcheckers.model;
 
+/**
+ * Represents a move made by a player.
+ */
 public class Move {
     private Position start;
     private Position end;
