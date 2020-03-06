@@ -1,4 +1,4 @@
-package com.webcheckers.ui;
+package com.webcheckers.ui.pageroutes;
 
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;

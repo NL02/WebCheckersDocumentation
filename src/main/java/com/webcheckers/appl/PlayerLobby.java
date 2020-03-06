@@ -1,6 +1,5 @@
 package com.webcheckers.appl;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -8,8 +7,7 @@ import java.util.Map;
 
 import com.webcheckers.model.CheckersGame;
 import com.webcheckers.model.Player;
-import com.webcheckers.ui.GetHomeRoute;
-import com.webcheckers.ui.PostLoginRoute;
+import com.webcheckers.ui.pageroutes.PostLoginRoute;
 
 /**
  * The object to coordinate the state of the Web Application and keep site wide statistics.

@@ -1,4 +1,4 @@
-package com.webcheckers.ui;
+package com.webcheckers.ui.pageroutes;
 
 import com.webcheckers.appl.PlayerLobby;
 import spark.*;

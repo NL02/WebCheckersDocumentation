@@ -1,10 +1,9 @@
-package com.webcheckers.ui;
+package com.webcheckers.ui.pageroutes;
 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.board.BoardView;
 import com.webcheckers.ui.board.Color;
-import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -41,7 +40,7 @@ public class GetNewGameRoute implements Route {
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    GetNewGameRoute(TemplateEngine templateEngine){
+    public GetNewGameRoute(TemplateEngine templateEngine){
         this.templateEngine = templateEngine;
     }
 

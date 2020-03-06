@@ -1,4 +1,4 @@
-package com.webcheckers.ui;
+package com.webcheckers.ui.pageroutes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.PlayerServices;
 import com.webcheckers.model.Player;
+import com.webcheckers.ui.SessionTimeoutWatchdog;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;

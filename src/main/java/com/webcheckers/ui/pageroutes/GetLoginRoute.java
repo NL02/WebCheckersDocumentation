@@ -1,8 +1,6 @@
-package com.webcheckers.ui;
+package com.webcheckers.ui.pageroutes;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 import com.webcheckers.appl.PlayerLobby;
@@ -11,8 +9,6 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.TemplateEngine;
-
-import com.webcheckers.util.Message;
 
 
 public class GetLoginRoute implements Route {
