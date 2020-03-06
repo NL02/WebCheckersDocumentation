@@ -1,4 +1,4 @@
 package com.webcheckers.ui.gameroutes;
 
-public class PostBackupMove {
+public class PostSubmitTurnRoute {
 }
