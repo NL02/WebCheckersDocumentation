@@ -11,13 +11,8 @@ import com.webcheckers.ui.pageroutes.PostLoginRoute;
 
 /**
  * The object to coordinate the state of the Web Application and keep site wide statistics.
- *
  * This class is an example of the Pure Fabrication principle.
- *
  * Contains all players that have signed in and are in the system
- *
- * @author
- * @author
  */
 public class PlayerLobby {
     private static final Logger LOG = Logger.getLogger(PlayerLobby.class.getName());
@@ -30,7 +25,6 @@ public class PlayerLobby {
     private static int liveCount = 0;
     private ArrayList<Player> onlinePlayers = new ArrayList<>();
 
-    // change Map to Map <username, Player>
     private Map <String, Player> userMap = new HashMap<>();
     private int totalGames = 0;
     private static Map<String, CheckersGame> activeGames = new HashMap<>();
@@ -158,6 +152,11 @@ public class PlayerLobby {
         return false;
     }
 
+    /**
+     * newGame creates a new CheckersGame instance and adds it to the activeGames array
+     *
+     * @param whitePlayer Player that is starting the game
+     */
     public static void newGame(Player whitePlayer){
         activeGames.put(whitePlayer.name, new CheckersGame(whitePlayer, null));
     }

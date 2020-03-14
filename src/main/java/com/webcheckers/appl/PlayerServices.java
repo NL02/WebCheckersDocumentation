@@ -4,11 +4,8 @@ import com.webcheckers.model.CheckersGame;
 
 /**
  * The object to coordinate the state of the Web Application.
- *
  * This class is an example of the GRASP Controller principle.
- *
  * Handles each individual player in the game
- *
  */
 
 public class PlayerServices {
