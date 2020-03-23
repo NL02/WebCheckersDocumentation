@@ -77,7 +77,7 @@ public class GetNewGameRoute implements Route {
         // render the View
         //TODO: SET PLAYER TO SEARCHING IF THEY GO TO HOME PAGE
         //TODO: FIGURE OUT HOW TO SEND A PLAYER TO /game FROM /newgame
-        return templateEngine.render( new ModelAndView(vm , "game.ftl"));
+        return templateEngine.render( new ModelAndView(vm , "new_game.ftl"));
     }
 
 }
