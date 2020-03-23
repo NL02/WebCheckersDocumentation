@@ -11,14 +11,25 @@
 <div class="page">
 
   <h1>Web Checkers | ${title}</h1>
-
   <!-- Provide a navigation bar -->
   <#include "nav-bar.ftl" />
 
   <div class="body">
 
+  <#if currentUser??>
+    <h2><a href="/newgame">Create Game</a></h2>
+  </#if>
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl" />
+
+  <#if currentUser??>
+    <#list playerList as player>
+        <p><a href="/game?opponent=${player.name}">${player.name}</a></p>
+    </#list>
+  </#if>
+
+
+
 
     <!-- TODO: future content on the Home:
             to start games,

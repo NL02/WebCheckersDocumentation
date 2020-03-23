@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <#if Status == "INGAME">
+    <meta http-equiv="refresh" content="0; url=/game"></meta>
+  </#if>
+  <meta http-equiv="refresh" content="4"></meta>
   <title>${title} | Web Checkers</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/game.css">
@@ -23,7 +27,6 @@
     
     <#include "nav-bar.ftl" />
     <div class="body">
-
       <div id="help_text" class="INFO"></div>
 
       <div>
@@ -89,7 +92,7 @@
 
   <audio id="audio" src="http://www.soundjay.com/button/beep-07.mp3" autostart="false" ></audio>
   
-  <script data-main="/js/game/index" src="/js/require.js"></script>
+    <script data-main="/js/game/index" src="/js/require.js"></script>
   
 </body>
 </html>

@@ -9,12 +9,13 @@ geometry: margin=1in
 > and appear in the generated PDF in italics._
 
 ## Team Information
-* Team name: TEAMNAME
+* Team name: C-hess
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  * Wyatt Holcombe
+  * Rayna Mishra
+  * Ethan Davison
+  * May ()
+  * Nelson Liang
 
 ## Executive Summary
 
