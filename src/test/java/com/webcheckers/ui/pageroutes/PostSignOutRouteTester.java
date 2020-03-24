@@ -3,6 +3,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import com.webcheckers.ui.TemplateEngineTester;
 import com.webcheckers.ui.WebServer;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,27 +30,30 @@ public class PostSignOutRouteTester {
     private TemplateEngine engine;
     private PlayerLobby lobby;
     private Response response;
+    private Player player;
+
 
     /**
      * Setup new mock objects for each test.
      */
     @BeforeEach
-    public void setup(){
-       request = mock(Request.class);
-       session = mock(Session.class);
-       when(request.session()).thenReturn(session);
-       response = mock(Response.class);
-       lobby = mock(PlayerLobby.class);
-       engine = mock(TemplateEngine.class);
+    public void setup() {
+        request = mock(Request.class);
+        session = mock(Session.class);
+        when(request.session()).thenReturn(session);
+        response = mock(Response.class);
+        lobby = mock(PlayerLobby.class);
+        engine = mock(TemplateEngine.class);
+        player = mock(Player.class);
 
-       CuT = new PostSignOutRoute(lobby, engine);
+        CuT = new PostSignOutRoute(lobby, engine);
     }
 
     /**
      * Test ability to
      */
     @Test
-    public void test_new_sign_out(){
+    public void test_new_sign_out() {
         final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render((any(ModelAndView.class)))).thenAnswer(testHelper.makeAnswer());
 
@@ -68,12 +72,60 @@ public class PostSignOutRouteTester {
     }
 
     /**
-     * Test ability to remove a player from the online players list given a player that was online
+     * Test ability to remove a player from the online players list given a player that was
+     * searching for a game.
      */
     @Test
-    public void removePlayerWasOnline(){
+    public void removePlayerWasSearching() {
+        player = session.attribute("currentUser");
+        when(player.status.equals(Player.Status.SEARCHING));
+
         // Invoke test
+        CuT.handle(request, response);
+
         // Analyze results:
+        assertEquals(true, CuT.getIsRemoved());
+        assertEquals(Player.Status.OFFLINE, player.status);
+        assertNull(session.attribute("currentUser"));
+        verify(response).redirect(WebServer.HOME_URL);
+    }
+
+    /**
+     * Test ability to remove a player from the online players list given a player that was
+     * waiting for a game.
+     */
+    @Test
+    public void removePlayerWasWaiting() {
+        player = session.attribute("currentUser");
+        when(player.status.equals(Player.Status.WAITING));
+
+        // Invoke test
+        CuT.handle(request, response);
+
+        // Analyze results:
+        assertEquals(true, CuT.getIsRemoved());
+        assertEquals(Player.Status.OFFLINE, player.status);
+        assertNull(session.attribute("currentUser"));
+        verify(response).redirect(WebServer.HOME_URL);
+    }
+
+    /**
+     * Test ability to remove a player from the online players list given a player that was
+     * in a game.
+     */
+    @Test
+    public void removePlayerWasInGame() {
+        player = session.attribute("currentUser");
+        when(player.status.equals(Player.Status.INGAME));
+
+        // Invoke test
+        CuT.handle(request, response);
+
+        // Analyze results:
+        assertEquals(true, CuT.getIsRemoved());
+        assertEquals(Player.Status.OFFLINE, player.status);
+        assertNull(session.attribute("currentUser"));
+        verify(response).redirect(WebServer.HOME_URL);
     }
 
     /**
@@ -81,33 +133,15 @@ public class PostSignOutRouteTester {
      * not online
      */
     @Test
-    public void removePlayerWasNotOnline(){
-
-    }
-
-    /**
-     * Test ability to set the current player's status to offline
-     */
-    @Test
-    public void setStatusOFFLINE(){
-
-    }
-
-    /**
-     * Test ability to remove the current player from the session attribute
-     */
-    @Test
-    public void removePlayerFromSession(){
-
-    }
-
-    /**
-     * Test that CuT redirects to the home page after a player signs out (at the end of the sign
-     * out routine)
-     */
-    @Test
-    public void redirectToHome(){
+    public void removePlayerWasNotOnline() {
+        player = session.attribute("currentUser");
+        when(player.status.equals(Player.Status.OFFLINE));
+        //Invoke Test
         CuT.handle(request, response);
+
+        assertEquals(false, CuT.getIsRemoved());
+        assertEquals(Player.Status.OFFLINE, player.status);
+        assertNull(session.attribute("currentUser"));
         verify(response).redirect(WebServer.HOME_URL);
     }
 }
