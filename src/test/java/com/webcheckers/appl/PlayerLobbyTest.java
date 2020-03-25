@@ -1,8 +1,11 @@
 package com.webcheckers.appl;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.webcheckers.model.CheckersGame;
 import com.webcheckers.model.Player;
+import com.webcheckers.ui.pageroutes.PostLoginRoute;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -15,7 +18,7 @@ import com.webcheckers.appl.PlayerLobby;
  * @author Rayna Mishra rvm8343
  */
 @Tag("Application-tier")
-public class PlayerLobbyTester {
+public class PlayerLobbyTest {
 
     /**
      * The component-under-test (CuT)
@@ -48,7 +51,7 @@ public class PlayerLobbyTester {
      */
     @Test
     public void test_make_game(){
-        final PlayerLobby CuT = new PlayerLobby();
+
         // Invoke test
         final CheckersGame game = CuT.getGame("Player1");
 
@@ -66,8 +69,13 @@ public class PlayerLobbyTester {
      */
     @Test
     public void test_game_finished(){
+        int totalGames = CuT.getTotalGames();
         // Invoke test
+        CuT.gameFinished();
+        int totalGamesAfter = CuT.getTotalGames();
+
         // Analyze results:
+        assertEquals(totalGames + 1, totalGamesAfter);
     }
 
     /**
@@ -75,8 +83,15 @@ public class PlayerLobbyTester {
      */
     @Test
     public void test_save_user_null_name(){
+        player1 = mock(Player.class);
+        when(player1.getName()).thenReturn(null);
+
         // Invoke test
+        PostLoginRoute.AddUserStatus result = CuT.saveUser(player1);
+
         // Analyze results:
+        assertEquals(PostLoginRoute.AddUserStatus.INVLAID, result);
+
     }
 
     /**
@@ -84,17 +99,29 @@ public class PlayerLobbyTester {
      */
     @Test
     public void test_save_user_invalid_char_name(){
+        player1 = mock(Player.class);
+        when(player1.getName()).thenReturn("weruio{}weruio");
+
         // Invoke test
+        PostLoginRoute.AddUserStatus result = CuT.saveUser(player1);
+
         // Analyze results:
+        assertEquals(PostLoginRoute.AddUserStatus.INVLAID, result);
     }
 
     /**
-     * Test the ability to not save a user that gave a name that is already in use
+     * Test the ability to not save a user that has an empty string for a username
      */
     @Test
-    public void test_save_user_need_new_name(){
-        // Invoke test
-        // Analyze results:
+    public void test_save_user_empty_string(){
+        player1 = mock(Player.class);
+        when(player1.getName()).thenReturn("");
+
+        //Invoke test
+        PostLoginRoute.AddUserStatus result = CuT.saveUser(player1);
+
+        //Analyze results:
+        assertEquals(PostLoginRoute.AddUserStatus.INVLAID, result);
     }
 
     /**
@@ -102,44 +129,58 @@ public class PlayerLobbyTester {
      */
     @Test
     public void test_save_user_new_name(){
+        player1 = mock(Player.class);
+        player1.status = Player.Status.SEARCHING;
+        when(player1.getName()).thenReturn("Johnny");
+
         // Invoke test
+        PostLoginRoute.AddUserStatus first = CuT.saveUser(player1);
+
         // Analyze results:
+        assertEquals(PostLoginRoute.AddUserStatus.SUCCESS, first);
+        assertEquals(CuT.findPlayer("Johnny"), player1);
+        assertEquals(Player.Status.SEARCHING, player1.status);
     }
+
+    /**
+     * Test the ability to not save a user that gave a name that is already in use
+     */
+    @Test
+    public void test_save_user_need_new_name(){
+        player1 = mock(Player.class);
+        player2 = mock(Player.class);
+        when(player2.getName()).thenReturn("Johnathan");
+        when(player1.getName()).thenReturn("Johnathan");
+
+        //Invoke test
+        PostLoginRoute.AddUserStatus first = CuT.saveUser(player1);
+        PostLoginRoute.AddUserStatus second = CuT.saveUser(player2);
+
+        //Analyze results:
+        assertEquals(PostLoginRoute.AddUserStatus.SUCCESS, first);
+        assertEquals(PostLoginRoute.AddUserStatus.PICKANOTHER, second);
+        assertEquals(CuT.findPlayer("Johnathan"), player1);
+    }
+
 
     /**
      * Test the ability to save a user that has just logged in and is a returning player
      */
     @Test
     public void test_save_user_returning_player(){
-        // Invoke test
-        // Analyze results:
-    }
+        player1 = mock(Player.class);
+        when(player1.getName()).thenReturn("Joseph");
+        PostLoginRoute.AddUserStatus first = CuT.saveUser(player1);
+        player1.status = Player.Status.OFFLINE;
 
-    /**
-     * Test the ability to get the count of online players (live count)
-     */
-    @Test
-    public void test_get_live_count(){
         // Invoke test
-        // Analyze results:
-    }
+        PostLoginRoute.AddUserStatus second = CuT.saveUser(player1);
 
-    /**
-     * Test the ability to increment the number of online players (live count)
-     */
-    @Test
-    public void test_increment(){
-        // Invoke test
         // Analyze results:
-    }
-
-    /**
-     * Test the ability to decrement the count of online players (live count)
-     */
-    @Test
-    public void test_decrement(){
-        // Invoke test
-        // Analyze results:
+        assertEquals(PostLoginRoute.AddUserStatus.SUCCESS, first);
+        assertEquals(PostLoginRoute.AddUserStatus.SUCCESS, second);
+        assertEquals(CuT.findPlayer("Joseph"), player1);
+        assertEquals(Player.Status.SEARCHING, player1.status);
     }
 
     /**

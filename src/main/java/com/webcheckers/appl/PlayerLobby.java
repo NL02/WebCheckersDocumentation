@@ -55,6 +55,10 @@ public class PlayerLobby {
         return activeGames.getOrDefault(whitePlayer, null);
     }
 
+    public int getTotalGames(){
+        return totalGames;
+    }
+
     /**
      * Collect site wide statistics when a game is finished.
      */
@@ -74,10 +78,12 @@ public class PlayerLobby {
     public PostLoginRoute.AddUserStatus saveUser(Player newPlayer) {
         if( newPlayer.getName() == null || !newPlayer.getName().matches("^[a-zA-Z0-9]*$") || newPlayer.getName().matches(".*\\s+.*")){
             LOG.fine("Not alphaNumeric/spaces");
+            System.out.println("invalid char");
             return PostLoginRoute.AddUserStatus.INVLAID;
         }
         if (newPlayer.getName().length() < 1) {
             LOG.fine("Not at least one character");
+            System.out.println("too small");
             return PostLoginRoute.AddUserStatus.INVLAID;
         }
         if (userMap.containsKey(newPlayer.getName())) {

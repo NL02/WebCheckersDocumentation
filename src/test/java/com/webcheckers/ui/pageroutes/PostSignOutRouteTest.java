@@ -4,12 +4,13 @@ import static org.mockito.Mockito.*;
 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
-import com.webcheckers.ui.TemplateEngineTester;
 import com.webcheckers.ui.WebServer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
+
+import java.io.PipedOutputStream;
 
 /**
  * The unit test suite for the PostSignOutTester
@@ -17,7 +18,7 @@ import spark.*;
  * @author Rayna Mishra rvm8343
  */
 @Tag("UI-tier")
-public class PostSignOutRouteTester {
+public class PostSignOutRouteTest {
 
     /**
      * The component-under-test (CuT)
@@ -30,7 +31,9 @@ public class PostSignOutRouteTester {
     private TemplateEngine engine;
     private PlayerLobby lobby;
     private Response response;
-    private Player player;
+
+    // friendly
+    public Player player;
 
 
     /**
@@ -44,31 +47,9 @@ public class PostSignOutRouteTester {
         response = mock(Response.class);
         lobby = mock(PlayerLobby.class);
         engine = mock(TemplateEngine.class);
-        player = mock(Player.class);
 
+        player = new Player("Player name");
         CuT = new PostSignOutRoute(lobby, engine);
-    }
-
-    /**
-     * Test ability to
-     */
-    @Test
-    public void test_new_sign_out() {
-        final TemplateEngineTester testHelper = new TemplateEngineTester();
-        when(engine.render((any(ModelAndView.class)))).thenAnswer(testHelper.makeAnswer());
-
-        // Invoke test
-        CuT.handle(request, response);
-
-        // Analyze results:
-        //      * model is a non-null Map
-        testHelper.assertViewModelExists();
-        testHelper.assertViewModelIsaMap();
-        //      * model contains all necessary View-Model data
-        testHelper.assertViewModelAttribute(PostSignOutRoute.CURRENT_USER_ATTR, session.attribute("currentUser"));
-        //      * test view name
-        // todo: testHelper.assertViewName(PostSignOutRoute.VIEWNAME);
-        //  also, do we need a timeout session key here?
     }
 
     /**
@@ -77,8 +58,8 @@ public class PostSignOutRouteTester {
      */
     @Test
     public void removePlayerWasSearching() {
-        player = session.attribute("currentUser");
-        when(player.status.equals(Player.Status.SEARCHING));
+        when(session.attribute(PostSignOutRoute.CURRENT_USER_ATTR)).thenReturn(player);
+        when(lobby.removeUser(player)).thenReturn(true);
 
         // Invoke test
         CuT.handle(request, response);
@@ -86,7 +67,6 @@ public class PostSignOutRouteTester {
         // Analyze results:
         assertEquals(true, CuT.getIsRemoved());
         assertEquals(Player.Status.OFFLINE, player.status);
-        assertNull(session.attribute("currentUser"));
         verify(response).redirect(WebServer.HOME_URL);
     }
 
@@ -96,8 +76,9 @@ public class PostSignOutRouteTester {
      */
     @Test
     public void removePlayerWasWaiting() {
-        player = session.attribute("currentUser");
-        when(player.status.equals(Player.Status.WAITING));
+        when(session.attribute(PostSignOutRoute.CURRENT_USER_ATTR)).thenReturn(player);
+        when(lobby.removeUser(player)).thenReturn(true);
+        player.status = Player.Status.WAITING;
 
         // Invoke test
         CuT.handle(request, response);
@@ -105,7 +86,6 @@ public class PostSignOutRouteTester {
         // Analyze results:
         assertEquals(true, CuT.getIsRemoved());
         assertEquals(Player.Status.OFFLINE, player.status);
-        assertNull(session.attribute("currentUser"));
         verify(response).redirect(WebServer.HOME_URL);
     }
 
@@ -115,8 +95,9 @@ public class PostSignOutRouteTester {
      */
     @Test
     public void removePlayerWasInGame() {
-        player = session.attribute("currentUser");
-        when(player.status.equals(Player.Status.INGAME));
+        when(session.attribute(PostSignOutRoute.CURRENT_USER_ATTR)).thenReturn(player);
+        when(lobby.removeUser(player)).thenReturn(true);
+        player.status = Player.Status.INGAME;
 
         // Invoke test
         CuT.handle(request, response);
@@ -124,7 +105,6 @@ public class PostSignOutRouteTester {
         // Analyze results:
         assertEquals(true, CuT.getIsRemoved());
         assertEquals(Player.Status.OFFLINE, player.status);
-        assertNull(session.attribute("currentUser"));
         verify(response).redirect(WebServer.HOME_URL);
     }
 
@@ -134,14 +114,15 @@ public class PostSignOutRouteTester {
      */
     @Test
     public void removePlayerWasNotOnline() {
-        player = session.attribute("currentUser");
-        when(player.status.equals(Player.Status.OFFLINE));
+        when(session.attribute(PostSignOutRoute.CURRENT_USER_ATTR)).thenReturn(player);
+        when(lobby.removeUser(player)).thenReturn(false);
+        player.status = Player.Status.OFFLINE;
+
         //Invoke Test
         CuT.handle(request, response);
 
         assertEquals(false, CuT.getIsRemoved());
         assertEquals(Player.Status.OFFLINE, player.status);
-        assertNull(session.attribute("currentUser"));
         verify(response).redirect(WebServer.HOME_URL);
     }
 }
