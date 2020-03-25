@@ -8,7 +8,6 @@ import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
@@ -54,7 +53,7 @@ public class GetHomeRoute implements Route {
    */
   public GetHomeRoute(PlayerLobby playerLobby, final TemplateEngine templateEngine) {
     this.playerLobby = playerLobby;
-    this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
+    this.templateEngine = templateEngine;//Objects.requireNonNull(templateEngine, "templateEngine is required");
     //
     LOG.config("GetHomeRoute is initialized.");
   }

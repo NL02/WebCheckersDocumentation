@@ -2,6 +2,7 @@ package com.webcheckers.ui.pageroutes;
 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.PlayerServices;
+import com.webcheckers.model.Player;
 import com.webcheckers.ui.TemplateEngineTester;
 import com.webcheckers.ui.WebServer;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,13 +10,15 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 /**
- * The unit test suite for the PostSignOutTester
+ * The unit test suite for the GetHomeRoute
  *
  * @author Nelson Liang nl3514
  */
@@ -33,6 +36,9 @@ public class GetHomeRouteTest {
     private Session session;
     private TemplateEngine engine;
     private Response response;
+    private Object Player;
+    private ArrayList<Player> waitingPlayers;
+
 
     @BeforeEach
     public void testSetup(){
@@ -40,6 +46,8 @@ public class GetHomeRouteTest {
         session = mock(Session.class);
         when(request.session()).thenReturn(session);
         response = mock(Response.class);
+        Player player = mock(Player.class);
+//        when(lobby.getWaitingPlayer()).thenReturn(waitingPlayers);
         lobby = mock(PlayerLobby.class);
         engine = mock(TemplateEngine.class);
 
