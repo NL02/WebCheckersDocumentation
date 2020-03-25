@@ -146,7 +146,7 @@ public class WebServer {
     // Shows the Checkers game Home page.
     get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
     get(LOGIN_URL, new GetLoginRoute(playerLobby, templateEngine));
-    get(GAME_URL, new GetGameRoute(playerLobby, templateEngine));
+    get(GAME_URL, new GetGameRoute(templateEngine));
     get(NEW_GAME_URL, new GetNewGameRoute(templateEngine));
 
     // Post a Login attempt.
