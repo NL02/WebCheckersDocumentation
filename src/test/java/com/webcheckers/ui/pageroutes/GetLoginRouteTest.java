@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
+import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -89,13 +90,15 @@ public class GetLoginRouteTest {
     @Test
     public void testNoMessage() {
         // Set up and render view-model
+        final TemplateEngine testEngine = new FreeMarkerEngine();
         final Map<String, Object> vm = new HashMap<>();
         final ModelAndView modelAndView = new ModelAndView(vm, GetLoginRoute.VIEW_NAME);
         vm.put(GetLoginRoute.TITLE_ATTR, GetLoginRoute.TITLE);
 
-        final String viewHTML = engine.render(modelAndView);
+        final String viewHTML = testEngine.render(modelAndView);
 
         // Analyze results
+        assertNotNull(viewHTML);
         assertTrue(viewHTML.contains(TITLE_HEAD_TAG), "Title head tag exists.");
         assertTrue(viewHTML.contains(TITLE_H1_TAG), "Title header tag exists.");
         assertFalse(viewHTML.contains(MESSAGE_TAG), "Message does not exist.");
@@ -107,11 +110,12 @@ public class GetLoginRouteTest {
     @Test
     public void testMessage() {
         // Set up and render view-model
+        final TemplateEngine testEngine = new FreeMarkerEngine();
         final Map<String, Object> vm = new HashMap<>();
         final ModelAndView modelAndView = new ModelAndView(vm, GetLoginRoute.VIEW_NAME);
         vm.put(GetLoginRoute.TITLE_ATTR, GetLoginRoute.TITLE);
 
-        final String viewHTML = engine.render(modelAndView);
+        final String viewHTML = testEngine.render(modelAndView);
 
         // Analyze results
         assertTrue(viewHTML.contains(TITLE_HEAD_TAG), "Title head tag exists.");
