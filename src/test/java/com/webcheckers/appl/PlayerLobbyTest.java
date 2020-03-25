@@ -59,7 +59,6 @@ public class PlayerLobbyTest {
         when(player1.getName()).thenReturn("Avdol");
         CuT.saveUser(player1);
 
-        game = mock(CheckersGame.class);
         when(new CheckersGame(player1)).thenReturn(game);
 
         // Invoke test
