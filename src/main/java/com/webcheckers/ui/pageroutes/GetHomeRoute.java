@@ -1,24 +1,15 @@
 package com.webcheckers.ui.pageroutes;
 
+import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.PlayerServices;
+import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
+import spark.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-
-import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.appl.PlayerServices;
-import com.webcheckers.model.Player;
-import com.webcheckers.ui.SessionTimeoutWatchdog;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.Session;
-import spark.TemplateEngine;
-
-import com.webcheckers.util.Message;
-
-import static spark.Spark.halt;
 
 /**
  * The UI Controller to GET the Home page.
