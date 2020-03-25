@@ -1,13 +1,11 @@
-package com.webcheckers.ui;
+package com.webcheckers.ui.pageroutes;
 
-import java.util.Objects;
-import java.util.logging.Logger;
+import com.webcheckers.appl.PlayerServices;
 
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
-
-import com.webcheckers.appl.PlayerServices;
-import com.webcheckers.appl.PlayerLobby;
+import java.util.Objects;
+import java.util.logging.Logger;
 
 /**
  * Whenever an instance of a class that implements {@linkplain HttpSessionBindingListener}
