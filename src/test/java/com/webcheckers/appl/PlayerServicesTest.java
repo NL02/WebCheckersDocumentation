@@ -43,7 +43,7 @@ public class PlayerServicesTest {
     }
 
     /**
-     * Test will test win/losses when they are created in sprint 2.
+     * Test that two players arn't equal
      */
 
 
