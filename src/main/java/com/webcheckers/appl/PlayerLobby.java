@@ -46,7 +46,7 @@ public class PlayerLobby {
     }
 
     /**
-     * Create a new {CheckersGame} game.
+     * Create a {CheckersGame} game.
      *
      * @return
      *   A new {@link CheckersGame}
@@ -66,6 +66,10 @@ public class PlayerLobby {
         synchronized(this){
             totalGames++;
         }
+    }
+
+    public ArrayList<Player> getOnlinePlayers(){
+        return onlinePlayers;
     }
 
     /**
@@ -164,16 +168,21 @@ public class PlayerLobby {
      * @param whitePlayer Player that is starting the game
      */
     public static void newGame(Player whitePlayer){
-        activeGames.put(whitePlayer.name, new CheckersGame(whitePlayer, null));
+        activeGames.put(whitePlayer.getName(), new CheckersGame(whitePlayer, null));
     }
 
     /**
      * addOnlinePlayer adds a player to the onlinePlayers list
      *
      * @param player player instance to be added
+     * @return boolean whether or not the player was saved
      */
-    public void addOnlinePlayer(Player player){
-        onlinePlayers.add(player);
+    public boolean addOnlinePlayer(Player player){
+        if(player.status != Player.Status.OFFLINE) {
+            onlinePlayers.add(player);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -183,6 +192,9 @@ public class PlayerLobby {
      * @return player from map or null if not present
      */
     public Player findPlayer(String username){
+        if(username == null){
+            return null;
+        }
         return userMap.getOrDefault(username, null);
     }
 }

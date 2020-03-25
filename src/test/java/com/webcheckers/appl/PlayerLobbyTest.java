@@ -1,5 +1,6 @@
 package com.webcheckers.appl;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -11,6 +12,8 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import com.webcheckers.appl.PlayerLobby;
+
+import java.util.ArrayList;
 
 /**
  * The unit test suite for the PlayerLobby component
@@ -29,6 +32,7 @@ public class PlayerLobbyTest {
     private Player player1;
     private Player player2;
     private Player player3;
+    private CheckersGame game;
 
     @BeforeEach
     public void setup() {
@@ -51,17 +55,20 @@ public class PlayerLobbyTest {
      */
     @Test
     public void test_make_game(){
+        player1 = mock(Player.class);
+        when(player1.getName()).thenReturn("Avdol");
+        CuT.saveUser(player1);
+
+        game = mock(CheckersGame.class);
+        when(new CheckersGame(player1)).thenReturn(game);
 
         // Invoke test
-        final CheckersGame game = CuT.getGame("Player1");
+        CuT.newGame(player1);
+        CheckersGame gameMade = CuT.getGame("Avdol");
 
         // Check results
         // 1) The returned game is not null
-        assertNotNull(game);
-        // 2) The whitePlayer is "Player1"
-        assertEquals("Player1", game.getWhitePlayer().getName());
-        // 3) The opponent is null
-        assertNull(game.getRedPlayer().getName());
+        assertEquals(game, gameMade);
     }
 
     /**
@@ -188,8 +195,26 @@ public class PlayerLobbyTest {
      */
     @Test
     public void test_get_waiting_players_none(){
+        player1 = mock(Player.class);
+        when(player1.getName()).thenReturn("Jotaro");
+        CuT.saveUser(player1);
+        player1.status = Player.Status.OFFLINE;
+
+        player2 = mock(Player.class);
+        when(player2.getName()).thenReturn("Josuke");
+        CuT.saveUser(player2);
+        player2.status = Player.Status.SEARCHING;
+
+        player3 = mock(Player.class);
+        when(player3.getName()).thenReturn("Giorno");
+        CuT.saveUser(player3);
+        player3.status = Player.Status.INGAME;
+
         // Invoke test
+        ArrayList<Player> playerList = CuT.getWaitingPlayer();
+
         // Analyze results:
+        assertEquals(0, playerList.size());
     }
 
     /**
@@ -197,8 +222,27 @@ public class PlayerLobbyTest {
      */
     @Test
     public void test_get_waiting_players_one(){
+        player1 = mock(Player.class);
+        when(player1.getName()).thenReturn("Jotaro");
+        CuT.saveUser(player1);
+        player1.status = Player.Status.WAITING;
+
+        player2 = mock(Player.class);
+        when(player2.getName()).thenReturn("Josuke");
+        CuT.saveUser(player2);
+        player2.status = Player.Status.SEARCHING;
+
+        player3 = mock(Player.class);
+        when(player3.getName()).thenReturn("Giorno");
+        CuT.saveUser(player3);
+        player3.status = Player.Status.INGAME;
+
         // Invoke test
+        ArrayList<Player> playerList = CuT.getWaitingPlayer();
+
         // Analyze results:
+        assertEquals(1, playerList.size());
+        assertEquals(player1, playerList.get(0));
     }
 
     /**
@@ -206,26 +250,55 @@ public class PlayerLobbyTest {
      */
     @Test
     public void test_get_waiting_players_two(){
+        player1 = mock(Player.class);
+        when(player1.getName()).thenReturn("Jotaro");
+        CuT.saveUser(player1);
+        player1.status = Player.Status.WAITING;
+
+        player2 = mock(Player.class);
+        when(player2.getName()).thenReturn("Josuke");
+        CuT.saveUser(player2);
+        player2.status = Player.Status.WAITING;
+
+        player3 = mock(Player.class);
+        when(player3.getName()).thenReturn("Giorno");
+        CuT.saveUser(player3);
+        player3.status = Player.Status.INGAME;
+
         // Invoke test
+        ArrayList<Player> playerList = CuT.getWaitingPlayer();
+
         // Analyze results:
+        assertEquals(2, playerList.size());
+        assertEquals(player1, playerList.get(0));
+        assertEquals(player2, playerList.get(1));
     }
 
     /**
-     * Test the ability to remove an online user from the list of online players
+     * Test the ability to remove a user from the list of online players
      */
     @Test
     public void test_remove_user_online(){
-        // Invoke test
-        // Analyze results:
-    }
+        player1 = mock(Player.class);
+        when(player1.getName()).thenReturn("Jolyne");
+        CuT.saveUser(player1);
+        player1.status = Player.Status.SEARCHING;
+        CuT.addOnlinePlayer(player1);
 
-    /**
-     * Test the ability to remove an offline user from the list of online players
-     */
-    @Test
-    public void test_remove_user_offline(){
+        player2 = mock(Player.class);
+        when(player2.getName()).thenReturn("Gappy");
+        CuT.saveUser(player2);
+        player2.status = Player.Status.SEARCHING;
+        CuT.addOnlinePlayer(player2);
+
         // Invoke test
+        boolean result = CuT.removeUser(player1);
+        ArrayList<Player> onlinePlayersList = CuT.getOnlinePlayers();
+
         // Analyze results:
+        assertEquals(true, result);
+        assertEquals(1, onlinePlayersList.size());
+        assertEquals(player2, onlinePlayersList.get(0));
     }
 
     /**
@@ -233,8 +306,26 @@ public class PlayerLobbyTest {
      */
     @Test
     public void test_add_online_player(){
+        player1 = mock(Player.class);
+        when(player1.getName()).thenReturn("Jolyne");
+        CuT.saveUser(player1);
+        player1.status = Player.Status.OFFLINE;
+
+        player2 = mock(Player.class);
+        when(player2.getName()).thenReturn("Gappy");
+        CuT.saveUser(player2);
+        player2.status = Player.Status.SEARCHING;
+
         // Invoke test
+        boolean result1 = CuT.addOnlinePlayer(player1);
+        boolean result2 = CuT.addOnlinePlayer(player2);
+        ArrayList<Player> onlinePlayersList = CuT.getOnlinePlayers();
+
         // Analyze results:
+        assertEquals(false, result1);
+        assertEquals(true, result2);
+        assertEquals(1, onlinePlayersList.size());
+        assertEquals(player2, onlinePlayersList.get(0));
     }
 
     /**
@@ -242,8 +333,25 @@ public class PlayerLobbyTest {
      */
     @Test
     public void test_find_player_null(){
+        player1 = mock(Player.class);
+        when(player1.getName()).thenReturn("Bruno");
+        CuT.saveUser(player1);
+
+        player2 = mock(Player.class);
+        when(player2.getName()).thenReturn("Mista");
+        CuT.saveUser(player2);
+
+        player3 = mock(Player.class);
+        when(player3.getName()).thenReturn("Fugo");
+        CuT.saveUser(player3);
+
         // Invoke test
+        Player result1 = CuT.findPlayer(null);
+        Player result2 = CuT.findPlayer("Mista");
+
         // Analyze results:
+        assertNull(result1);
+        assertEquals(player2, result2);
     }
 
     /**
@@ -251,8 +359,26 @@ public class PlayerLobbyTest {
      */
     @Test
     public void test_find_player_non_existent(){
+        player1 = mock(Player.class);
+        when(player1.getName()).thenReturn("Bruno");
+        CuT.saveUser(player1);
+
+        player2 = mock(Player.class);
+        when(player2.getName()).thenReturn("Mista");
+        CuT.saveUser(player2);
+
+        player3 = mock(Player.class);
+        when(player3.getName()).thenReturn("Fugo");
+        CuT.saveUser(player3);
+
         // Invoke test
+        Player result1 = CuT.findPlayer("Narancia");
+        Player result2 = CuT.findPlayer("Bruno");
+
+
         // Analyze results:
+        assertNull(result1);
+        assertEquals(player1, result2);
     }
 
     /**
@@ -260,8 +386,27 @@ public class PlayerLobbyTest {
      */
     @Test
     public void test_find_player_valid(){
+        player1 = mock(Player.class);
+        when(player1.getName()).thenReturn("Bruno");
+        CuT.saveUser(player1);
+
+        player2 = mock(Player.class);
+        when(player2.getName()).thenReturn("Mista");
+        CuT.saveUser(player2);
+
+        player3 = mock(Player.class);
+        when(player3.getName()).thenReturn("Fugo");
+        CuT.saveUser(player3);
+
         // Invoke test
+        Player result1 = CuT.findPlayer("Bruno");
+        Player result2 = CuT.findPlayer("Mista");
+        Player result3 = CuT.findPlayer("Fugo");
+
         // Analyze results:
+        assertEquals(player1, result1);
+        assertEquals(player2, result2);
+        assertEquals(player3, result3);
     }
 
 
