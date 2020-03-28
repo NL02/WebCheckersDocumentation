@@ -54,7 +54,7 @@ public class PositionTest {
     @Test
     public void invalidPosition() {
         assertTrue(CuT.isValid());
-//        assertFalse(CuTF.isValid());
+        assertFalse(CuTF.isValid());
     }
 
 
