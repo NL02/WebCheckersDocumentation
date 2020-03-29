@@ -19,11 +19,10 @@ geometry: margin=1in
 
 ## Executive Summary
 
-    A web application that allows players to create individual accounts and play checkers online.
+A web application that allows players to create individual accounts and play checkers online.
 
 ### Purpose
-    Learn more about the model-view-controller architecture as 
-    well as enforce software engineering principles.
+Learn more about the model-view-controller architecture as well as enforce software engineering principles.
 
 ### Glossary and Acronyms
 
@@ -166,7 +165,8 @@ When the user successfully logs in and sees the home page they can now see the b
 a sign out button and a  list of player names, some of them are clickable. If the user clicks on the 
 clickable names then, the GetGameRoute gets called and the user is placed into a game with the previously 
 clicked name.
-##Include comments here about game option routes, submit turn, resign, etc.
+>Include comments here about game option routes, submit turn, resign, etc.
+
 If the user decides that they instead want to click on the "Create Game" button then the GetNewGameRoute
 is called and the user now waits for an opponent, and their name appears clickable on the home page. If
 the user instead chooses to click the sign out button then the PostSignOutRoute gets called and the 
