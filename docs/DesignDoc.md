@@ -49,7 +49,7 @@ This section describes the features of the application.
 
 ### Definition of MVP
 
-   Log in, log out, resign,  and play checkers according to the American rules. 
+   Log in, log out, resign, and play checkers according to the American rules. 
 
 ### MVP Features
 > _Provide a list of top-level Epics and/or Stories of the MVP._
