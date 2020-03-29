@@ -155,6 +155,8 @@ the online player count.
 > separate section for describing significant features. Place this after
 > you describe the design of the three tiers._
 
+![The WebCheckers Sequence Diagram for Game Route](SequenceDiagramforWebCheckers.jpeg)
+
 When the user first enters the web page the GetHomeRoute correctly displays the sign in button
 as well as the online player count. After clicking the sign in button, the GetLoginRoute displays a 
 text field where the user can enter in a valid username. If they enter an invalid username then, the 
