@@ -1,6 +1,8 @@
 package com.webcheckers.ui.gameroutes;
 
 import com.webcheckers.appl.PlayerLobby;
+import spark.Request;
+import spark.Response;
 import spark.TemplateEngine;
 
 import java.util.logging.Logger;
@@ -16,6 +18,11 @@ public class PostResignGameRoute {
         this.playerLobby = playerLobby;
 
         LOG.config("PostResignGameRoute is initialized.");
+    }
+
+    public Object handle(Request request, Response response) {
+
+        return null;
     }
 
 }

@@ -1,6 +1,8 @@
 package com.webcheckers.ui.gameroutes;
 
 import com.webcheckers.appl.PlayerLobby;
+import spark.Request;
+import spark.Response;
 import spark.TemplateEngine;
 
 import java.util.logging.Logger;
