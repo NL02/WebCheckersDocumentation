@@ -35,9 +35,9 @@ public class PostValidateMoveRoute {
 
         Message moveMessage = Message.info("valid");
 
-        String json;
-        json = gson.toJson(moveMessage);
-        return json;
+//        String json;
+//        json = gson.toJson(moveMessage);
+        return gson.toJson(Message.info("Valid move"));
     }
 
 }

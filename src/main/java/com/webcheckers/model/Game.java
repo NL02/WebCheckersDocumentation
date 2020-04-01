@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class Game {
     private static final Logger LOG = Logger.getLogger(Game.class.getName());
 
-    private CheckerBoard board;
+    private Board board;
 
     private Player whitePlayer;
     private Player redPlayer;
@@ -20,13 +20,13 @@ public class Game {
         LOG.fine("Game started ");
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        this.board = new CheckerBoard();
+        this.board = new Board();
     }
 
     public Game(Player whitePlayer){
         LOG.fine("Game Created");
         this.whitePlayer = whitePlayer;
-        this.board = new CheckerBoard();
+        this.board = new Board();
     }
 
     public synchronized void addRedPlayer(Player redPlayer){

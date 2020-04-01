@@ -18,14 +18,15 @@ public class Piece {
         KING;
     }
 
+
     /**
      * Constructs a new CheckersPiece.
      *
      * @param c Color of piece
      */
     public Piece(Color c) {
-        color = c;
-        type = PieceType.SINGLE;
+        this.color = c;
+        this.type = PieceType.SINGLE;
     }
 
     /**

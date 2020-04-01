@@ -6,7 +6,7 @@ package com.webcheckers.model;
  *
  * @author Wyatt Holcombe
  */
-public class Square {
+public class Space {
 
     private int cellIdx;         // Index of this square on the row
     private boolean valid;       // Whether a piece can be moved here (true if so, else false)
@@ -19,10 +19,16 @@ public class Square {
      * @param valid Whether a piece can occupy this square
      * @param piece CheckersPiece to start here, if applicable
      */
-    public Square(int index, boolean valid, Piece piece) {
+    public Space(int index, boolean valid, Piece piece) {
         this.cellIdx = index;
         this.valid = valid;
         this.piece = piece;
+    }
+
+    public Space(int index, boolean valid ) {
+        this.cellIdx = index;
+        this.valid = valid;
+        this.piece = null;
     }
 
     /**
@@ -50,6 +56,16 @@ public class Square {
      */
     public Piece getPiece() {
         return this.piece;
+    }
+
+
+    public boolean setPiece(Piece newPiece) {
+        if (piece != null){
+            piece = newPiece;
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

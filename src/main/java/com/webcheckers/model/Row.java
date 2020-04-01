@@ -8,11 +8,11 @@ import java.util.Iterator;
  *
  * @author Wyatt Holcombe
  */
-public class Row implements Iterable<Square> {
+public class Row implements Iterable<Space> {
 
     private static final int NUM_SQUARES = 8; // Number of squares per row
 
-    private final Square[] squares;    // Array of squares
+    private final Space[] spaces;    // Array of squares
     private final int index;                // Index of this row on the board
 
     /**
@@ -22,12 +22,12 @@ public class Row implements Iterable<Square> {
      *                    will be rendered in the bottom 3 rows
      */
     public Row(int index, Color playerColor) {
-        squares = new Square[NUM_SQUARES];
+        spaces = new Space[NUM_SQUARES];
         this.index = index;
 
         // Construct squares; second expression determines square validity
         for (int i = 0; i < NUM_SQUARES; i++) {
-            squares[i] = new Square(i,(index - i) % 2 != 0, makePiece(i, playerColor));
+            spaces[i] = new Space(i,(index - i) % 2 != 0, makePiece(i, playerColor));
         }
     }
 
@@ -63,17 +63,17 @@ public class Row implements Iterable<Square> {
      *
      * @return Iterator over squares
      */
-    public Iterator<Square> iterator() {
+    public Iterator<Space> iterator() {
         return new RowIterator(this);
     }
 
     /**
      * Iterator that iterates over a BoardRow's squares.
      */
-    public class RowIterator implements Iterator<Square> {
+    public class RowIterator implements Iterator<Space> {
 
         private int index;              // Current index
-        private Square[] squares;  // Array of squares from row
+        private Space[] spaces;  // Array of squares from row
 
         /**
          * Constructs a new RowIterator.
@@ -81,7 +81,7 @@ public class Row implements Iterable<Square> {
          * @param row BoardRow to iterate over
          */
         public RowIterator(Row row) {
-            this.squares = row.squares;
+            this.spaces = row.spaces;
             this.index = 0;
         }
 
@@ -92,7 +92,7 @@ public class Row implements Iterable<Square> {
          */
         @Override
         public boolean hasNext() {
-            return index < squares.length;
+            return index < spaces.length;
         }
 
         /**
@@ -101,10 +101,10 @@ public class Row implements Iterable<Square> {
          * @return Next BoardSquare
          */
         @Override
-        public Square next() {
+        public Space next() {
             if (hasNext()) {
                 index++;
-                return squares[index - 1];
+                return spaces[index - 1];
             }
             return null;
         }
