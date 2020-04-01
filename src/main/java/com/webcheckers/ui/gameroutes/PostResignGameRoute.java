@@ -6,15 +6,12 @@ import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.pageroutes.PostLoginRoute;
 import com.webcheckers.util.Message;
-import spark.Request;
-import spark.Response;
-import spark.Session;
-import spark.TemplateEngine;
+import spark.*;
 import sun.security.util.Password;
 
 import java.util.logging.Logger;
 
-public class PostResignGameRoute {
+public class PostResignGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostValidateMoveRoute.class.getName());
 
     private final TemplateEngine templateEngine;
@@ -32,8 +29,6 @@ public class PostResignGameRoute {
     }
 
     public Object handle(Request request, Response response) {
-
-
         Session httpSession = request.session();
         Player currUser = httpSession.attribute("currentUser");
 

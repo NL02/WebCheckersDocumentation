@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.ui.gameroutes.PostResignGameRoute;
 import com.webcheckers.ui.pageroutes.*;
 import spark.TemplateEngine;
 
@@ -58,6 +59,8 @@ public class WebServer {
   public static final String GAME_URL = "/game";
   public static final String LOGOUT_URL = "/signout";
   public static final String NEW_GAME_URL = "/newgame";
+
+  public static final String RESIGN_URL = "/resignGame";
 
   //
   // Attributes
@@ -152,6 +155,8 @@ public class WebServer {
     // Post a Login attempt.
     post(LOGIN_URL, new PostLoginRoute(playerLobby, templateEngine));
     post(LOGOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
+
+    post(RESIGN_URL, new PostResignGameRoute(playerLobby, templateEngine));
 
     //
     LOG.config("WebServer is initialized.");
