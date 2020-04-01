@@ -1,5 +1,8 @@
 package com.webcheckers.ui.board;
 
+import com.webcheckers.model.Row;
+import com.webcheckers.model.Color;
+
 import java.util.Iterator;
 
 /**
@@ -8,11 +11,11 @@ import java.util.Iterator;
  *
  * @author Wyatt Holcombe
  */
-public class BoardView implements Iterable<BoardRow> {
+public class BoardView implements Iterable<Row> {
 
     private static final int NUM_ROWS = 8;  // Number of rows the board contains
 
-    private final BoardRow[] rows;          // Array of rows from board
+    private final Row[] rows;          // Array of rows from board
 
     /**
      * Constructs a new BoardView and its rows.
@@ -20,11 +23,11 @@ public class BoardView implements Iterable<BoardRow> {
      * @param playerColor Color of pieces the player controls; those pieces will be rendered in the bottom 3 rows
      */
     public BoardView(Color playerColor) {
-        rows = new BoardRow[NUM_ROWS];
+        rows = new Row[NUM_ROWS];
 
         // Construct rows
         for (int i = 0; i < NUM_ROWS; i++) {
-            rows[i] = new BoardRow(i, playerColor);
+            rows[i] = new Row(i, playerColor);
         }
     }
 
@@ -33,17 +36,17 @@ public class BoardView implements Iterable<BoardRow> {
      *
      * @return Iterator over rows
      */
-    public Iterator<BoardRow> iterator() {
+    public Iterator<Row> iterator() {
         return new BoardIterator(this);
     }
 
     /**
      * Iterator that iterates over BoardView's rows.
      */
-    public class BoardIterator implements Iterator<BoardRow> {
+    public class BoardIterator implements Iterator<Row> {
 
         private int index;              // Current index
-        private final BoardRow[] rows;  // Rows to iterate over
+        private final Row[] rows;  // Rows to iterate over
 
         /**
          * Constructs a new BoardIterator.
@@ -71,7 +74,7 @@ public class BoardView implements Iterable<BoardRow> {
          * @return Next BoardRow
          */
         @Override
-        public BoardRow next() {
+        public Row next() {
             if (hasNext()) {
                 index++;
                 return rows[index - 1];

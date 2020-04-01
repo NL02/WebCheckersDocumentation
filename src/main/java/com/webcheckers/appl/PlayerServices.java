@@ -1,6 +1,6 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.CheckersGame;
+import com.webcheckers.model.Game;
 
 /**
  * The object to coordinate the state of the Web Application.
@@ -14,7 +14,7 @@ public class PlayerServices {
     // Attributes
     //
 
-    private CheckersGame game;
+    private Game game;
     private final PlayerLobby lobby;
 
     //

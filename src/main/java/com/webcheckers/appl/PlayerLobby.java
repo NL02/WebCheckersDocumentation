@@ -1,13 +1,13 @@
 package com.webcheckers.appl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.logging.Logger;
-import java.util.Map;
-
-import com.webcheckers.model.CheckersGame;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.pageroutes.PostLoginRoute;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * The object to coordinate the state of the Web Application and keep site wide statistics.
@@ -27,7 +27,7 @@ public class PlayerLobby {
 
     private Map <String, Player> userMap = new HashMap<>();
     private int totalGames = 0;
-    private static Map<String, CheckersGame> activeGames = new HashMap<>();
+    private static Map<String, Game> activeGames = new HashMap<>();
 
     //
     // Public methods
@@ -49,9 +49,9 @@ public class PlayerLobby {
      * Create a new {CheckersGame} game.
      *
      * @return
-     *   A new {@link CheckersGame}
+     *   A new {@link Game}
      */
-    public static CheckersGame getGame(String whitePlayer){
+    public static Game getGame(String whitePlayer){
         return activeGames.getOrDefault(whitePlayer, null);
     }
 
@@ -158,7 +158,7 @@ public class PlayerLobby {
      * @param whitePlayer Player that is starting the game
      */
     public static void newGame(Player whitePlayer){
-        activeGames.put(whitePlayer.name, new CheckersGame(whitePlayer, null));
+        activeGames.put(whitePlayer.name, new Game(whitePlayer, null));
     }
 
     /**

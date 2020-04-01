@@ -2,9 +2,7 @@ package com.webcheckers.ui.gameroutes;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.CheckersGame;
 import com.webcheckers.model.Move;
-import com.webcheckers.ui.pageroutes.PostSignOutRoute;
 import com.webcheckers.util.Message;
 import spark.Request;
 import spark.Response;

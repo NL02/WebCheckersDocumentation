@@ -3,7 +3,7 @@ package com.webcheckers.ui.pageroutes;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.board.BoardView;
-import com.webcheckers.ui.board.Color;
+import com.webcheckers.model.Color;
 import spark.*;
 
 import java.util.HashMap;

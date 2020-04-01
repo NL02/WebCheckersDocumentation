@@ -6,10 +6,10 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.CheckersGame;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.board.BoardView;
-import com.webcheckers.ui.board.Color;
+import com.webcheckers.model.Color;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -86,7 +86,7 @@ public class GetGameRoute implements Route {
         //Get myself, and my opponent
         Player me = request.session().attribute("currentUser");
         String opponent = request.queryParams("opponent");
-        CheckersGame game;
+        Game game;
         if(me.status == Player.Status.SEARCHING){
             game = PlayerLobby.getGame(opponent);
             game.addRedPlayer(me);

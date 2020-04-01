@@ -1,4 +1,4 @@
-package com.webcheckers.ui.board;
+package com.webcheckers.model;
 
 /**
  * Enum representing the two possible colors of pieces.

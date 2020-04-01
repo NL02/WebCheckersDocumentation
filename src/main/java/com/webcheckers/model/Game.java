@@ -1,7 +1,5 @@
 package com.webcheckers.model;
 
-import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.ui.board.BoardView;
 //import sun.rmi.runtime.Log;
 
 import java.util.logging.Logger;
@@ -10,22 +8,22 @@ import java.util.logging.Logger;
  * A single "Checkers game".
  *
  */
-public class CheckersGame {
-    private static final Logger LOG = Logger.getLogger(CheckersGame.class.getName());
+public class Game {
+    private static final Logger LOG = Logger.getLogger(Game.class.getName());
 
     private CheckerBoard board;
 
     private Player whitePlayer;
     private Player redPlayer;
 
-    public CheckersGame(Player whitePlayer, Player redPlayer) {
+    public Game(Player whitePlayer, Player redPlayer) {
         LOG.fine("Game started ");
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.board = new CheckerBoard();
     }
 
-    public CheckersGame(Player whitePlayer){
+    public Game(Player whitePlayer){
         LOG.fine("Game Created");
         this.whitePlayer = whitePlayer;
         this.board = new CheckerBoard();

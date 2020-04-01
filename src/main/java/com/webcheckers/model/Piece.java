@@ -1,4 +1,4 @@
-package com.webcheckers.ui.board;
+package com.webcheckers.model;
 
 /**
  * View component for checkers pieces. Temporarily holding model-tier information until model-tier board classes
@@ -6,7 +6,7 @@ package com.webcheckers.ui.board;
  *
  * @author Wyatt Holcombe
  */
-public class CheckersPiece {
+public class Piece {
 
     private Color color;    // Color of this piece, red or white
     private PieceType type; // Type of piece, single or king
@@ -23,7 +23,7 @@ public class CheckersPiece {
      *
      * @param c Color of piece
      */
-    public CheckersPiece(Color c) {
+    public Piece(Color c) {
         color = c;
         type = PieceType.SINGLE;
     }

@@ -4,7 +4,7 @@ public class Player {
     //private final int playerID; // Internal ID constructed by hashing player info
     public final String name;
     public Status status;
-    public CheckersGame game;
+    public Game game;
     public int playerID;
 
     /**
@@ -32,7 +32,7 @@ public class Player {
     //   return playerID;
     //}
 
-    public void startGame(CheckersGame game){
+    public void startGame(Game game){
         this.game = game;
     }
 
