@@ -46,7 +46,10 @@ public class Space {
      * @return valid
      */
     public boolean isValid() {
-        return valid;
+        if (piece == null && valid){
+            return true;
+        }
+        return false;
     }
 
     /**

@@ -59,7 +59,6 @@ public class WebServer {
   public static final String GAME_URL = "/game";
   public static final String LOGOUT_URL = "/signout";
   public static final String NEW_GAME_URL = "/newgame";
-
   public static final String RESIGN_URL = "/resignGame";
 
   //

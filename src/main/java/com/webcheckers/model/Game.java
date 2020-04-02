@@ -27,6 +27,7 @@ public class Game {
         LOG.fine("Game Created");
         this.whitePlayer = whitePlayer;
         this.board = new Board();
+        redPlayer = null;
     }
 
     public synchronized void addRedPlayer(Player redPlayer){
@@ -39,5 +40,9 @@ public class Game {
 
     public synchronized Player getWhitePlayer() {
         return whitePlayer;
+    }
+
+    public synchronized void addBoard(Board board){
+        this.board = board;
     }
 }

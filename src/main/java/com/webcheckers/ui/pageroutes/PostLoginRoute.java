@@ -1,6 +1,7 @@
 package com.webcheckers.ui.pageroutes;
 
 import com.webcheckers.model.Player;
+import com.webcheckers.ui.WebServer;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -16,13 +17,11 @@ public class PostLoginRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostLoginRoute.class.getName());
 
     // Values used in the view-model map for rendering the post login view after a login attempt
-    static final String USER_USER = "username";
     static final String MESSAGE_ATTR = "message";
     static final String INVALID_USERNAME = "Usernames must have at least one alphanumeric character";
     static final String PICK_ANOTHER_USERNAME = "Another player is using that name, please pick another one";
     static final String TITLE_ATTR = "title";
     static final String CURRENT_USER_ATTR = "currentUser";
-    static final String VIEW_NAME = "signin.ftl";
 
 
     public enum AddUserStatus{
@@ -48,7 +47,7 @@ public class PostLoginRoute implements Route {
 
         this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
-        LOG.config("PostGuessRoute is initialized.");
+        LOG.config("PostLoginRoute is initialized.");
     }
 
     //
@@ -62,7 +61,7 @@ public class PostLoginRoute implements Route {
 
         final Session httpSession = request.session();
 
-        final String username = request.queryParams(USER_USER);
+        final String username = request.queryParams("username");
         LOG.fine(username);
 
         Player newPlayer = new Player(username);
@@ -76,15 +75,15 @@ public class PostLoginRoute implements Route {
         else if (is_added == AddUserStatus.INVLAID){
             Message error = Message.error(INVALID_USERNAME);
             vm.put(MESSAGE_ATTR, error);
-            return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
+            return templateEngine.render(new ModelAndView(vm, "/signin.ftl"));
         }
         else{
             Message error = Message.error(PICK_ANOTHER_USERNAME);
             vm.put(MESSAGE_ATTR, error);
-            return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
+            return templateEngine.render(new ModelAndView(vm, "/signin.ftl"));
         }
 
-        response.redirect("/");
+        response.redirect(WebServer.HOME_URL);
         return null;
     }
 }

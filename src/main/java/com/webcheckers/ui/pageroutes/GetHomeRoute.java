@@ -25,7 +25,7 @@ import static spark.Spark.halt;
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
-public class GetHomeRoute implements Route {
+public class  GetHomeRoute implements Route {
 
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
@@ -91,7 +91,7 @@ public class GetHomeRoute implements Route {
 
     // display a user message in the Home page
     vm.put(MESSAGE_ATTR, WELCOME_MSG);
-    Message num_players = Message.info(String.format(NUM_PLAYERS_MSG, playerLobby.getLiveCount())); //change 3 to numplayers from playerlobby
+    Message num_players = Message.info(String.format(NUM_PLAYERS_MSG, playerLobby.getLiveCount()));
     vm.put( NUM_PLAYERS_ATTR, num_players);
 
     // display navbar
@@ -100,29 +100,29 @@ public class GetHomeRoute implements Route {
     // list all logged-in players
     vm.put(PLAYER_LIST_ATTR, playerLobby.getWaitingPlayer());
 
-    // if this is a brand new browser session or a session that timed out
-    if(httpSession.attribute(PLAYERSERVICES_KEY) == null) {
-      // get the object that will provide client-specific services for this player
-      final PlayerServices playerService = playerLobby.newPlayerServices();
-      httpSession.attribute(PLAYERSERVICES_KEY, playerService);
-
-      // setup session timeout. The valueUnbound() method in the SessionTimeoutWatchdog will
-      // be called when the session is invalidated. The next invocation of this route will
-      // have a new Session object with no attributes.
-      httpSession.attribute(TIMEOUT_SESSION_KEY, new SessionTimeoutWatchdog(playerService));
-      httpSession.maxInactiveInterval(SESSION_TIMEOUT_PERIOD);
-
-      // render the Game Form view
-      vm.put(NEW_PLAYER_ATTR, true);
-
-      return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
-    }
-//    else {
-//      // there is a game already being played so redirect the user to the Game view
-//      response.redirect(WebServer.GAME_URL);
-//      halt();
-//      return null;
+//    // if this is a brand new browser session or a session that timed out
+//    if(httpSession.attribute(PLAYERSERVICES_KEY) == null) {
+//      // get the object that will provide client-specific services for this player
+//      final PlayerServices playerService = playerLobby.newPlayerServices();
+//      httpSession.attribute(PLAYERSERVICES_KEY, playerService);
+//
+//      // setup session timeout. The valueUnbound() method in the SessionTimeoutWatchdog will
+//      // be called when the session is invalidated. The next invocation of this route will
+//      // have a new Session object with no attributes.
+//      httpSession.attribute(TIMEOUT_SESSION_KEY, new SessionTimeoutWatchdog(playerService));
+//      httpSession.maxInactiveInterval(SESSION_TIMEOUT_PERIOD);
+//
+//      // render the Game Form view
+//      vm.put(NEW_PLAYER_ATTR, true);
+//
+//      return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
 //    }
+////    else {
+////      // there is a game already being played so redirect the user to the Game view
+////      response.redirect(WebServer.GAME_URL);
+////      halt();
+////      return null;
+////    }
 
     Player currentUser = request.session().attribute("currentUser");
     if(currentUser != null && currentUser.status != Player.Status.SEARCHING) {
