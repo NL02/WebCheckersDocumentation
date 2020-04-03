@@ -2,14 +2,16 @@ package com.webcheckers.model;
 
 import com.webcheckers.util.Message;
 
-import java.util.Deque;
+import java.util.ArrayList;
 
 public class Board {
     private static final Message VALID_MOVE = Message.info("Move is valid");
     private static final Message OUT_OF_BOUNDS = Message.error("Move is out of bounds");
     private static final Message INVALID_SPACE = Message.error("Cannot move to white space");
     private static final Message SPACE_OCCUPIED = Message.error("A piece occupies this space");
-    private static final Message TOO_FAR = Message.error("Move goes too far without jumping");
+    private static final Message TOO_FAR = Message.error("Move is too far");
+    private static final Message ILLEGAL_COMBO = Message.error("Cannot make simple move and jump in same turn");
+    private static final Message WRONG_DIRECTION = Message.error("Cannot move that direction");
 
     private static final int ROWS = 8;
     private static final int COLS = 8;
@@ -20,13 +22,14 @@ public class Board {
     private Color active; // The color of the active player
     private Player activePlayer; // The player about to make a move
 
-    private Deque<Move> pendingMoves; // A deque of moves that haven't been submitted
+    private ArrayList<Move> pendingMoves; // A deque of moves that haven't been submitted
     private boolean isJumping = false;
     private boolean isMoving = false;
 
     public Board(){
         InitializeSpaces();
         PopulateBoard();
+        pendingMoves = new ArrayList<>();
     }
 
     public Message validateMove(Move move) {
@@ -35,18 +38,28 @@ public class Board {
         int endX = move.getEnd().getRow();
         int endY = move.getEnd().getCell();
 
-        // Verify in-bounds
+        // Verify move is in-bounds
         if (endX < 0 || endX == ROWS || endY < 0 || endY == COLS) {
             return OUT_OF_BOUNDS;
         }
-        // Verify valid
-        else if (!board[endX][endY].isValid()) {
-            return INVALID_SPACE;
-        }
-        // Verify unoccupied
+        // Verify space is unoccupied
         else if (board[endX][endY].getPiece() != null) {
             return SPACE_OCCUPIED;
         }
+        // Verify space is valid for movement
+        else if (!board[endX][endY].isValid()) {
+            return INVALID_SPACE;
+        }
+        // Verify move length
+        else if (Math.abs(endX - startX) > 2 || Math.abs(endY - startY) > 2) {
+            return TOO_FAR;
+        }
+        // Verify move is diagonal
+        else if (startX == endX || startY == endY) {
+            return WRONG_DIRECTION;
+        }
+
+        pendingMoves.add(move);
 
         isMoving = true;
         return VALID_MOVE;
