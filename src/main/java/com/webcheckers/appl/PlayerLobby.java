@@ -161,6 +161,10 @@ public class PlayerLobby {
         activeGames.put(whitePlayer.name, new Game(whitePlayer, null));
     }
 
+    public static void addGame(Player player, Game game){
+        activeGames.put(player.name, game);
+    }
+
     /**
      * addOnlinePlayer adds a player to the onlinePlayers list
      *
