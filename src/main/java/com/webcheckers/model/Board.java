@@ -27,13 +27,14 @@ public class Board {
     private boolean isJumping = false;
     private boolean isMoving = false;
 
-    public Board(){
+    public Board() {
         InitializeSpaces();
         PopulateBoard();
         pendingMoves = new ArrayList<>();
     }
 
     public Message validateMove(Move move) {
+        move.setMidpoint();
         int startX = move.getStart().getRow();
         int startY = move.getStart().getCell();
         int midX = move.getMidpoint().getRow();

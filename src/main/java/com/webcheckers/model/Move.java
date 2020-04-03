@@ -6,13 +6,11 @@ package com.webcheckers.model;
 public class Move {
     private final Position start;
     private final Position end;
-    private final Position midpoint;
+    private Position midpoint;
 
     public Move(final Position start, final Position end) {
         this.start = start;
         this.end = end;
-        this.midpoint = new Position((start.getRow() + end.getRow() / 2),
-                (start.getCell() + end.getCell() / 2));
     }
 
     public Position getStart() {
@@ -25,6 +23,11 @@ public class Move {
 
     public Position getMidpoint() {
         return midpoint;
+    }
+
+    public void setMidpoint() {
+        this.midpoint = new Position((start.getRow() + end.getRow()) / 2,
+                (start.getCell() + end.getCell()) / 2);
     }
 
 }
