@@ -58,7 +58,6 @@ public class WebServer {
   public static final String LOGIN_URL = "/signin";
   public static final String GAME_URL = "/game";
   public static final String LOGOUT_URL = "/signout";
-  public static final String NEW_GAME_URL = "/newgame";
   public static final String RESIGN_URL = "/resignGame";
 
   //
@@ -149,7 +148,6 @@ public class WebServer {
     get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
     get(LOGIN_URL, new GetLoginRoute(playerLobby, templateEngine));
     get(GAME_URL, new GetGameRoute(playerLobby, templateEngine));
-    get(NEW_GAME_URL, new GetNewGameRoute(templateEngine));
 
     // Post a Login attempt.
     post(LOGIN_URL, new PostLoginRoute(playerLobby, templateEngine));

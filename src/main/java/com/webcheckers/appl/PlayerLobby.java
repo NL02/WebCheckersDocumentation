@@ -33,17 +33,6 @@ public class PlayerLobby {
     // Public methods
     //
 
-    /**
-     * Get a new {PlayerServices} object to provide client-specific services to
-     * the client who just connected to this application.
-     *
-     * @return
-     *   A new {PlayerServices}
-     */
-    public PlayerServices newPlayerServices(){
-        LOG.fine("New player services instance created.");
-        return new PlayerServices(this);
-    }
 
     /**
      * Create a new {CheckersGame} game.
