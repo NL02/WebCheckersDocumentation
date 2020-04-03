@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.util.Deque;
+
 public class Board {
     private static final int ROWS = 8;
     private static final int COLS = 8;
@@ -7,6 +9,7 @@ public class Board {
     private Space[][] board; // board representation
     private Color active; // The color of the active player
     private Player activePlayer; // The player about to make a move
+    private Deque<Move> pendingMoves;
 
     private boolean isJumping = false;
     private boolean isMoving = false;
@@ -57,6 +60,8 @@ public class Board {
     public Space[][] getBoard() {
         return board;
     }
+
+
 
 
 }
