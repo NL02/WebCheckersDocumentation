@@ -12,6 +12,7 @@ public class Board {
     private static final Message TOO_FAR = Message.error("Move is too far");
     private static final Message ILLEGAL_COMBO = Message.error("Cannot make simple move and jump in same turn");
     private static final Message WRONG_DIRECTION = Message.error("Cannot move that direction");
+    private static final Message NO_PIECE = Message.error("No piece to jump");
 
     private static final int ROWS = 8;
     private static final int COLS = 8;
@@ -35,6 +36,8 @@ public class Board {
     public Message validateMove(Move move) {
         int startX = move.getStart().getRow();
         int startY = move.getStart().getCell();
+        int midX = move.getMidpoint().getRow();
+        int midY = move.getMidpoint().getCell();
         int endX = move.getEnd().getRow();
         int endY = move.getEnd().getCell();
 
@@ -59,8 +62,24 @@ public class Board {
             return WRONG_DIRECTION;
         }
 
-        pendingMoves.add(move);
+        // If move is a simple move, verify it's the only move
+        if (midX == startX || midY == startY) {
+            if (pendingMoves.size() > 0) {
+                return ILLEGAL_COMBO;
+            }
+        }
+        // Otherwise, it's a jump move, so verify there is a piece to jump over
+        else {
+            if (board[midX][midY].getPiece() == null) {
+                return NO_PIECE;
+            }
+            else {
+                isJumping = true;
+            }
+        }
 
+        // Move is valid, so add it to pendingMoves
+        pendingMoves.add(move);
         isMoving = true;
         return VALID_MOVE;
     }
