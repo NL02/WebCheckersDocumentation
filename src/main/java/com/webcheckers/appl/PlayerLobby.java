@@ -120,6 +120,11 @@ public class PlayerLobby {
                     waitingPlayers.add(player);
                 }
             }
+            else{
+                if(waitingPlayers.contains(player)){
+                    waitingPlayers.remove(player);
+                }
+            }
         });
         return waitingPlayers;
     }
