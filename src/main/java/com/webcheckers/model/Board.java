@@ -6,11 +6,13 @@ public class Board {
     private static final int ROWS = 8;
     private static final int COLS = 8;
 
+
     private Space[][] board; // board representation
+    private Space[][] pendingBoard;
     private Color active; // The color of the active player
     private Player activePlayer; // The player about to make a move
-    private Deque<Move> pendingMoves;
 
+    private Deque<Move> pendingMoves; // A deque of moves that haven't been submitted
     private boolean isJumping = false;
     private boolean isMoving = false;
 
@@ -61,8 +63,33 @@ public class Board {
         return board;
     }
 
+    /**
+     * @return the color of the player whose turn it is
+     */
+    public Color getActive() {
+        return this.active;
+    }
 
+    /**
+     * @return the player whose turn it is
+     */
+    public Player getActivePlayer() {
+        return activePlayer;
+    }
 
+    /**
+     * @return true if the pending move is a jump
+     */
+    public boolean isJumping() {
+        return isJumping;
+    }
+
+    /**
+     * @return true if a piece is moving
+     */
+    public boolean isMoving() {
+        return isMoving;
+    }
 
 
 }
