@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <head>
-  <meta http-equiv="refresh" content="4"></meta>
   <title>${title} | Web Checkers</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/game.css">
@@ -18,6 +17,15 @@
   </script>
 </head>
 <body>
+  <#if activeColor == "RED">
+    <#if redPlayer != currentUser>
+      <meta http-equiv="refresh" content="10"></meta>
+    </#if>
+  <#else>
+    <#if whitePlayer != currentUser>
+      <meta http-equiv="refresh" content="10"></meta>
+    </#if>
+  </#if>
   <div class="page">
     <h1>Web Checkers | Game View</h1>
     
