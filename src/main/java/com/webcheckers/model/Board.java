@@ -57,7 +57,7 @@ public class Board {
 
         for ( int row = 0; row < ROWS; row++ ) {
             for ( int col = 0; col < COLS; col++ ) {
-                if (row % 2 == 0) {
+                if (row % 2 == 1) {
                     if (col % 2 == 0) {
                         board[row][col] = new Space(col, true);
                     } else {
