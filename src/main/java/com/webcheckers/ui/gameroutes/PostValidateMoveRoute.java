@@ -27,7 +27,8 @@ public class PostValidateMoveRoute implements Route {
     public Object handle(Request request, Response response) throws Exception {
         final Session httpSession = request.session();
         Gson gson = new Gson();
-        Move move = gson.fromJson(request.body(), Move.class);
+        Move move = gson.fromJson(request.queryParams("actionData"), Move.class);
+
         Player player = httpSession.attribute("currentUser");
 
         Message moveMessage = player.getGame().validateMove(move);
