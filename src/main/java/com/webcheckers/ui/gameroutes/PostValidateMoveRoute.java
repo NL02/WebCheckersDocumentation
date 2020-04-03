@@ -30,13 +30,8 @@ public class PostValidateMoveRoute implements Route {
         Move move = gson.fromJson(request.body(), Move.class);
         Player player = httpSession.attribute("currentUser");
 
-        //String currUser = httpSession.attribute(PostSignOutRoute.CURRENT_USER_ATTR);
-        //CheckersGame game = PlayerLobby.getGame(currUser);
-
         Message moveMessage = player.getGame().validateMove(move);
 
-//        String json;
-//        json = gson.toJson(moveMessage);
         return gson.toJson(moveMessage);
     }
 
