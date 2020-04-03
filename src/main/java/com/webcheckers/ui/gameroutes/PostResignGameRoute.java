@@ -3,7 +3,9 @@ package com.webcheckers.ui.gameroutes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.ui.WebServer;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -29,6 +31,20 @@ public class PostResignGameRoute implements Route {
     public Object handle(Request request, Response response) {
         Session httpSession = request.session();
         Player currUser = httpSession.attribute("currentUser");
+
+        Game game = currUser.getGame();
+
+        Player redPlayer = game.getRedPlayer();
+        Player whitePlayer = game.getWhitePlayer();
+
+        redPlayer.status = Player.Status.RESIGN;
+        whitePlayer.status = Player.Status.RESIGN;
+
+        redPlayer.endGame();
+        whitePlayer.endGame();
+        playerLobby.removeGame(redPlayer);
+        playerLobby.removeGame(whitePlayer);
+        playerLobby.gameFinished();
 
         message = Message.info(PASS_MSSG);
 
