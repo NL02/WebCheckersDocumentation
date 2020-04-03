@@ -160,6 +160,15 @@ public class PlayerLobby {
     }
 
     /**
+     * removeGame removes a game from the activeGames list
+     *
+     * @param player that is starting the game
+     */
+    public static void removeGame(Player player){
+        activeGames.remove(player);
+    }
+
+    /**
      * addOnlinePlayer adds a player to the onlinePlayers list
      *
      * @param player player instance to be added

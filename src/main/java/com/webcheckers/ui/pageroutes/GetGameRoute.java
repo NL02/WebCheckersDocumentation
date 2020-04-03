@@ -79,6 +79,8 @@ public class GetGameRoute implements Route {
 
         Game game = null;
 
+        System.out.println(me.status.toString() + "BRUhhHHH");
+
         Map<String, Object> vm = new HashMap<>();
 
         vm.put(TITLE_ATTR, TITLE_WAIT);
@@ -86,14 +88,15 @@ public class GetGameRoute implements Route {
         vm.put(CURRENT_USER_ATTR, me);
         vm.put(VIEW_MODE_ATTR, VIEW_MODE);
 
-        if(me.status != Player.Status.WAITING && me.status != Player.Status.INGAME && opponent == null){
-            if(PlayerLobby.getGame(me.name) == null){
+        if(me.status != Player.Status.WAITING && me.status != Player.Status.INGAME
+                && opponent == null && me.status != Player.Status.RESIGN){
+            me.status = Player.Status.WAITING;
+            if(PlayerLobby.getGame(me.name) == null) {
                 PlayerLobby.newGame(me);
                 game = PlayerLobby.getGame(me.name);
                 me.startGame(game);
                 game.addRedPlayer(ghost);
             }
-            me.status = Player.Status.WAITING;
         }
         else if(me.status == Player.Status.SEARCHING){
             game = PlayerLobby.getGame(opponent);
@@ -108,6 +111,10 @@ public class GetGameRoute implements Route {
         }
         else if (me.status == Player.Status.WAITING){
             game = PlayerLobby.getGame(me.name);
+        }
+        else if(me.status == Player.Status.RESIGN){
+            response.redirect(WebServer.HOME_URL);
+            return null;
         }
 
         Player redPlayer = game.getRedPlayer();
