@@ -45,6 +45,15 @@ public class Player {
     }
 
     /**
+     * Returns the game this player is playing.
+     *
+     * @return game
+     */
+    public Game getGame() {
+        return game;
+    }
+
+    /**
      * checks if the given object is equal (has the name username) as this player instance
      *
      * @param obj Object to check

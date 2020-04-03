@@ -1,8 +1,16 @@
 package com.webcheckers.model;
 
+import com.webcheckers.util.Message;
+
 import java.util.Deque;
 
 public class Board {
+    private static final Message VALID_MOVE = Message.info("Move is valid");
+    private static final Message OUT_OF_BOUNDS = Message.error("Move is out of bounds");
+    private static final Message INVALID_SPACE = Message.error("Cannot move to white space");
+    private static final Message SPACE_OCCUPIED = Message.error("A piece occupies this space");
+    private static final Message TOO_FAR = Message.error("Move goes too far without jumping");
+
     private static final int ROWS = 8;
     private static final int COLS = 8;
 
@@ -19,6 +27,29 @@ public class Board {
     public Board(){
         InitializeSpaces();
         PopulateBoard();
+    }
+
+    public Message validateMove(Move move) {
+        int startX = move.getStart().getRow();
+        int startY = move.getStart().getCell();
+        int endX = move.getEnd().getRow();
+        int endY = move.getEnd().getCell();
+
+        // Verify in-bounds
+        if (endX < 0 || endX == ROWS || endY < 0 || endY == COLS) {
+            return OUT_OF_BOUNDS;
+        }
+        // Verify valid
+        else if (!board[endX][endY].isValid()) {
+            return INVALID_SPACE;
+        }
+        // Verify unoccupied
+        else if (board[endX][endY].getPiece() != null) {
+            return SPACE_OCCUPIED;
+        }
+
+        isMoving = true;
+        return VALID_MOVE;
     }
 
     private void InitializeSpaces() {

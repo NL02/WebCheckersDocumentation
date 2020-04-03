@@ -2,6 +2,8 @@ package com.webcheckers.model;
 
 //import sun.rmi.runtime.Log;
 
+import com.webcheckers.util.Message;
+
 import java.util.logging.Logger;
 
 /**
@@ -28,6 +30,10 @@ public class Game {
         this.whitePlayer = whitePlayer;
         this.board = new Board();
         redPlayer = null;
+    }
+
+    public Message validateMove(Move move) {
+        return this.board.validateMove(move);
     }
 
     public synchronized void addRedPlayer(Player redPlayer){
