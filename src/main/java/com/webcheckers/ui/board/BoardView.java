@@ -40,7 +40,7 @@ public class BoardView implements Iterable<Row> {
             }
         }
         if (playerColor == Color.RED) {
-            for (int r = 7; r >=0; r--) {
+            for (int r = 7; r >= 0; r--) {
                 rows[r] = new Row( r, game.getBoard().getRowReversesd(7-r));
             }
         }
