@@ -20,8 +20,6 @@ public class Board {
 
     private Space[][] board; // board representation
     private Space[][] pendingBoard;
-    private Color active; // The color of the active player
-    private Player activePlayer; // The player about to make a move
 
     private ArrayList<Move> pendingMoves; // A deque of moves that haven't been submitted
     private boolean isJumping = false;
@@ -147,19 +145,6 @@ public class Board {
         return board;
     }
 
-    /**
-     * @return the color of the player whose turn it is
-     */
-    public Color getActive() {
-        return this.active;
-    }
-
-    /**
-     * @return the player whose turn it is
-     */
-    public Player getActivePlayer() {
-        return activePlayer;
-    }
 
     /**
      * @return true if the pending move is a jump
