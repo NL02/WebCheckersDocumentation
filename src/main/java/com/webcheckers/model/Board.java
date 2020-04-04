@@ -19,7 +19,6 @@ public class Board {
 
 
     private Space[][] board; // board representation
-    private Space[][] pendingBoard;
 
     private ArrayList<Move> pendingMoves; // A deque of moves that haven't been submitted
     private boolean isJumping = false;
@@ -62,7 +61,7 @@ public class Board {
         }
 
         // If move is a simple move, verify it's the only move
-        if (midX == startX || midY == startY) {
+        if (Math.abs(endX - startX) == 1) {
             if (pendingMoves.size() > 0) {
                 return ILLEGAL_COMBO;
             }
@@ -92,16 +91,34 @@ public class Board {
         return Message.info("Turn submitted.");
     }
 
-
+    /**
+     * Apply a move to the board.
+     *
+     * @param move Move to be executed
+     */
     private void executeMove(Move move) {
         int startX = move.getStart().getRow();
         int startY = move.getStart().getCell();
+        int midX = move.getMidpoint().getRow();
+        int midY = move.getMidpoint().getCell();
         int endX = move.getEnd().getRow();
         int endY = move.getEnd().getCell();
 
         Piece movedPiece = board[startX][startY].getPiece();
+
+        // Remove jumped piece
+        if (midY != startY && board[midX][midY].getPiece() != null) {
+            board[midX][midY].removePiece();
+        }
+
+        // Move piece
         board[endX][endY].setPiece(movedPiece);
         board[startX][startY].removePiece();
+
+        // Make piece a king if it reaches the back
+        if (endX == 0 || endX == 7) {
+            movedPiece.kingMe();
+        }
     }
 
     private void InitializeSpaces() {
