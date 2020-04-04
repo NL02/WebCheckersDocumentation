@@ -76,7 +76,6 @@ public class GetGameRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
 
         vm.put(TITLE_ATTR, TITLE_WAIT);
-//        vm.put(GAMEID_ATTR, me.playerID);
         vm.put(CURRENT_USER_ATTR, me);
         vm.put(VIEW_MODE_ATTR, VIEW_MODE);
 
@@ -123,12 +122,15 @@ public class GetGameRoute implements Route {
         vm.put(ACTIVE_COLOR_ATTR, playerLobby.findPlayer(whitePlayer.name).getGame().getActiveColor());
 
         // Determine my POV
-        if(me == redPlayer) {
-            vm.put(BOARD_ATTR, new BoardView(me, playerLobby.findPlayer(me.name).getGame()));
-        }
-        else{
-            vm.put(BOARD_ATTR, new BoardView(whitePlayer, playerLobby.findPlayer(whitePlayer.name).getGame()));
-        }
+//        if(me == redPlayer) {
+//            vm.put(BOARD_ATTR, new BoardView(me, playerLobby.findPlayer(me.name).getGame()));
+//        }
+//        else{
+//            vm.put(BOARD_ATTR, new BoardView(whitePlayer, playerLobby.findPlayer(whitePlayer.name).getGame()));
+//        }
+        vm.put(BOARD_ATTR, new BoardView(whitePlayer, playerLobby.findPlayer(whitePlayer.name).getGame()));
+
+
         // render the View
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }

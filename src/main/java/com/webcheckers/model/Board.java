@@ -154,6 +154,18 @@ public class Board {
         return board[index];
     }
 
+    public Space[] getRowReversesd( int index ) {
+        Space[] row = getRow(index);
+        Space[] reversed = new Space[ROWS];
+        int indexing = ROWS;
+        for ( int i = 0; i < ROWS; i++) {
+            indexing--;
+            reversed[i] = row[indexing];
+
+        }
+            return reversed;
+    }
+
 
     /**
      * @return true if the pending move is a jump

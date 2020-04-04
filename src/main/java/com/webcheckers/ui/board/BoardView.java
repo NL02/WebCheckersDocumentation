@@ -21,8 +21,6 @@ public class BoardView implements Iterable<Row> {
 
     /**
      * Constructs a new BoardView and its rows.
-     *
-     * @param playerColor Color of pieces the player controls; those pieces will be rendered in the bottom 3 rows
      */
     public BoardView(Player me, Game game) {
         rows = new Row[NUM_ROWS];
@@ -34,16 +32,16 @@ public class BoardView implements Iterable<Row> {
         } else {
             playerColor = Color.WHITE;
         }
-
-
+        System.out.println("THIS IS MEEE" + me.name);
+        System.out.println(playerColor);
         if (playerColor == Color.WHITE) {
             for (int r = 0; r < 8; r++) {
                 rows[r] = new Row( r , game.getBoard().getRow(r));
             }
         }
         if (playerColor == Color.RED) {
-            for (int r = 0; r < 8; r++) {
-                rows[r] = new Row( r, game.getBoard().getRow(r));
+            for (int r = 7; r >=0; r--) {
+                rows[r] = new Row( r, game.getBoard().getRowReversesd(7-r));
             }
         }
 
