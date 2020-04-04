@@ -27,6 +27,10 @@ public class PostValidateMoveRoute implements Route {
         final Session httpSession = request.session();
         Gson gson = new Gson();
         Move move = gson.fromJson(request.queryParams("actionData"), Move.class);
+        System.out.println(move.getStart().getRow());
+        System.out.println(move.getStart().getCell());
+        System.out.println(move.getEnd().getRow());
+        System.out.println(move.getEnd().getCell());
 
         Player player = httpSession.attribute("currentUser");
         Message moveMessage = player.getGame().validateMove(move);

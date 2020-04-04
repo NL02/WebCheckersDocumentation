@@ -92,6 +92,7 @@ public class Board {
         return Message.info("Turn submitted.");
     }
 
+
     private void executeMove(Move move) {
         int startX = move.getStart().getRow();
         int startY = move.getStart().getCell();
@@ -143,6 +144,14 @@ public class Board {
 
     public Space[][] getBoard() {
         return board;
+    }
+
+
+    public Space[] getRow(int index) {
+        if (index < 0 || index > 7) {
+            throw new IllegalArgumentException("Index must be between 0 and 7");
+        }
+        return board[index];
     }
 
 

@@ -1,7 +1,6 @@
 package com.webcheckers.ui.pageroutes;
 
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.WebServer;
@@ -71,13 +70,13 @@ public class GetGameRoute implements Route {
 
         Game game = null;
 
-        System.out.println(me.status.toString() + "BRUhhHHH");
-        System.out.println("THIS IS THE OPPONENT " + opponent);
+//        System.out.println(me.status.toString() + "BRUhhHHH");
+//        System.out.println("THIS IS THE OPPONENT " + opponent);
 
         Map<String, Object> vm = new HashMap<>();
 
         vm.put(TITLE_ATTR, TITLE_WAIT);
-        vm.put(GAMEID_ATTR, me.playerID);
+//        vm.put(GAMEID_ATTR, me.playerID);
         vm.put(CURRENT_USER_ATTR, me);
         vm.put(VIEW_MODE_ATTR, VIEW_MODE);
 
@@ -121,14 +120,14 @@ public class GetGameRoute implements Route {
         // Add Objects to the view
         vm.put(RED_PLAYER_ATTR, redPlayer);
         vm.put(WHITE_PLAYER_ATTR, whitePlayer);
-        vm.put(ACTIVE_COLOR_ATTR, playerLobby.findPlayer(whitePlayer.name).getGame().getActiveColor()); // Playerlobby.getgame(player).getactivecolor
+        vm.put(ACTIVE_COLOR_ATTR, playerLobby.findPlayer(whitePlayer.name).getGame().getActiveColor());
 
         // Determine my POV
         if(me == redPlayer) {
-            vm.put(BOARD_ATTR, new BoardView(Color.RED));
+            vm.put(BOARD_ATTR, new BoardView(me, playerLobby.findPlayer(me.name).getGame()));
         }
         else{
-            vm.put(BOARD_ATTR, new BoardView(Color.WHITE));
+            vm.put(BOARD_ATTR, new BoardView(whitePlayer, playerLobby.findPlayer(whitePlayer.name).getGame()));
         }
         // render the View
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
