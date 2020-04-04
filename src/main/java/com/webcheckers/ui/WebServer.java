@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.ui.gameroutes.PostResignGameRoute;
+import com.webcheckers.ui.gameroutes.PostSubmitTurnRoute;
 import com.webcheckers.ui.gameroutes.PostValidateMoveRoute;
 import com.webcheckers.ui.pageroutes.*;
 import spark.TemplateEngine;
@@ -60,6 +61,7 @@ public class WebServer {
   public static final String GAME_URL = "/game";
   public static final String LOGOUT_URL = "/signout";
   public static final String RESIGN_URL = "/resignGame";
+  public static final String SUBMIT_URL = "/submitTurn";
   public static final String VALIDATE_URL = "/validateMove";
 
   //
@@ -156,6 +158,7 @@ public class WebServer {
     post(LOGOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
 
     post(VALIDATE_URL, new PostValidateMoveRoute(playerLobby, templateEngine));
+    post(SUBMIT_URL, new PostSubmitTurnRoute(playerLobby, templateEngine));
     post(RESIGN_URL, new PostResignGameRoute(playerLobby, templateEngine));
 
     //
