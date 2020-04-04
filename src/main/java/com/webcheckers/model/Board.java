@@ -85,6 +85,26 @@ public class Board {
         return VALID_MOVE;
     }
 
+    public Message submitTurn() {
+        for (Move move : pendingMoves) {
+            executeMove(move);
+        }
+
+        pendingMoves.clear();
+        return Message.info("Turn submitted.");
+    }
+
+    private void executeMove(Move move) {
+        int startX = move.getStart().getRow();
+        int startY = move.getStart().getCell();
+        int endX = move.getEnd().getRow();
+        int endY = move.getEnd().getCell();
+
+        Piece movedPiece = board[startX][startY].getPiece();
+        board[endX][endY].setPiece(movedPiece);
+        board[startX][startY].removePiece();
+    }
+
     private void InitializeSpaces() {
         board = new Space[ROWS][COLS];
 

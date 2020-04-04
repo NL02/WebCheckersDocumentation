@@ -2,11 +2,9 @@ package com.webcheckers.ui.gameroutes;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import spark.*;
 
 import java.util.logging.Logger;
 
@@ -24,8 +22,12 @@ public class PostSubmitTurnRoute implements Route {
     }
 
     public Object handle(Request request, Response response) {
+        final Session httpSession = request.session();
         Gson gson = new Gson();
 
-        return gson.toJson(Message.info("test"));
+        Player player = httpSession.attribute("currentUser");
+        Message moveMessage = player.getGame().submitTurn();
+
+        return gson.toJson(moveMessage);
     }
 }

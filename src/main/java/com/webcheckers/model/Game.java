@@ -36,6 +36,10 @@ public class Game {
         return this.board.validateMove(move);
     }
 
+    public Message submitTurn() {
+        return this.board.submitTurn();
+    }
+
     public synchronized void addRedPlayer(Player redPlayer){
         this.redPlayer = redPlayer;
     }
