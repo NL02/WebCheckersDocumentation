@@ -1,25 +1,17 @@
 package com.webcheckers.ui.pageroutes;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.logging.Logger;
-
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.WebServer;
 import com.webcheckers.ui.board.BoardView;
-import com.webcheckers.model.Color;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import spark.*;
 
-import com.webcheckers.util.Message;
-
-import static spark.Spark.halt;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.logging.Logger;
 
 
 public class GetGameRoute implements Route {
@@ -80,6 +72,7 @@ public class GetGameRoute implements Route {
         Game game = null;
 
         System.out.println(me.status.toString() + "BRUhhHHH");
+        System.out.println("THIS IS THE OPPONENT " + opponent);
 
         Map<String, Object> vm = new HashMap<>();
 
@@ -117,6 +110,7 @@ public class GetGameRoute implements Route {
             return null;
         }
 
+
         Player redPlayer = game.getRedPlayer();
         Player whitePlayer = game.getWhitePlayer();
         if(!redPlayer.equals(ghost)) {
@@ -127,7 +121,7 @@ public class GetGameRoute implements Route {
         // Add Objects to the view
         vm.put(RED_PLAYER_ATTR, redPlayer);
         vm.put(WHITE_PLAYER_ATTR, whitePlayer);
-        vm.put(ACTIVE_COLOR_ATTR, ACTIVE_COLOR);
+        vm.put(ACTIVE_COLOR_ATTR, playerLobby.findPlayer(whitePlayer.name).getGame().getActiveColor()); // Playerlobby.getgame(player).getactivecolor
 
         // Determine my POV
         if(me == redPlayer) {

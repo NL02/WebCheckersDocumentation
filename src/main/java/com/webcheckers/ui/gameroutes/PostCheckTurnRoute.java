@@ -2,7 +2,6 @@ package com.webcheckers.ui.gameroutes;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.Request;
 import spark.Response;
@@ -25,8 +24,6 @@ public class PostCheckTurnRoute implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         Gson gson = new Gson();
-        Player me = request.session().attribute("currentUser");
-        playerLobby.findPlayer(me.name).getGame().changeActiveColor();
         return gson.toJson(Message.info("true"));
     }
 }
