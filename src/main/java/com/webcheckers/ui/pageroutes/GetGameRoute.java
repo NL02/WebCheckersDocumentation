@@ -122,13 +122,12 @@ public class GetGameRoute implements Route {
         vm.put(ACTIVE_COLOR_ATTR, playerLobby.findPlayer(whitePlayer.name).getGame().getActiveColor());
 
         // Determine my POV
-//        if(me == redPlayer) {
-//            vm.put(BOARD_ATTR, new BoardView(me, playerLobby.findPlayer(me.name).getGame()));
-//        }
-//        else{
-//            vm.put(BOARD_ATTR, new BoardView(whitePlayer, playerLobby.findPlayer(whitePlayer.name).getGame()));
-//        }
-        vm.put(BOARD_ATTR, new BoardView(whitePlayer, playerLobby.findPlayer(whitePlayer.name).getGame()));
+        if(me == redPlayer) {
+            vm.put(BOARD_ATTR, new BoardView(me, playerLobby.findPlayer(me.name).getGame()));
+        }
+        else if (me == whitePlayer){
+            vm.put(BOARD_ATTR, new BoardView(me, playerLobby.findPlayer(whitePlayer.name).getGame()));
+        }
 
 
         // render the View
