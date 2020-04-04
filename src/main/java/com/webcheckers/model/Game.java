@@ -33,6 +33,7 @@ public class Game {
         LOG.fine("Game Created");
         this.whitePlayer = whitePlayer;
         this.board = new Board();
+        this.activeColor = Color.RED;
         redPlayer = null;
     }
 
@@ -41,7 +42,7 @@ public class Game {
     }
 
     public synchronized void addRedPlayer(Player redPlayer){
-        this.activeColor = Color.RED;
+        this.activePlayer = redPlayer;
         this.redPlayer = redPlayer;
     }
 
@@ -60,6 +61,19 @@ public class Game {
     }
     public synchronized Player getRedPlayer() {
         return redPlayer;
+    }
+
+    /**
+     * Method used to switch the active color of the game
+     */
+    public synchronized void changeActiveColor() {
+        if ( this.activeColor == Color.RED) {
+            this.activeColor = Color.WHITE;
+            this.activePlayer = whitePlayer;
+        } else {
+            this.activeColor = Color.RED;
+            this.activePlayer = redPlayer;
+        }
     }
 
     public synchronized Player getWhitePlayer() {
