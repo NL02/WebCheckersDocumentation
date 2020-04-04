@@ -2,7 +2,6 @@ package com.webcheckers.ui.gameroutes;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Board;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
@@ -30,10 +29,9 @@ public class PostValidateMoveRoute implements Route {
         Move move = gson.fromJson(request.queryParams("actionData"), Move.class);
 
         Player player = httpSession.attribute("currentUser");
-
         Message moveMessage = player.getGame().validateMove(move);
 
-        return gson.toJson(moveMessage);
+        return gson.toJson(moveMessage); //moveMessage);
     }
 
 }

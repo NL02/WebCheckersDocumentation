@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.ui.gameroutes.PostCheckTurnRoute;
 import com.webcheckers.ui.gameroutes.PostResignGameRoute;
 import com.webcheckers.ui.gameroutes.PostSubmitTurnRoute;
 import com.webcheckers.ui.gameroutes.PostValidateMoveRoute;
@@ -63,6 +64,7 @@ public class WebServer {
   public static final String RESIGN_URL = "/resignGame";
   public static final String SUBMIT_URL = "/submitTurn";
   public static final String VALIDATE_URL = "/validateMove";
+  public static final String CHECK_URL = "/checkTurn";
 
   //
   // Attributes
@@ -160,7 +162,7 @@ public class WebServer {
     post(VALIDATE_URL, new PostValidateMoveRoute(playerLobby, templateEngine));
     post(SUBMIT_URL, new PostSubmitTurnRoute(playerLobby, templateEngine));
     post(RESIGN_URL, new PostResignGameRoute(playerLobby, templateEngine));
-
+    post(CHECK_URL, new PostCheckTurnRoute(playerLobby,templateEngine));
     //
     LOG.config("WebServer is initialized.");
 

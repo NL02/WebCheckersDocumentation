@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
-import com.webcheckers.ui.WebServer;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -31,6 +30,8 @@ public class PostResignGameRoute implements Route {
     public Object handle(Request request, Response response) {
         Session httpSession = request.session();
         Player currUser = httpSession.attribute("currentUser");
+        playerLobby.findPlayer(currUser.name).status = Player.Status.SEARCHING;
+
 
         Game game = currUser.getGame();
 
