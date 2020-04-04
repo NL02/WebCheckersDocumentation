@@ -18,6 +18,7 @@ public class Board {
     private static final int ROWS = 8;
     private static final int COLS = 8;
 
+    private static Color activeColor;
 
     private Space[][] board; // board representation
 
@@ -29,6 +30,7 @@ public class Board {
         InitializeSpaces();
         PopulateBoard();
         pendingMoves = new ArrayList<>();
+        activeColor = Color.RED;
     }
 
     public Message validateMove(Move move) {
@@ -48,7 +50,7 @@ public class Board {
         }
 
         // Verify move is in right direction
-        if (movedPiece.getType() != Piece.PieceType.KING) {
+        if (movedPiece.getType() != Piece.PieceType.KING && activeColor != Color.WHITE) {
             if (movedPiece.getColor() == Color.RED && startX > endX
                 || movedPiece.getColor() == Color.WHITE && startX < endX) {
                 return NOT_KING;
@@ -115,6 +117,13 @@ public class Board {
         int midY = move.getMidpoint().getCell();
         int endX = move.getEnd().getRow();
         int endY = move.getEnd().getCell();
+
+        if(activeColor == Color.RED){
+            startX = 7 - startX;
+            startY = 7 - startY;
+            endX = 7 - endX;
+            endY = 7 -endY;
+        }
 
         Piece movedPiece = board[startX][startY].getPiece();
 
@@ -195,6 +204,14 @@ public class Board {
             return reversed;
     }
 
+    public void changeActiveColor(){
+        if(activeColor == Color.RED){
+            activeColor = Color.WHITE;
+        }
+        else{
+            activeColor = Color.RED;
+        }
+    }
 
     /**
      * @return true if the pending move is a jump
