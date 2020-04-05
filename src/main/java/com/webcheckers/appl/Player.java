@@ -20,7 +20,6 @@ public class Player {
         SEARCHING, //Player is not in a game, nor looking for a game
         WAITING, //Player has created a new game and is waiting for
         INGAME, //Player is currently in a game or spectating
-        RESIGN //Player has resigned a game
     }
 
     /**
@@ -63,6 +62,7 @@ public class Player {
      * endGame sets the player game to null
      */
     public void endGame(boolean hasWon){
+        this.status = Status.SEARCHING;
         this.game = null;
         gamesPlayed++;
         if(hasWon){

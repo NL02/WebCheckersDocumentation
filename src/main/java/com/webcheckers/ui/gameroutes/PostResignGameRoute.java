@@ -36,8 +36,7 @@ public class PostResignGameRoute implements Route {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         Game game = me.getGame();
-        game.gameOver(String.format(GAME_OVER_MSG, me.name));
-        me.endGame(false);
+        game.gameOver(String.format(GAME_OVER_MSG, me.name), game.getRedPlayer() == me ? game.getWhitePlayer() : game.getRedPlayer());
         if(game.getActivePlayer() != me) {
             game.changeActiveColor();
         }

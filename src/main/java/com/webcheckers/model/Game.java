@@ -22,6 +22,7 @@ public class Game {
     private Player activePlayer; // The player about to make a move
 
     private String gameOverMsg = null;
+    public Player winner = null;
 
     public Game(Player whitePlayer, Player redPlayer) {
         LOG.fine("Game Created");
@@ -90,7 +91,8 @@ public class Game {
         board.changeActiveColor();
     }
 
-    public void gameOver(String gameOverMsg){
+    public void gameOver(String gameOverMsg, Player whoWon){
+        this.winner = whoWon;
         this.gameOverMsg = gameOverMsg;
     }
 

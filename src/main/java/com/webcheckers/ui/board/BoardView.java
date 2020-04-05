@@ -32,8 +32,6 @@ public class BoardView implements Iterable<Row> {
         } else {
             playerColor = Color.WHITE;
         }
-        System.out.println("THIS IS MEEE" + me.name);
-        System.out.println(playerColor);
         if (playerColor == Color.WHITE) {
             for (int r = 0; r < 8; r++) {
                 rows[r] = new Row( r , game.getBoard().getRow(r));
