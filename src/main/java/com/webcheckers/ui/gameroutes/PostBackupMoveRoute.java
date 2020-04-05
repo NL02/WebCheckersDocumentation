@@ -1,13 +1,13 @@
 package com.webcheckers.ui.gameroutes;
 
+import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
-import spark.Request;
-import spark.Response;
-import spark.TemplateEngine;
+import com.webcheckers.model.Game;
+import spark.*;
 
 import java.util.logging.Logger;
 
-public class PostBackupMoveRoute {
+public class PostBackupMoveRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostValidateMoveRoute.class.getName());
 
     private final TemplateEngine templateEngine;
@@ -18,6 +18,14 @@ public class PostBackupMoveRoute {
         this.playerLobby = playerLobby;
 
         LOG.config("PostBackupMoveRoute is initialized.");
+    }
+
+    @Override
+    public Object handle(Request request, Response response) {
+        final Player player = request.session().attribute("currentUser");
+        Game game = player.getGame();
+
+        return game.backupMove();
     }
 
 }

@@ -44,6 +44,10 @@ public class Game {
         return this.board.validateMove(move);
     }
 
+    public Message backupMove() {
+        return this.board.backupMove();
+    }
+
     public Message submitTurn() {
         return this.board.submitTurn();
     }
