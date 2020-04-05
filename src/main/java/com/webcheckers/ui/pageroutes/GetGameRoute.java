@@ -76,9 +76,6 @@ public class GetGameRoute implements Route {
 
         Game game = null;
 
-//        System.out.println(me.status.toString() + "BRUhhHHH");
-//        System.out.println("THIS IS THE OPPONENT " + opponent);
-
         Map<String, Object> vm = new HashMap<>();
 
         vm.put(TITLE_ATTR, TITLE_WAIT);
@@ -125,7 +122,7 @@ public class GetGameRoute implements Route {
         // Add Objects to the view
         vm.put(RED_PLAYER_ATTR, redPlayer);
         vm.put(WHITE_PLAYER_ATTR, whitePlayer);
-        vm.put(ACTIVE_COLOR_ATTR, playerLobby.findPlayer(whitePlayer.name).getGame().getActiveColor());
+        vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
 
         if(game.isGameOver() != null){
             final Map<String, Object> options = new HashMap<>(2);
@@ -138,12 +135,8 @@ public class GetGameRoute implements Route {
         }
 
         // Determine my POV
-        if(me == redPlayer) {
-            vm.put(BOARD_ATTR, new BoardView(me, playerLobby.findPlayer(me.name).getGame()));
-        }
-        else if (me == whitePlayer){
-            vm.put(BOARD_ATTR, new BoardView(me, playerLobby.findPlayer(whitePlayer.name).getGame()));
-        }
+
+            vm.put(BOARD_ATTR, new BoardView(me, game));
 
 
         // render the View

@@ -38,7 +38,9 @@ public class PostResignGameRoute implements Route {
         Game game = me.getGame();
         game.gameOver(String.format(GAME_OVER_MSG, me.name));
         me.endGame(false);
-        game.changeActiveColor();
+        if(game.getActivePlayer() != me) {
+            game.changeActiveColor();
+        }
 
         return gson.toJson(Message.info("true"));
     }

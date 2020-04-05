@@ -265,5 +265,9 @@ public class Board {
         return isMoving;
     }
 
+    @Override
+    public String toString(){
+        return null;
+    }
 
 }
