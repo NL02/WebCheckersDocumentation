@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 //import sun.rmi.runtime.Log;
 
+import com.webcheckers.appl.Player;
 import com.webcheckers.util.Message;
 
 import java.util.logging.Logger;
@@ -19,6 +20,8 @@ public class Game {
     private Player redPlayer;
     private Color activeColor; // The color of the active player
     private Player activePlayer; // The player about to make a move
+
+    private String gameOverMsg = null;
 
     public Game(Player whitePlayer, Player redPlayer) {
         LOG.fine("Game started ");
@@ -78,6 +81,14 @@ public class Game {
             this.activeColor = Color.RED;
             this.activePlayer = redPlayer;
         }
+    }
+
+    public void gameOver(String gameOverMsg){
+        this.gameOverMsg = gameOverMsg;
+    }
+
+    public String isGameOver(){
+        return gameOverMsg;
     }
 
     public synchronized Player getWhitePlayer() {

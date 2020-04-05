@@ -1,4 +1,6 @@
-package com.webcheckers.model;
+package com.webcheckers.appl;
+
+import com.webcheckers.model.Game;
 
 public class Player {
     //private final int playerID; // Internal ID constructed by hashing player info
@@ -6,6 +8,9 @@ public class Player {
     public Status status;
     public Game game;
     public int playerID;
+
+    private int gamesPlayed = 0;
+    private int gamesWon = 0;
 
     /**
      * Status - enums for the current state of the player
@@ -57,8 +62,12 @@ public class Player {
     /**
      * endGame sets the player game to null
      */
-    public void endGame(){
+    public void endGame(boolean hasWon){
         this.game = null;
+        gamesPlayed++;
+        if(hasWon){
+            gamesWon++;
+        }
     }
 
     /**

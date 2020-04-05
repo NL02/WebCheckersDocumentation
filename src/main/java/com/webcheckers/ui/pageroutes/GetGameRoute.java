@@ -2,7 +2,7 @@ package com.webcheckers.ui.pageroutes;
 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
-import com.webcheckers.model.Player;
+import com.webcheckers.appl.Player;
 import com.webcheckers.ui.WebServer;
 import com.webcheckers.ui.board.BoardView;
 import spark.*;

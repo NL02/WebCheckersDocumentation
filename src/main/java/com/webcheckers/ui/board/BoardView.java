@@ -2,7 +2,7 @@ package com.webcheckers.ui.board;
 
 import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
-import com.webcheckers.model.Player;
+import com.webcheckers.appl.Player;
 import com.webcheckers.model.Row;
 
 import java.util.Iterator;

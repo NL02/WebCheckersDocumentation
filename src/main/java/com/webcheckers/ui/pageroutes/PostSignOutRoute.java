@@ -2,7 +2,7 @@ package com.webcheckers.ui.pageroutes;
 
 import com.webcheckers.appl.PlayerLobby;
 import spark.*;
-import com.webcheckers.model.Player;
+import com.webcheckers.appl.Player;
 
 import java.util.Objects;
 import java.util.logging.Logger;

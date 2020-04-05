@@ -2,7 +2,6 @@ package com.webcheckers.appl;
 
 import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
-import com.webcheckers.model.Player;
 import com.webcheckers.ui.pageroutes.PostLoginRoute;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class PlayerLobby {
     private ArrayList<Player> onlinePlayers = new ArrayList<>();
 
     private Map <String, Player> userMap = new HashMap<>();
-    private int totalGames = 0;
+    private static int totalGames = 0;
     private static Map<String, Game> activeGames = new HashMap<>();
 
     //
@@ -48,10 +47,8 @@ public class PlayerLobby {
     /**
      * Collect site wide statistics when a game is finished.
      */
-    public void gameFinished(){
-        synchronized(this){
+    private static void gameFinished(){
             totalGames++;
-        }
     }
 
     /**
@@ -176,6 +173,7 @@ public class PlayerLobby {
      * @param player that is starting the game
      */
     public static void removeGame(Player player){
+        gameFinished();
         activeGames.remove(player);
     }
 
