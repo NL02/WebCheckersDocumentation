@@ -1,5 +1,6 @@
 package com.webcheckers.appl;
 
+import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.pageroutes.PostLoginRoute;
@@ -144,6 +145,16 @@ public class PlayerLobby {
             }
         }
         return false;
+    }
+
+    public static Color getMyColor(Player player){
+        Game me = getGame(player.name);
+        if(me.getRedPlayer().equals(player)){
+            return Color.RED;
+        }
+        else{
+            return Color.WHITE;
+        }
     }
 
     /**

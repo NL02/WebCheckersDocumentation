@@ -11,15 +11,16 @@ public class Board {
     private static final Message SPACE_OCCUPIED = Message.error("A piece occupies this space");
     private static final Message TOO_FAR = Message.error("Move is too far");
     private static final Message ILLEGAL_COMBO = Message.error("Cannot make simple move and jump in same turn");
-    private static final Message WRONG_DIRECTION = Message.error("Cannot move that direction");
+    private static final Message NOT_DIAGONAL = Message.error("Cannot move that direction");
     private static final Message NO_PIECE = Message.error("No piece to jump");
+    private static final Message NOT_KING = Message.error("Only king pieces can move backwards");
 
     private static final int ROWS = 8;
     private static final int COLS = 8;
 
+    private static Color activeColor;
 
     private Space[][] board; // board representation
-    private Space[][] pendingBoard;
 
     private ArrayList<Move> pendingMoves; // A deque of moves that haven't been submitted
     private boolean isJumping = false;
@@ -29,6 +30,7 @@ public class Board {
         InitializeSpaces();
         PopulateBoard();
         pendingMoves = new ArrayList<>();
+        activeColor = Color.RED;
     }
 
     public Message validateMove(Move move) {
@@ -40,12 +42,23 @@ public class Board {
         int endX = move.getEnd().getRow();
         int endY = move.getEnd().getCell();
 
+        Piece movedPiece = board[startX][startY].getPiece();
+
         // Verify move is in-bounds
         if (endX < 0 || endX == ROWS || endY < 0 || endY == COLS) {
             return OUT_OF_BOUNDS;
         }
+
+        // Verify move is in right direction
+        if (movedPiece.getType() != Piece.PieceType.KING && activeColor != Color.WHITE) {
+            if (movedPiece.getColor() == Color.RED && startX > endX
+                || movedPiece.getColor() == Color.WHITE && startX < endX) {
+                return NOT_KING;
+            }
+        }
+
         // Verify space is unoccupied
-        else if (board[endX][endY].getPiece() != null) {
+        if (board[endX][endY].getPiece() != null) {
             return SPACE_OCCUPIED;
         }
         // Verify space is valid for movement
@@ -58,11 +71,11 @@ public class Board {
         }
         // Verify move is diagonal
         else if (startX == endX || startY == endY) {
-            return WRONG_DIRECTION;
+            return NOT_DIAGONAL;
         }
 
         // If move is a simple move, verify it's the only move
-        if (midX == startX || midY == startY) {
+        if (Math.abs(endX - startX) == 1) {
             if (pendingMoves.size() > 0) {
                 return ILLEGAL_COMBO;
             }
@@ -92,15 +105,41 @@ public class Board {
         return Message.info("Turn submitted.");
     }
 
+    /**
+     * Apply a move to the board.
+     *
+     * @param move Move to be executed
+     */
     private void executeMove(Move move) {
         int startX = move.getStart().getRow();
         int startY = move.getStart().getCell();
+        int midX = move.getMidpoint().getRow();
+        int midY = move.getMidpoint().getCell();
         int endX = move.getEnd().getRow();
         int endY = move.getEnd().getCell();
 
+        if(activeColor == Color.RED){
+            startX = 7 - startX;
+            startY = 7 - startY;
+            endX = 7 - endX;
+            endY = 7 -endY;
+        }
+
         Piece movedPiece = board[startX][startY].getPiece();
+
+        // Remove jumped piece
+        if (midY != startY && board[midX][midY].getPiece() != null) {
+            board[midX][midY].removePiece();
+        }
+
+        // Move piece
         board[endX][endY].setPiece(movedPiece);
         board[startX][startY].removePiece();
+
+        // Make piece a king if it reaches the back
+        if (endX == 0 || endX == 7) {
+            movedPiece.kingMe();
+        }
     }
 
     private void InitializeSpaces() {
@@ -145,6 +184,34 @@ public class Board {
         return board;
     }
 
+
+    public Space[] getRow(int index) {
+        if (index < 0 || index > 7) {
+            throw new IllegalArgumentException("Index must be between 0 and 7");
+        }
+        return board[index];
+    }
+
+    public Space[] getRowReversesd( int index ) {
+        Space[] row = getRow(index);
+        Space[] reversed = new Space[ROWS];
+        int indexing = ROWS;
+        for ( int i = 0; i < ROWS; i++) {
+            indexing--;
+            reversed[i] = row[indexing];
+
+        }
+            return reversed;
+    }
+
+    public void changeActiveColor(){
+        if(activeColor == Color.RED){
+            activeColor = Color.WHITE;
+        }
+        else{
+            activeColor = Color.RED;
+        }
+    }
 
     /**
      * @return true if the pending move is a jump

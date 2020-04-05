@@ -18,16 +18,21 @@ public class Row implements Iterable<Space> {
     /**
      * Constructs a new BoardRow and the BoardSquares it contains.
      * @param index Index of this row on the board
-     * @param playerColor Color of pieces the player controls; those pieces
-     *                    will be rendered in the bottom 3 rows
+//     * @param playerColor Color of pieces the player controls; those pieces
+//     *                    will be rendered in the bottom 3 rows
      */
-    public Row(int index, Color playerColor) {
-        spaces = new Space[NUM_SQUARES];
-        this.index = index;
+    public Row(int index, Space[] spaces) {
+//        spaces = new Space[NUM_SQUARES];
+//        this.index = index;
 
         // Construct squares; second expression determines square validity
-        for (int i = 0; i < NUM_SQUARES; i++) {
-            spaces[i] = new Space(i,(index - i) % 2 != 0, makePiece(i, playerColor));
+//        for (int i = 0; i < NUM_SQUARES; i++) {
+//            spaces[i] = new Space(i,(index - i) % 2 != 0, makePiece(i, playerColor));
+//        }
+        this.spaces = new Space[NUM_SQUARES];
+        this.index = index;
+        for( int i = 0; i < NUM_SQUARES; i++ ) {
+            this.spaces[i] = new Space(i, spaces[i].isValid(),spaces[i].getPiece());
         }
     }
 

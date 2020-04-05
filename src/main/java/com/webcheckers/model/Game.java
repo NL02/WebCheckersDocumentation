@@ -87,4 +87,8 @@ public class Game {
     public synchronized void addBoard(Board board){
         this.board = board;
     }
+
+    public synchronized Board getBoard() {
+        return this.board;
+    }
 }
