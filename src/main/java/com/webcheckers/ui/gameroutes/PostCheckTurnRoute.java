@@ -23,7 +23,7 @@ public class PostCheckTurnRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        LOG.finer("PostCheckTurnRoute Invoked");
+        LOG.fine("PostCheckTurnRoute invoked");
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         Session session = request.session();

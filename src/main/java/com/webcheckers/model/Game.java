@@ -24,7 +24,7 @@ public class Game {
     private String gameOverMsg = null;
 
     public Game(Player whitePlayer, Player redPlayer) {
-        LOG.fine("Game started ");
+        LOG.fine("Game Created");
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.board = new Board();
@@ -49,6 +49,7 @@ public class Game {
     }
 
     public synchronized void addRedPlayer(Player redPlayer){
+        LOG.fine("Game started between " + whitePlayer.name + " and " + redPlayer.name);
         this.activePlayer = redPlayer;
         this.redPlayer = redPlayer;
     }
@@ -74,6 +75,7 @@ public class Game {
      * Method used to switch the active color of the game
      */
     public synchronized void changeActiveColor() {
+        LOG.fine("Game Turn Toggled");
         if ( this.activeColor == Color.RED) {
             this.activeColor = Color.WHITE;
             this.activePlayer = whitePlayer;
@@ -81,6 +83,7 @@ public class Game {
             this.activeColor = Color.RED;
             this.activePlayer = redPlayer;
         }
+        board.changeActiveColor();
     }
 
     public void gameOver(String gameOverMsg){

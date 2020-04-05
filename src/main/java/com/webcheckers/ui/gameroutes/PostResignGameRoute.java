@@ -28,15 +28,15 @@ public class PostResignGameRoute implements Route {
         LOG.config("PostResignGameRoute is initialized.");
     }
 
-    public Object handle(Request request, Response response) {
-        LOG.finer("PostResignRoute invoked");
+    @Override
+    public Object handle(Request request, Response response) throws Exception{
+        LOG.fine("PostResignRoute invoked");
         Player me = request.session().attribute("currentUser");
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         Game game = me.getGame();
         game.gameOver(String.format(GAME_OVER_MSG, me.name));
-        playerLobby.removeGame(game.getWhitePlayer());
         me.endGame(false);
         game.changeActiveColor();
 

@@ -209,7 +209,7 @@ public class Board {
             return reversed;
     }
 
-    public void changeActiveColor(){
+    protected void changeActiveColor(){
         if(activeColor == Color.RED){
             activeColor = Color.WHITE;
         }

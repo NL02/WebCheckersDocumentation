@@ -72,8 +72,8 @@ public class  GetHomeRoute implements Route {
    *   the rendered HTML for the Home page
    */
   @Override
-  public Object handle(Request request, Response response) {
-    LOG.finer("GetHomeRoute is invoked.");
+  public Object handle(Request request, Response response) throws Exception{
+    LOG.fine("GetHomeRoute is invoked.");
     //
     Map<String, Object> vm = new HashMap<>();
     vm.put(TITLE_ATTR, TITLE);

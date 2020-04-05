@@ -23,7 +23,9 @@ public class PostValidateMoveRoute implements Route {
         LOG.config("PostValidateMoveRoute is initialized.");
     }
 
+    @Override
     public Object handle(Request request, Response response) throws Exception {
+        LOG.fine("PostValidateMoveRoute invoked");
         final Session httpSession = request.session();
         Gson gson = new Gson();
         Move move = gson.fromJson(request.queryParams("actionData"), Move.class);

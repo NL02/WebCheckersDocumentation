@@ -18,17 +18,18 @@ public class PostSubmitTurnRoute implements Route {
         this.templateEngine = templateEngine;
         this.playerLobby = playerLobby;
 
-        LOG.config("PostSubmitturnRoute is initialized.");
+        LOG.config("PostSubmitTurnRoute is initialized.");
     }
 
-    public Object handle(Request request, Response response) {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+        LOG.fine("PostSubmitTurnRoute invoked");
         final Session httpSession = request.session();
         Gson gson = new Gson();
 
         Player player = httpSession.attribute("currentUser");
         Message moveMessage = player.getGame().submitTurn();
-        playerLobby.findPlayer(player.name).getGame().changeActiveColor();
-        player.getGame().getBoard().changeActiveColor();
+        player.getGame().changeActiveColor();
 
         return gson.toJson(moveMessage);
     }

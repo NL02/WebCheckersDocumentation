@@ -54,7 +54,8 @@ public class PostLoginRoute implements Route {
     // TemplateViewRoute method
     //
     @Override
-    public Object handle(Request request, Response response) {
+    public Object handle(Request request, Response response) throws Exception {
+        LOG.fine("PostLoginRoute Invoked");
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, "Bad Login");
 
@@ -62,7 +63,7 @@ public class PostLoginRoute implements Route {
         final Session httpSession = request.session();
 
         final String username = request.queryParams("username");
-        LOG.fine(username);
+        LOG.fine(username + " has logged in");
 
         Player newPlayer = new Player(username);
         playerLobby.addOnlinePlayer(newPlayer);

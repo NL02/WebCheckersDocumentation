@@ -64,8 +64,9 @@ public class GetGameRoute implements Route {
      * @return
      *   the rendered HTML for the Home page
      */
-    public Object handle(Request request, Response response) {
-        LOG.finer("GetGameRoute is invoked.");
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+        LOG.fine("GetGameRoute is invoked.");
         Player ghost = new Player("Waiting for Player");
 
         //Get myself, and my opponent
@@ -133,6 +134,7 @@ public class GetGameRoute implements Route {
             GsonBuilder gsonBuilder = new GsonBuilder();
             Gson gson = gsonBuilder.create();
             vm.put(MODE_OPTION, gson.toJson(options));
+            playerLobby.removeGame(game.getWhitePlayer());
         }
 
         // Determine my POV
