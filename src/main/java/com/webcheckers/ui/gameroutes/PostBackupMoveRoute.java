@@ -8,7 +8,7 @@ import spark.*;
 
 import java.util.logging.Logger;
 
-public class PostBackupMoveRoute {
+public class PostBackupMoveRoute implements Route{
     private static final Logger LOG = Logger.getLogger(PostValidateMoveRoute.class.getName());
 
     private final TemplateEngine templateEngine;
