@@ -34,13 +34,25 @@ public class Board {
     }
 
     public Message validateMove(Move move) {
-        move.setMidpoint();
         int startX = move.getStart().getRow();
         int startY = move.getStart().getCell();
-        int midX = move.getMidpoint().getRow();
-        int midY = move.getMidpoint().getCell();
         int endX = move.getEnd().getRow();
         int endY = move.getEnd().getCell();
+
+        if(activeColor == Color.RED){
+            startX = 7 - startX;
+            startY = 7 - startY;
+            endX = 7 - endX;
+            endY = 7 -endY;
+            Position newStart = new Position(startX, startY);
+            Position newEnd = new Position(endX, endY);
+            move = new Move(newStart, newEnd);
+        }
+
+        move.setMidpoint();
+
+        int midX = move.getMidpoint().getRow();
+        int midY = move.getMidpoint().getCell();
 
         Piece movedPiece = board[startX][startY].getPiece();
 
@@ -117,13 +129,6 @@ public class Board {
         int midY = move.getMidpoint().getCell();
         int endX = move.getEnd().getRow();
         int endY = move.getEnd().getCell();
-
-        if(activeColor == Color.RED){
-            startX = 7 - startX;
-            startY = 7 - startY;
-            endX = 7 - endX;
-            endY = 7 -endY;
-        }
 
         Piece movedPiece = board[startX][startY].getPiece();
 
