@@ -83,7 +83,7 @@ public class GetGameRoute implements Route {
         vm.put(VIEW_MODE_ATTR, VIEW_MODE);
 
         if(me.status != Player.Status.WAITING && me.status != Player.Status.INGAME
-                && opponent == null && me.status != Player.Status.RESIGN){
+                && opponent == null){
             me.status = Player.Status.WAITING;
             if(PlayerLobby.getGame(me.name) == null) {
                 PlayerLobby.newGame(me);
@@ -106,10 +106,6 @@ public class GetGameRoute implements Route {
         else if (me.status == Player.Status.WAITING){
             game = PlayerLobby.getGame(me.name);
         }
-        else if(me.status == Player.Status.RESIGN){
-            response.redirect(WebServer.HOME_URL);
-            return null;
-        }
 
 
         Player redPlayer = game.getRedPlayer();
@@ -124,6 +120,7 @@ public class GetGameRoute implements Route {
         vm.put(WHITE_PLAYER_ATTR, whitePlayer);
         vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
 
+        // Determine if the game is over
         if(game.isGameOver() != null){
             final Map<String, Object> options = new HashMap<>(2);
             options.put(IS_GAME_OVER, true);
@@ -131,7 +128,12 @@ public class GetGameRoute implements Route {
             GsonBuilder gsonBuilder = new GsonBuilder();
             Gson gson = gsonBuilder.create();
             vm.put(MODE_OPTION, gson.toJson(options));
+
+            // Add the scores to each players scorecard and remove the game from the playerLobby
+            whitePlayer.endGame(game.winner == whitePlayer);
+            redPlayer.endGame(game.winner == redPlayer);
             playerLobby.removeGame(game.getWhitePlayer());
+            playerLobby.removeGame(game.getRedPlayer());
         }
 
         // Determine my POV

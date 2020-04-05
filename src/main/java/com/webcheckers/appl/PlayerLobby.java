@@ -27,7 +27,8 @@ public class PlayerLobby {
 
     private Map <String, Player> userMap = new HashMap<>();
     private static int totalGames = 0;
-    private static Map<String, Game> activeGames = new HashMap<>();
+    public static Map<String, Game> activeGames = new HashMap<>();
+    //private static Map<String, Game> allGames = TODO Find Valid Data Type to store all games
 
     //
     // Public methods
@@ -42,6 +43,7 @@ public class PlayerLobby {
      */
     public static Game getGame(String whitePlayer){
         return activeGames.getOrDefault(whitePlayer, null);
+        //TODO Switch to allGames once implemented
     }
 
     /**
@@ -165,6 +167,7 @@ public class PlayerLobby {
 
     public static void addGame(Player player, Game game){
         activeGames.put(player.name, game);
+        //TODO Add game to allGames
     }
 
     /**
@@ -174,7 +177,7 @@ public class PlayerLobby {
      */
     public static void removeGame(Player player){
         gameFinished();
-        activeGames.remove(player);
+        activeGames.remove(player.name);
     }
 
     /**
