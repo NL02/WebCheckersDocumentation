@@ -5,6 +5,7 @@ import com.webcheckers.util.Message;
 import java.util.ArrayList;
 
 public class Board {
+    // Move validation messages
     private static final Message VALID_MOVE = Message.info("Move is valid");
     private static final Message OUT_OF_BOUNDS = Message.error("Move is out of bounds");
     private static final Message INVALID_SPACE = Message.error("Cannot move to white space");
@@ -15,6 +16,10 @@ public class Board {
     private static final Message NO_PIECE = Message.error("No piece to jump");
     private static final Message NOT_KING = Message.error("Only king pieces can move backwards");
 
+    // Backup move messages
+    private static final Message BACKUP_SUCCESSFUL = Message.info("Move undone");
+    private static final Message NO_MOVES = Message.error("No moves to back up");
+
     private static final int ROWS = 8;
     private static final int COLS = 8;
 
@@ -22,9 +27,12 @@ public class Board {
 
     private Space[][] board; // board representation
 
-    private ArrayList<Move> pendingMoves; // A deque of moves that haven't been submitted
+    private ArrayList<Move> pendingMoves; // A list of moves that haven't been submitted
     private boolean isJumping = false;
     private boolean isMoving = false;
+
+    private int turnStartX = -1;
+    private int turnStartY = -1;
 
     public Board() {
         InitializeSpaces();
@@ -49,12 +57,17 @@ public class Board {
             move = new Move(newStart, newEnd);
         }
 
+        if (turnStartX == -1) {
+            turnStartX = startX;
+            turnStartY = startY;
+        }
+
         move.setMidpoint();
 
         int midX = move.getMidpoint().getRow();
         int midY = move.getMidpoint().getCell();
 
-        Piece movedPiece = board[startX][startY].getPiece();
+        Piece movedPiece = board[turnStartX][turnStartY].getPiece();
 
         // Verify move is in-bounds
         if (endX < 0 || endX == ROWS || endY < 0 || endY == COLS) {
@@ -62,7 +75,7 @@ public class Board {
         }
 
         // Verify move is in right direction
-        if (movedPiece.getType() != Piece.PieceType.KING && activeColor != Color.WHITE) {
+        if (movedPiece.getType() != Piece.PieceType.KING) {
             if (movedPiece.getColor() == Color.RED && startX > endX
                 || movedPiece.getColor() == Color.WHITE && startX < endX) {
                 return NOT_KING;
@@ -108,13 +121,33 @@ public class Board {
         return VALID_MOVE;
     }
 
+    /**
+     * Execute a player's moves for the turn.
+     *
+     * @return Message indicating submission success or failure
+     */
     public Message submitTurn() {
         for (Move move : pendingMoves) {
             executeMove(move);
         }
 
         pendingMoves.clear();
+        turnStartX = -1;
+        turnStartY = -1;
         return Message.info("Turn submitted.");
+    }
+
+    /**
+     * Undo the most recent move.
+     *
+     * @return Message indicating backup success or failure
+     */
+    public Message backupMove() {
+        if (pendingMoves.size() > 0) {
+            pendingMoves.remove(pendingMoves.size() - 1);
+            return BACKUP_SUCCESSFUL;
+        }
+        return NO_MOVES;
     }
 
     /**
