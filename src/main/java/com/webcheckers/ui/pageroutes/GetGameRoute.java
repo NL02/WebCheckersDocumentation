@@ -1,5 +1,7 @@
 package com.webcheckers.ui.pageroutes;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.appl.Player;
@@ -30,6 +32,9 @@ public class GetGameRoute implements Route {
     static final String ACTIVE_COLOR_ATTR = "activeColor";
     static final String ACTIVE_COLOR = "RED";
     static final String BOARD_ATTR = "board";
+    static final String IS_GAME_OVER = "isGameOver";
+    static final String GAME_OVER_ATTR = "gameOverMessage";
+    static final String MODE_OPTION = "modeOptionsAsJSON";
 
     //
     // Attributes
@@ -120,6 +125,15 @@ public class GetGameRoute implements Route {
         vm.put(RED_PLAYER_ATTR, redPlayer);
         vm.put(WHITE_PLAYER_ATTR, whitePlayer);
         vm.put(ACTIVE_COLOR_ATTR, playerLobby.findPlayer(whitePlayer.name).getGame().getActiveColor());
+
+        if(game.isGameOver() != null){
+            final Map<String, Object> options = new HashMap<>(2);
+            options.put(IS_GAME_OVER, true);
+            options.put(GAME_OVER_ATTR,game.isGameOver());
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            Gson gson = gsonBuilder.create();
+            vm.put(MODE_OPTION, gson.toJson(options));
+        }
 
         // Determine my POV
         if(me == redPlayer) {
