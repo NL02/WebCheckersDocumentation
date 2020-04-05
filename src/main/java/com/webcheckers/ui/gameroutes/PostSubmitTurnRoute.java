@@ -31,7 +31,9 @@ public class PostSubmitTurnRoute implements Route {
 
         Player player = httpSession.attribute("currentUser");
         Message moveMessage = player.getGame().submitTurn();
-        player.getGame().changeActiveColor();
+        if (moveMessage.getType() != Message.Type.ERROR) {
+            player.getGame().changeActiveColor();
+        }
 
         return gson.toJson(moveMessage);
     }

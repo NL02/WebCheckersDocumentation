@@ -16,6 +16,9 @@ public class Board {
     private static final Message NO_PIECE = Message.error("No piece to jump");
     private static final Message NOT_KING = Message.error("Only king pieces can move backwards");
 
+    // Submit turn messages
+    private static final Message JUMP_AVAILABLE = Message.error("A jump is available, so you must make a jump move");
+
     // Backup move messages
     private static final Message BACKUP_SUCCESSFUL = Message.info("Move undone");
     private static final Message NO_MOVES = Message.error("No moves to back up");
@@ -127,6 +130,27 @@ public class Board {
      * @return Message indicating submission success or failure
      */
     public Message submitTurn() {
+        // If it's a simple move, verify no jumps are available
+        if (pendingMoves.size() == 1) {
+            int startX = pendingMoves.get(0).getStart().getRow();
+            int endX = pendingMoves.get(0).getEnd().getRow();
+
+            if (Math.abs(endX - startX) == 1) {
+                for (int row = 0; row < ROWS; row++) {
+                    for (int cell = 0; cell < COLS; cell++) {
+                        // Verify a piece of the active color is at this cell
+                        if (board[row][cell].getPiece() != null
+                                && board[row][cell].getPiece().getColor() == activeColor) {
+                            System.out.println(board[row][cell].getPiece().getColor());
+                            if (checkJumps(row, cell)) {
+                                return JUMP_AVAILABLE;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         for (Move move : pendingMoves) {
             executeMove(move);
         }
@@ -148,6 +172,68 @@ public class Board {
             return BACKUP_SUCCESSFUL;
         }
         return NO_MOVES;
+    }
+
+    /**
+     * Check to see if any of four potential jump moves from a space are valid.
+     * Used when verifying if a jump is available when submitting a turn.
+     *
+     * @param row Starting row
+     * @param cell Starting cell
+     * @return true if a jump exists; else false
+     */
+    private boolean checkJumps(int row, int cell) {
+        Piece piece = board[row][cell].getPiece();
+        Position start = new Position(row, cell);
+        Position northWest = null;
+        Position northEast = null;
+        Position southWest = null;
+        Position southEast = null;
+
+        if (piece.getType() == Piece.PieceType.KING || piece.getColor() == Color.WHITE) {
+            if (row > 1 && cell > 1)
+                northWest = new Position(row - 2, cell - 2);
+            if (row > 1 && cell < 6)
+                northEast = new Position(row - 2, cell + 2);
+        }
+        if (piece.getType() == Piece.PieceType.KING || piece.getColor() == Color.RED) {
+            if (row < 6 && cell > 1)
+                southWest = new Position(row + 2, cell - 2);
+            if (row < 6 && cell < 6)
+                southEast = new Position(row + 2, cell + 2);
+        }
+
+        Position[] testPositions = new Position[]{northWest, northEast, southWest, southEast};
+
+        for (Position p : testPositions) {
+            if (p != null) {
+                if (canJump(new Move(start, p))) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Verify that the given move is a valid jump.
+     * Used when verifying if a jump is available when submitting a turn.
+     *
+     * @param move Move to verify
+     * @return true if jump is possible; else false
+     */
+    private boolean canJump(Move move) {
+        System.out.println(move.getStart().getRow() + ", " + move.getStart().getCell() + " to "
+                            + move.getEnd().getRow() + ", " + move.getEnd().getCell());
+        move.setMidpoint();
+        int midX = move.getMidpoint().getRow();
+        int midY = move.getMidpoint().getCell();
+        int endX = move.getEnd().getRow();
+        int endY = move.getEnd().getCell();
+
+        return board[midX][midY].getPiece() != null && board[endX][endY].getPiece() == null
+                && board[midX][midY].getPiece().getColor() != activeColor;
     }
 
     /**
