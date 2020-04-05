@@ -27,9 +27,12 @@ public class Board {
 
     private Space[][] board; // board representation
 
-    private ArrayList<Move> pendingMoves; // A deque of moves that haven't been submitted
+    private ArrayList<Move> pendingMoves; // A list of moves that haven't been submitted
     private boolean isJumping = false;
     private boolean isMoving = false;
+
+    private int turnStartX = -1;
+    private int turnStartY = -1;
 
     public Board() {
         InitializeSpaces();
@@ -54,12 +57,17 @@ public class Board {
             move = new Move(newStart, newEnd);
         }
 
+        if (turnStartX == -1) {
+            turnStartX = startX;
+            turnStartY = startY;
+        }
+
         move.setMidpoint();
 
         int midX = move.getMidpoint().getRow();
         int midY = move.getMidpoint().getCell();
 
-        Piece movedPiece = board[startX][startY].getPiece();
+        Piece movedPiece = board[turnStartX][turnStartY].getPiece();
 
         // Verify move is in-bounds
         if (endX < 0 || endX == ROWS || endY < 0 || endY == COLS) {
@@ -67,7 +75,7 @@ public class Board {
         }
 
         // Verify move is in right direction
-        if (movedPiece.getType() != Piece.PieceType.KING && activeColor != Color.WHITE) {
+        if (movedPiece.getType() != Piece.PieceType.KING) {
             if (movedPiece.getColor() == Color.RED && startX > endX
                 || movedPiece.getColor() == Color.WHITE && startX < endX) {
                 return NOT_KING;
@@ -124,6 +132,8 @@ public class Board {
         }
 
         pendingMoves.clear();
+        turnStartX = -1;
+        turnStartY = -1;
         return Message.info("Turn submitted.");
     }
 

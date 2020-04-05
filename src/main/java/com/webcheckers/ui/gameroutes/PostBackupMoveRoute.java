@@ -1,5 +1,6 @@
 package com.webcheckers.ui.gameroutes;
 
+import com.google.gson.Gson;
 import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
@@ -24,8 +25,9 @@ public class PostBackupMoveRoute implements Route {
     public Object handle(Request request, Response response) {
         final Player player = request.session().attribute("currentUser");
         Game game = player.getGame();
+        Gson gson = new Gson();
 
-        return game.backupMove();
+        return gson.toJson(game.backupMove());
     }
 
 }
