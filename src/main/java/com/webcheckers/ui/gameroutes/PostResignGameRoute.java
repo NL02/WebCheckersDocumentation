@@ -31,8 +31,12 @@ public class PostResignGameRoute implements Route {
         LOG.fine("PostResignRoute invoked");
         Player me = request.session().attribute("currentUser");
 
+
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
+        if(me.status != Player.Status.INGAME){
+            return gson.toJson(Message.error("You can't resign if you haven't started a game!"));
+        }
         Game game = me.getGame();
         game.gameOver(String.format(GAME_OVER_MSG, me.name), game.getRedPlayer() == me ? game.getWhitePlayer() : game.getRedPlayer());
 
