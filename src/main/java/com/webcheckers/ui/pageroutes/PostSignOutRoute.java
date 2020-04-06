@@ -2,7 +2,7 @@ package com.webcheckers.ui.pageroutes;
 
 import com.webcheckers.appl.PlayerLobby;
 import spark.*;
-import com.webcheckers.model.Player;
+import com.webcheckers.appl.Player;
 
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -36,7 +36,8 @@ public class PostSignOutRoute implements Route{
     // TemplateViewRoute method
     //
     @Override
-    public Object handle(Request request, Response response){
+    public Object handle(Request request, Response response) throws Exception{
+        LOG.fine("PostSignOutRoute invoked");
         final Session httpSession = request.session();
 
         Player currentPlayer = httpSession.attribute(CURRENT_USER_ATTR);

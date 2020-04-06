@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.ui.gameroutes.*;
 import com.webcheckers.ui.pageroutes.*;
 import spark.TemplateEngine;
 
@@ -57,7 +58,11 @@ public class WebServer {
   public static final String LOGIN_URL = "/signin";
   public static final String GAME_URL = "/game";
   public static final String LOGOUT_URL = "/signout";
-  public static final String NEW_GAME_URL = "/newgame";
+  public static final String RESIGN_URL = "/resignGame";
+  public static final String SUBMIT_URL = "/submitTurn";
+  public static final String VALIDATE_URL = "/validateMove";
+  public static final String BACKUP_URL = "/backupMove";
+  public static final String CHECK_URL = "/checkTurn";
 
   //
   // Attributes
@@ -147,12 +152,16 @@ public class WebServer {
     get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
     get(LOGIN_URL, new GetLoginRoute(playerLobby, templateEngine));
     get(GAME_URL, new GetGameRoute(playerLobby, templateEngine));
-    get(NEW_GAME_URL, new GetNewGameRoute(templateEngine));
 
     // Post a Login attempt.
     post(LOGIN_URL, new PostLoginRoute(playerLobby, templateEngine));
     post(LOGOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
 
+    post(VALIDATE_URL, new PostValidateMoveRoute(playerLobby, templateEngine));
+    post(SUBMIT_URL, new PostSubmitTurnRoute(playerLobby, templateEngine));
+    post(BACKUP_URL, new PostBackupMoveRoute(playerLobby, templateEngine));
+    post(RESIGN_URL, new PostResignGameRoute(playerLobby, templateEngine));
+    post(CHECK_URL, new PostCheckTurnRoute(playerLobby,templateEngine));
     //
     LOG.config("WebServer is initialized.");
 

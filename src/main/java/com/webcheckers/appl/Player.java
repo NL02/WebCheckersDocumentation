@@ -1,11 +1,16 @@
-package com.webcheckers.model;
+package com.webcheckers.appl;
+
+import com.webcheckers.model.Game;
 
 public class Player {
     //private final int playerID; // Internal ID constructed by hashing player info
     public final String name;
     public Status status;
-    public CheckersGame game;
+    public Game game;
     public int playerID;
+
+    private int gamesPlayed = 0;
+    private int gamesWon = 0;
 
     /**
      * Status - enums for the current state of the player
@@ -14,7 +19,7 @@ public class Player {
         OFFLINE, //Player is not online
         SEARCHING, //Player is not in a game, nor looking for a game
         WAITING, //Player has created a new game and is waiting for
-        INGAME //Player is currently in a game or spectating
+        INGAME, //Player is currently in a game or spectating
     }
 
     /**
@@ -32,7 +37,7 @@ public class Player {
     //   return playerID;
     //}
 
-    public void startGame(CheckersGame game){
+    public void startGame(Game game){
         this.game = game;
     }
 
@@ -42,6 +47,27 @@ public class Player {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Returns the game this player is playing.
+     *
+     * @return game
+     */
+    public Game getGame() {
+        return game;
+    }
+
+    /**
+     * endGame sets the player game to null
+     */
+    public void endGame(boolean hasWon){
+        this.status = Status.SEARCHING;
+        this.game = null;
+        gamesPlayed++;
+        if(hasWon){
+            gamesWon++;
+        }
     }
 
     /**

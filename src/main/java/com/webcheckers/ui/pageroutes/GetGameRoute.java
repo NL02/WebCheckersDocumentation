@@ -1,47 +1,28 @@
 package com.webcheckers.ui.pageroutes;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Game;
+import com.webcheckers.appl.Player;
+import com.webcheckers.ui.WebServer;
+import com.webcheckers.ui.board.BoardView;
+import spark.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-
-import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.CheckersGame;
-import com.webcheckers.model.Player;
-import com.webcheckers.ui.board.BoardView;
-import com.webcheckers.ui.board.Color;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
-
-import com.webcheckers.util.Message;
-
-import static spark.Spark.halt;
 
 
 public class GetGameRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
-    private static final Message GAME_MSG = Message.info("Game Page.");
-
-    private static final Message GAMEID_MSG = Message.info("gameID");
-
-    private static final Message CURRENT_USER_MSG = Message.info("currentUser");
-
-    private static final Message VIEWMODE_MSG = Message.info("modeOptions");
-
-    private static final Message RED_PLAYER_MSG = Message.info("redPlayer");
-
-    private static final Message WHITE_PLAYER_MSG = Message.info("whitePlayer");
-
-    private static final Message ACTIVE_COLOR_MSG = Message.info("activeColor");
-
     // Values used in the view-model map for rendering the home view.
     static final String TITLE_ATTR = "title";
-    static final String TITLE = "Let's start the Game!";
+    static final String TITLE_START = "Let's start the Game!";
+    static final String TITLE_WAIT = "Waiting for Opponent";
     static final String GAMEID_ATTR = "gameID";
     static final String CURRENT_USER_ATTR = "currentUser";
     static final String VIEW_MODE_ATTR = "viewMode";
@@ -51,6 +32,9 @@ public class GetGameRoute implements Route {
     static final String ACTIVE_COLOR_ATTR = "activeColor";
     static final String ACTIVE_COLOR = "RED";
     static final String BOARD_ATTR = "board";
+    static final String IS_GAME_OVER = "isGameOver";
+    static final String GAME_OVER_ATTR = "gameOverMessage";
+    static final String MODE_OPTION = "modeOptionsAsJSON";
 
     //
     // Attributes
@@ -68,7 +52,6 @@ public class GetGameRoute implements Route {
         this.playerLobby = Objects.requireNonNull(playerLobby, "PlayerLobby is required");
         //
         LOG.config("GetGameRoute is initialized.");
-
     }
     /**
      * Render the WebCheckers Game page.
@@ -81,39 +64,83 @@ public class GetGameRoute implements Route {
      * @return
      *   the rendered HTML for the Home page
      */
-    public Object handle(Request request, Response response) {
-        LOG.finer("GetGameRoute is invoked.");
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+        LOG.fine("GetGameRoute is invoked.");
+        Player ghost = new Player("Waiting for Player");
+
         //Get myself, and my opponent
         Player me = request.session().attribute("currentUser");
+
         String opponent = request.queryParams("opponent");
-        CheckersGame game;
-        if(me.status == Player.Status.SEARCHING){
-            game = PlayerLobby.getGame(opponent);
-            game.addRedPlayer(me);
-        }
-        else{
-            game = PlayerLobby.getGame(me.name);
-        }
-        Player redPlayer = game.getRedPlayer();
-        Player whitePlayer = game.getWhitePlayer();
-        redPlayer.status = Player.Status.INGAME;
-        whitePlayer.status = Player.Status.INGAME;
-        // Add Objects to the view
+
+        Game game = null;
+
         Map<String, Object> vm = new HashMap<>();
-        vm.put(TITLE_ATTR, TITLE);
-        vm.put(GAMEID_ATTR, me.playerID);
+
+        vm.put(TITLE_ATTR, TITLE_WAIT);
         vm.put(CURRENT_USER_ATTR, me);
         vm.put(VIEW_MODE_ATTR, VIEW_MODE);
+
+        if(me.status != Player.Status.WAITING && me.status != Player.Status.INGAME
+                && opponent == null){
+            me.status = Player.Status.WAITING;
+            if(PlayerLobby.getGame(me.name) == null) {
+                PlayerLobby.newGame(me);
+                game = PlayerLobby.getGame(me.name);
+                me.startGame(game);
+                game.addRedPlayer(ghost);
+            }
+        }
+        else if(me.status == Player.Status.SEARCHING){
+            game = PlayerLobby.getGame(opponent);
+            game.addRedPlayer(me);
+            me.startGame(game);
+            playerLobby.addGame(me, game);
+            vm.put(TITLE_ATTR, TITLE_START);
+        }
+        else if (me.status == Player.Status.INGAME){
+            game = PlayerLobby.getGame(me.name);
+            vm.put(TITLE_ATTR, TITLE_START);
+        }
+        else if (me.status == Player.Status.WAITING){
+            game = PlayerLobby.getGame(me.name);
+        }
+
+
+        Player redPlayer = game.getRedPlayer();
+        Player whitePlayer = game.getWhitePlayer();
+        if(!redPlayer.equals(ghost)) {
+            redPlayer.status = Player.Status.INGAME;
+            whitePlayer.status = Player.Status.INGAME;
+        }
+
+        // Add Objects to the view
         vm.put(RED_PLAYER_ATTR, redPlayer);
         vm.put(WHITE_PLAYER_ATTR, whitePlayer);
-        vm.put(ACTIVE_COLOR_ATTR, ACTIVE_COLOR);
+        vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
+
+        // Determine if the game is over
+        if(game.isGameOver() != null){
+            final Map<String, Object> options = new HashMap<>(2);
+            options.put(IS_GAME_OVER, true);
+            options.put(GAME_OVER_ATTR,game.isGameOver());
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            Gson gson = gsonBuilder.create();
+            vm.put(MODE_OPTION, gson.toJson(options));
+
+            // Add the scores to each players scorecard and remove the game from the playerLobby
+            whitePlayer.endGame(game.winner == whitePlayer);
+            redPlayer.endGame(game.winner == redPlayer);
+            playerLobby.removeGame(game.getWhitePlayer());
+            playerLobby.removeGame(game.getRedPlayer());
+        }
+
         // Determine my POV
-        if(me == redPlayer) {
-            vm.put(BOARD_ATTR, new BoardView(Color.RED));
-        }
-        else{
-            vm.put(BOARD_ATTR, new BoardView(Color.WHITE));
-        }
+
+            vm.put(BOARD_ATTR, new BoardView(me, game));
+
+
         // render the View
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
