@@ -15,6 +15,7 @@ public class Board {
     private static final Message NOT_DIAGONAL = Message.error("Cannot move that direction");
     private static final Message NO_PIECE = Message.error("No piece to jump");
     private static final Message NOT_KING = Message.error("Only king pieces can move backwards");
+    private static final Message OWN_PIECE = Message.error("Can't jump own piece");
 
     // Submit turn messages
     private static final Message JUMP_AVAILABLE = Message.error("A jump is available, so you must make a jump move");
@@ -77,11 +78,32 @@ public class Board {
             return OUT_OF_BOUNDS;
         }
 
-        // Verify move is in right direction
-        if (movedPiece.getType() != Piece.PieceType.KING) {
-            if (movedPiece.getColor() == Color.RED && startX > endX
-                || movedPiece.getColor() == Color.WHITE && startX < endX) {
-                return NOT_KING;
+        // If move is a simple move, verify it's the only move
+        if (Math.abs(endX - startX) == 1) {
+            if (pendingMoves.size() > 0) {
+                return ILLEGAL_COMBO;
+            }
+        }
+        // Otherwise, it's a jump move, so verify there is a piece to jump over
+        else {
+            if (board[midX][midY].getPiece() == null) {
+                return NO_PIECE;
+            }
+            else if (board[midX][midY].getPiece().getColor() == activeColor) {
+                return OWN_PIECE;
+            }
+            else {
+                isJumping = true;
+            }
+        }
+
+        // Verify move is in right direction if it's not multi-jump
+        if (!isJumping) {
+            if (movedPiece.getType() != Piece.PieceType.KING) {
+                if (movedPiece.getColor() == Color.RED && startX > endX
+                        || movedPiece.getColor() == Color.WHITE && startX < endX) {
+                    return NOT_KING;
+                }
             }
         }
 
@@ -100,22 +122,6 @@ public class Board {
         // Verify move is diagonal
         else if (startX == endX || startY == endY) {
             return NOT_DIAGONAL;
-        }
-
-        // If move is a simple move, verify it's the only move
-        if (Math.abs(endX - startX) == 1) {
-            if (pendingMoves.size() > 0) {
-                return ILLEGAL_COMBO;
-            }
-        }
-        // Otherwise, it's a jump move, so verify there is a piece to jump over
-        else {
-            if (board[midX][midY].getPiece() == null) {
-                return NO_PIECE;
-            }
-            else {
-                isJumping = true;
-            }
         }
 
         // Move is valid, so add it to pendingMoves
@@ -158,6 +164,8 @@ public class Board {
         pendingMoves.clear();
         turnStartX = -1;
         turnStartY = -1;
+        isMoving = false;
+        isJumping = false;
         return Message.info("Turn submitted.");
     }
 
