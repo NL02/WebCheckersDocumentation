@@ -70,6 +70,11 @@ public class Player {
         }
     }
 
+    public void endSession(){
+        this.status = Status.OFFLINE;
+        this.game = null;
+    }
+
     /**
      * checks if the given object is equal (has the name username) as this player instance
      *

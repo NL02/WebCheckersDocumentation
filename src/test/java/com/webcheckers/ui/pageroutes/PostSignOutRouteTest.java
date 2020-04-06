@@ -65,7 +65,6 @@ public class PostSignOutRouteTest {
         CuT.handle(request, response);
 
         // Analyze results:
-        assertEquals(true, CuT.getIsRemoved());
         assertEquals(Player.Status.OFFLINE, player.status);
         verify(response).redirect(WebServer.HOME_URL);
     }
@@ -84,7 +83,6 @@ public class PostSignOutRouteTest {
         CuT.handle(request, response);
 
         // Analyze results:
-        assertEquals(true, CuT.getIsRemoved());
         assertEquals(Player.Status.OFFLINE, player.status);
         verify(response).redirect(WebServer.HOME_URL);
     }
@@ -103,7 +101,6 @@ public class PostSignOutRouteTest {
         CuT.handle(request, response);
 
         // Analyze results:
-        assertEquals(true, CuT.getIsRemoved());
         assertEquals(Player.Status.OFFLINE, player.status);
         verify(response).redirect(WebServer.HOME_URL);
     }
@@ -121,7 +118,6 @@ public class PostSignOutRouteTest {
         //Invoke Test
         CuT.handle(request, response);
 
-        assertEquals(false, CuT.getIsRemoved());
         assertEquals(Player.Status.OFFLINE, player.status);
         verify(response).redirect(WebServer.HOME_URL);
     }

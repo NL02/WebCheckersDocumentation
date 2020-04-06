@@ -94,8 +94,13 @@ public class  GetHomeRoute implements Route {
 
 
     Player currentUser = request.session().attribute("currentUser");
+    if(currentUser != null && currentUser.status == Player.Status.INGAME){
+      response.redirect("/game");
+      halt();
+    }
     if(currentUser != null && currentUser.status != Player.Status.SEARCHING) {
       currentUser.status = Player.Status.SEARCHING;
+      playerLobby.removeGame(currentUser);
     }
     // render the View
     return templateEngine.render(new ModelAndView(vm , VIEW_NAME));

@@ -15,8 +15,6 @@ public class PostResignGameRoute implements Route {
 
     private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
-    private final String ERR_MSSG = "Failed resign";
-    private final String PASS_MSSG = "Passed resign";
     private final String GAME_OVER_MSG = "%s has resigned from the game";
 
     private Message message;

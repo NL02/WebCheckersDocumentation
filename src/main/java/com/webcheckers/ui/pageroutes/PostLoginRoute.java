@@ -65,10 +65,18 @@ public class PostLoginRoute implements Route {
         final String username = request.queryParams("username");
         LOG.fine(username + " has logged in");
 
-        Player newPlayer = new Player(username);
-        playerLobby.addOnlinePlayer(newPlayer);
+        Player newPlayer;
+        AddUserStatus is_added;
 
-        AddUserStatus is_added = playerLobby.saveUser(newPlayer);
+        if(playerLobby.findPlayer(username) == null) {
+            newPlayer = new Player(username);
+            playerLobby.addOnlinePlayer(newPlayer);
+            is_added = playerLobby.saveUser(newPlayer);
+        }
+        else{
+            newPlayer = playerLobby.findPlayer(username);
+            is_added = AddUserStatus.SUCCESS;
+        }
 
         if(is_added == AddUserStatus.SUCCESS){
             httpSession.attribute(CURRENT_USER_ATTR, newPlayer);

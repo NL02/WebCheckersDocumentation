@@ -192,4 +192,11 @@ public class PlayerLobby {
     public Player findPlayer(String username){
         return userMap.getOrDefault(username, null);
     }
+
+    public boolean endSession(Player player){
+        removeUser(player);
+        decrement();
+        player.endSession();
+        return findPlayer(player.name) == null;
+    }
 }
