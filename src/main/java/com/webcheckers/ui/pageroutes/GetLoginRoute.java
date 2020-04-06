@@ -1,14 +1,10 @@
 package com.webcheckers.ui.pageroutes;
 
+import com.webcheckers.appl.PlayerLobby;
+import spark.*;
+
 import java.util.HashMap;
 import java.util.logging.Logger;
-
-import com.webcheckers.appl.PlayerLobby;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
 
 
 public class GetLoginRoute implements Route {
@@ -34,7 +30,7 @@ public class GetLoginRoute implements Route {
     }
 
     /**
-     *  Renders Login Psgr
+     *  Renders Login Page
      * @param request http request
      * @param response http response
      * @return the rendered HTML for the Home page

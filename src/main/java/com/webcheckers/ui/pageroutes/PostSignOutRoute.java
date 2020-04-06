@@ -1,6 +1,7 @@
 package com.webcheckers.ui.pageroutes;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.ui.WebServer;
 import spark.*;
 import com.webcheckers.appl.Player;
 
@@ -18,6 +19,7 @@ public class PostSignOutRoute implements Route{
     //
     private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
+    private boolean is_removed;
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code POST /} HTTP requests.
@@ -32,6 +34,10 @@ public class PostSignOutRoute implements Route{
         LOG.config("PostSignOutRoute is initialized");
     }
 
+    public boolean getIsRemoved(){
+        return is_removed;
+    }
+
     //
     // TemplateViewRoute method
     //
@@ -41,7 +47,7 @@ public class PostSignOutRoute implements Route{
         final Session httpSession = request.session();
 
         Player currentPlayer = httpSession.attribute(CURRENT_USER_ATTR);
-        boolean is_removed = playerLobby.removeUser(currentPlayer);
+        is_removed = playerLobby.removeUser(currentPlayer);
         if(is_removed){
             PlayerLobby.decrement();
         }
@@ -53,7 +59,7 @@ public class PostSignOutRoute implements Route{
         currentPlayer.status = Player.Status.OFFLINE;
         httpSession.attribute(CURRENT_USER_ATTR, null);
 
-        response.redirect("/");
+        response.redirect(WebServer.HOME_URL);
         return null;
     }
 }

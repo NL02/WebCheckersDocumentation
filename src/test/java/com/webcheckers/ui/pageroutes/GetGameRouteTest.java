@@ -1,4 +1,4 @@
 package com.webcheckers.ui.pageroutes;
 
-public class PostSignOutRouteTester {
+public class GetGameRouteTest {
 }
