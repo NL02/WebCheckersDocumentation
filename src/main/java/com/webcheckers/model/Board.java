@@ -97,15 +97,15 @@ public class Board {
             }
         }
 
-        // Verify move is in right direction if it's not multi-jump
-        if (!isJumping) {
+        // Verify move is in right direction
+        //if (!isJumping) {
             if (movedPiece.getType() != Piece.PieceType.KING) {
                 if (movedPiece.getColor() == Color.RED && startX > endX
                         || movedPiece.getColor() == Color.WHITE && startX < endX) {
                     return NOT_KING;
                 }
             }
-        }
+        //}
 
         // Verify space is unoccupied
         if (board[endX][endY].getPiece() != null) {
