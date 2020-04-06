@@ -3,7 +3,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Player;
+import com.webcheckers.appl.Player;
 import com.webcheckers.ui.WebServer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -57,7 +57,7 @@ public class PostSignOutRouteTest {
      * searching for a game.
      */
     @Test
-    public void removePlayerWasSearching() {
+    public void removePlayerWasSearching() throws Exception {
         when(session.attribute(PostSignOutRoute.CURRENT_USER_ATTR)).thenReturn(player);
         when(lobby.removeUser(player)).thenReturn(true);
 
@@ -75,7 +75,7 @@ public class PostSignOutRouteTest {
      * waiting for a game.
      */
     @Test
-    public void removePlayerWasWaiting() {
+    public void removePlayerWasWaiting() throws Exception{
         when(session.attribute(PostSignOutRoute.CURRENT_USER_ATTR)).thenReturn(player);
         when(lobby.removeUser(player)).thenReturn(true);
         player.status = Player.Status.WAITING;
@@ -94,7 +94,7 @@ public class PostSignOutRouteTest {
      * in a game.
      */
     @Test
-    public void removePlayerWasInGame() {
+    public void removePlayerWasInGame() throws Exception{
         when(session.attribute(PostSignOutRoute.CURRENT_USER_ATTR)).thenReturn(player);
         when(lobby.removeUser(player)).thenReturn(true);
         player.status = Player.Status.INGAME;
@@ -113,7 +113,7 @@ public class PostSignOutRouteTest {
      * not online
      */
     @Test
-    public void removePlayerWasNotOnline() {
+    public void removePlayerWasNotOnline() throws Exception{
         when(session.attribute(PostSignOutRoute.CURRENT_USER_ATTR)).thenReturn(player);
         when(lobby.removeUser(player)).thenReturn(false);
         player.status = Player.Status.OFFLINE;

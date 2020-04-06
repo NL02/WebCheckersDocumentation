@@ -146,14 +146,8 @@ public class PlayerLobby {
         return false;
     }
 
-    public static Color getMyColor(Player player){
-        Game me = getGame(player.name);
-        if(me.getRedPlayer().equals(player)){
-            return Color.RED;
-        }
-        else{
-            return Color.WHITE;
-        }
+    public static int getTotalGames(){
+        return totalGames;
     }
 
     /**

@@ -5,7 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Player;
+import com.webcheckers.appl.Player;
 import com.webcheckers.ui.TemplateEngineTester;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -43,7 +43,7 @@ public class PostLoginRouteTest {
     }
 
     @Test
-    public void test_good_login() {
+    public void test_good_login() throws Exception {
         final TemplateEngineTester testEngine = new TemplateEngineTester();
         when(request.queryParams("username")).thenReturn("may");
         when(lobby.saveUser(player)).thenReturn(PostLoginRoute.AddUserStatus.SUCCESS);
@@ -60,7 +60,7 @@ public class PostLoginRouteTest {
     }
 
     @Test
-    public void test_bad_login_alpha() {
+    public void test_bad_login_alpha() throws Exception{
         final TemplateEngineTester testEngine = new TemplateEngineTester();
         when(session.attribute(PostLoginRoute.MESSAGE_ATTR)).thenReturn(PostLoginRoute.INVALID_USERNAME);
         when(request.queryParams("username")).thenReturn("may;");
@@ -77,7 +77,7 @@ public class PostLoginRouteTest {
     }
 
     @Test
-    public void test_bad_login_length() {
+    public void test_bad_login_length() throws Exception {
         final TemplateEngineTester testEngine = new TemplateEngineTester();
         when(session.attribute(PostLoginRoute.MESSAGE_ATTR)).thenReturn(PostLoginRoute.INVALID_USERNAME);
         when(request.queryParams("username")).thenReturn("m");

@@ -1,8 +1,9 @@
-package com.webcheckers.model;
+package com.webcheckers.appl;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import com.webcheckers.model.Game;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -66,7 +67,7 @@ public class PlayerTest {
     @Test
     public void testStartGame() {
         // Inject mock game into CuT
-        CheckersGame game = mock(CheckersGame.class);
+        Game game = mock(Game.class);
         CuT.startGame(game);
 
         // Analyze results

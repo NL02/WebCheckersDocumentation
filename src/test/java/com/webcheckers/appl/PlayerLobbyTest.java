@@ -4,8 +4,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.webcheckers.model.CheckersGame;
-import com.webcheckers.model.Player;
+import com.webcheckers.model.Game;
+import com.webcheckers.appl.Player;
 import com.webcheckers.ui.pageroutes.PostLoginRoute;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -32,22 +32,11 @@ public class PlayerLobbyTest {
     private Player player1;
     private Player player2;
     private Player player3;
-    private CheckersGame game;
+    private Game game;
 
     @BeforeEach
     public void setup() {
         CuT = new PlayerLobby();
-    }
-
-    /**
-     * Test the ability to make a new PlayerService
-     */
-    @Test
-    public void test_make_player_service(){
-        // Invoke test
-        final PlayerServices playerServices = CuT.newPlayerServices();
-        // check result
-        assertNotNull(playerServices);
     }
 
     /**
@@ -59,11 +48,11 @@ public class PlayerLobbyTest {
         when(player1.getName()).thenReturn("Avdol");
         CuT.saveUser(player1);
 
-        when(new CheckersGame(player1)).thenReturn(game);
+        when(new Game(player1)).thenReturn(game);
 
         // Invoke test
         CuT.newGame(player1);
-        CheckersGame gameMade = CuT.getGame("Avdol");
+        Game gameMade = CuT.getGame("Avdol");
 
         // Check results
         // 1) The returned game is not null
@@ -76,8 +65,9 @@ public class PlayerLobbyTest {
     @Test
     public void test_game_finished(){
         int totalGames = CuT.getTotalGames();
+        CuT.newGame(player1);
         // Invoke test
-        CuT.gameFinished();
+        CuT.removeGame(player1);
         int totalGamesAfter = CuT.getTotalGames();
 
         // Analyze results:
@@ -292,7 +282,7 @@ public class PlayerLobbyTest {
 
         // Invoke test
         boolean result = CuT.removeUser(player1);
-        ArrayList<Player> onlinePlayersList = CuT.getOnlinePlayers();
+        ArrayList<Player> onlinePlayersList = CuT.getWaitingPlayer();
 
         // Analyze results:
         assertEquals(true, result);
@@ -316,13 +306,11 @@ public class PlayerLobbyTest {
         player2.status = Player.Status.SEARCHING;
 
         // Invoke test
-        boolean result1 = CuT.addOnlinePlayer(player1);
-        boolean result2 = CuT.addOnlinePlayer(player2);
-        ArrayList<Player> onlinePlayersList = CuT.getOnlinePlayers();
+        CuT.addOnlinePlayer(player1);
+        CuT.addOnlinePlayer(player2);
+        ArrayList<Player> onlinePlayersList = CuT.getWaitingPlayer();
 
         // Analyze results:
-        assertEquals(false, result1);
-        assertEquals(true, result2);
         assertEquals(1, onlinePlayersList.size());
         assertEquals(player2, onlinePlayersList.get(0));
     }

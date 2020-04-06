@@ -70,7 +70,7 @@ public class GetLoginRouteTest {
      * Test the handle() method to see if it renders the login page properly
      */
     @Test
-    public void testRender() {
+    public void testRender() throws Exception{
         final TemplateEngineTester engineTester = new TemplateEngineTester();
         when(engine.render((any(ModelAndView.class)))).thenAnswer(engineTester.makeAnswer());
 
