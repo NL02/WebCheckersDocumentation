@@ -75,7 +75,12 @@ public class PostLoginRoute implements Route {
         }
         else{
             newPlayer = playerLobby.findPlayer(username);
-            is_added = AddUserStatus.SUCCESS;
+            if(newPlayer.status != Player.Status.OFFLINE){
+                is_added = AddUserStatus.PICKANOTHER;
+            }
+            else {
+                is_added = AddUserStatus.SUCCESS;
+            }
         }
 
         if(is_added == AddUserStatus.SUCCESS){
