@@ -35,8 +35,9 @@ public class GetLoginRoute implements Route {
      * @param response http response
      * @return the rendered HTML for the Home page
      */
-    public Object handle(Request request, Response response) {
-        LOG.finer("GetLoginRoute is invoked.");
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+        LOG.fine("GetLoginRoute is invoked.");
 
         HashMap<String, Object> vm = new HashMap<>();
 

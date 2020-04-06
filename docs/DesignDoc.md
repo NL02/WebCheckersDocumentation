@@ -77,7 +77,7 @@ This section describes the features of the application.
 
 This section describes the application domain.
 
-![The WebCheckers Domain Model](DomainModel.png)
+![The WebCheckers Domain Model](domain-model-placeholder.png)
 
 > _Provide a high-level overview of the domain for this application. You
 > can discuss the more important domain entities and their relationship
@@ -117,7 +117,7 @@ Details of the components within these tiers are supplied below.
 This section describes the web interface flow; this is how the user views and interacts
 with the WebCheckers application.
 
-![The WebCheckers Web Interface Statechart](WebCheckers State Chart.jpeg)
+![The WebCheckers Web Interface Statechart](web-interface-placeholder.png)
 
 > _Provide a summary of the application's user interface.  Describe, from
 > the user's perspective, the flow of the pages in the web application._
@@ -154,8 +154,6 @@ the online player count.
 > consider placing the narrative description of that feature in a
 > separate section for describing significant features. Place this after
 > you describe the design of the three tiers._
-
-![The WebCheckers Sequence Diagram for Game Route](SequenceDiagramforWebCheckers.jpeg)
 
 When the user first enters the web page the GetHomeRoute correctly displays the sign in button
 as well as the online player count. After clicking the sign in button, the GetLoginRoute displays a 

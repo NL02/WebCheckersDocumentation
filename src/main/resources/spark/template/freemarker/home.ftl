@@ -17,7 +17,7 @@
   <div class="body">
 
   <#if currentUser??>
-    <h2><a href="/newgame">Create Game</a></h2>
+    <h2><a href="/game">Create Game</a></h2>
   </#if>
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl" />
@@ -27,15 +27,6 @@
         <p><a href="/game?opponent=${player.name}">${player.name}</a></p>
     </#list>
   </#if>
-
-
-
-
-    <!-- TODO: future content on the Home:
-            to start games,
-            spectating active games,
-            or replay archived games
-    -->
 
   </div>
 

@@ -1,4 +1,4 @@
-package com.webcheckers.ui.board;
+package com.webcheckers.model;
 
 import java.util.Iterator;
 
@@ -8,26 +8,31 @@ import java.util.Iterator;
  *
  * @author Wyatt Holcombe
  */
-public class BoardRow implements Iterable<BoardSquare> {
+public class Row implements Iterable<Space> {
 
     private static final int NUM_SQUARES = 8; // Number of squares per row
 
-    private final BoardSquare[] squares;    // Array of squares
+    private final Space[] spaces;    // Array of squares
     private final int index;                // Index of this row on the board
 
     /**
      * Constructs a new BoardRow and the BoardSquares it contains.
      * @param index Index of this row on the board
-     * @param playerColor Color of pieces the player controls; those pieces
-     *                    will be rendered in the bottom 3 rows
+//     * @param playerColor Color of pieces the player controls; those pieces
+//     *                    will be rendered in the bottom 3 rows
      */
-    public BoardRow(int index, Color playerColor) {
-        squares = new BoardSquare[NUM_SQUARES];
-        this.index = index;
+    public Row(int index, Space[] spaces) {
+//        spaces = new Space[NUM_SQUARES];
+//        this.index = index;
 
         // Construct squares; second expression determines square validity
-        for (int i = 0; i < NUM_SQUARES; i++) {
-            squares[i] = new BoardSquare(i,(index - i) % 2 != 0, makePiece(i, playerColor));
+//        for (int i = 0; i < NUM_SQUARES; i++) {
+//            spaces[i] = new Space(i,(index - i) % 2 != 0, makePiece(i, playerColor));
+//        }
+        this.spaces = new Space[NUM_SQUARES];
+        this.index = index;
+        for( int i = 0; i < NUM_SQUARES; i++ ) {
+            this.spaces[i] = new Space(i, spaces[i].isValid(),spaces[i].getPiece());
         }
     }
 
@@ -47,14 +52,14 @@ public class BoardRow implements Iterable<BoardSquare> {
      * @param i Index of the square in the row
      * @return null if ineligible space, otherwise white or red CheckersPiece
      */
-    private CheckersPiece makePiece(int i, Color playerColor) {
+    private Piece makePiece(int i, Color playerColor) {
         // Determine if a square can start with a piece; return null if not
         if ((index - i) % 2 == 0 || (index > 2 && index < 5)) {
             return null;
         }
         // Determine the right color and return a piece of that color
         else {
-            return new CheckersPiece(index < 3 ? (playerColor == Color.WHITE ? Color.RED : Color.WHITE) : playerColor);
+            return new Piece(index < 3 ? (playerColor == Color.WHITE ? Color.RED : Color.WHITE) : playerColor);
         }
     }
 
@@ -63,25 +68,25 @@ public class BoardRow implements Iterable<BoardSquare> {
      *
      * @return Iterator over squares
      */
-    public Iterator<BoardSquare> iterator() {
+    public Iterator<Space> iterator() {
         return new RowIterator(this);
     }
 
     /**
      * Iterator that iterates over a BoardRow's squares.
      */
-    public class RowIterator implements Iterator<BoardSquare> {
+    public class RowIterator implements Iterator<Space> {
 
         private int index;              // Current index
-        private BoardSquare[] squares;  // Array of squares from row
+        private Space[] spaces;  // Array of squares from row
 
         /**
          * Constructs a new RowIterator.
          *
          * @param row BoardRow to iterate over
          */
-        public RowIterator(BoardRow row) {
-            this.squares = row.squares;
+        public RowIterator(Row row) {
+            this.spaces = row.spaces;
             this.index = 0;
         }
 
@@ -92,7 +97,7 @@ public class BoardRow implements Iterable<BoardSquare> {
          */
         @Override
         public boolean hasNext() {
-            return index < squares.length;
+            return index < spaces.length;
         }
 
         /**
@@ -101,10 +106,10 @@ public class BoardRow implements Iterable<BoardSquare> {
          * @return Next BoardSquare
          */
         @Override
-        public BoardSquare next() {
+        public Space next() {
             if (hasNext()) {
                 index++;
-                return squares[index - 1];
+                return spaces[index - 1];
             }
             return null;
         }

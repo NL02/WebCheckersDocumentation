@@ -1,21 +1,29 @@
 package com.webcheckers.ui.pageroutes;
 
-import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.appl.PlayerServices;
-import com.webcheckers.model.Player;
-import com.webcheckers.util.Message;
-import spark.*;
-
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Logger;
+
+import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.Player;
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import spark.Session;
+import spark.TemplateEngine;
+
+import com.webcheckers.util.Message;
+
+import static spark.Spark.halt;
 
 /**
  * The UI Controller to GET the Home page.
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
-public class GetHomeRoute implements Route {
+public class  GetHomeRoute implements Route {
 
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
@@ -31,12 +39,6 @@ public class GetHomeRoute implements Route {
   static final String CURRENT_USER_ATTR = "currentUser";
   static final String PLAYER_LIST_ATTR = "playerList";
 
-  // Key in the session attribute map for the player who started the session
-  static final String PLAYERSERVICES_KEY = "playerServices";
-  static final String TIMEOUT_SESSION_KEY = "timeoutWatchdog";
-
-  // The length of the session timeout in seconds
-  static final int SESSION_TIMEOUT_PERIOD = 120;
 
   //
   // Attributes
@@ -53,7 +55,7 @@ public class GetHomeRoute implements Route {
    */
   public GetHomeRoute(PlayerLobby playerLobby, final TemplateEngine templateEngine) {
     this.playerLobby = playerLobby;
-    this.templateEngine = templateEngine;//Objects.requireNonNull(templateEngine, "templateEngine is required");
+    this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
     //
     LOG.config("GetHomeRoute is initialized.");
   }
@@ -70,8 +72,8 @@ public class GetHomeRoute implements Route {
    *   the rendered HTML for the Home page
    */
   @Override
-  public Object handle(Request request, Response response) {
-    LOG.finer("GetHomeRoute is invoked.");
+  public Object handle(Request request, Response response) throws Exception{
+    LOG.fine("GetHomeRoute is invoked.");
     //
     Map<String, Object> vm = new HashMap<>();
     vm.put(TITLE_ATTR, TITLE);
@@ -81,7 +83,7 @@ public class GetHomeRoute implements Route {
 
     // display a user message in the Home page
     vm.put(MESSAGE_ATTR, WELCOME_MSG);
-    Message num_players = Message.info(String.format(NUM_PLAYERS_MSG, playerLobby.getLiveCount())); //change 3 to numplayers from playerlobby
+    Message num_players = Message.info(String.format(NUM_PLAYERS_MSG, playerLobby.getLiveCount()));
     vm.put( NUM_PLAYERS_ATTR, num_players);
 
     // display navbar
@@ -90,29 +92,6 @@ public class GetHomeRoute implements Route {
     // list all logged-in players
     vm.put(PLAYER_LIST_ATTR, playerLobby.getWaitingPlayer());
 
-    // if this is a brand new browser session or a session that timed out
-    if(httpSession.attribute(PLAYERSERVICES_KEY) == null) {
-      // get the object that will provide client-specific services for this player
-      final PlayerServices playerService = playerLobby.newPlayerServices();
-      httpSession.attribute(PLAYERSERVICES_KEY, playerService);
-
-      // setup session timeout. The valueUnbound() method in the SessionTimeoutWatchdog will
-      // be called when the session is invalidated. The next invocation of this route will
-      // have a new Session object with no attributes.
-      httpSession.attribute(TIMEOUT_SESSION_KEY, new SessionTimeoutWatchdog(playerService));
-      httpSession.maxInactiveInterval(SESSION_TIMEOUT_PERIOD);
-
-      // render the Game Form view
-      vm.put(NEW_PLAYER_ATTR, true);
-
-      return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
-    }
-//    else {
-//      // there is a game already being played so redirect the user to the Game view
-//      response.redirect(WebServer.GAME_URL);
-//      halt();
-//      return null;
-//    }
 
     Player currentUser = request.session().attribute("currentUser");
     if(currentUser != null && currentUser.status != Player.Status.SEARCHING) {

@@ -1,13 +1,13 @@
 package com.webcheckers.appl;
 
+import com.webcheckers.model.Color;
+import com.webcheckers.model.Game;
+import com.webcheckers.ui.pageroutes.PostLoginRoute;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Logger;
 import java.util.Map;
-
-import com.webcheckers.model.CheckersGame;
-import com.webcheckers.model.Player;
-import com.webcheckers.ui.pageroutes.PostLoginRoute;
+import java.util.logging.Logger;
 
 /**
  * The object to coordinate the state of the Web Application and keep site wide statistics.
@@ -26,50 +26,31 @@ public class PlayerLobby {
     private ArrayList<Player> onlinePlayers = new ArrayList<>();
 
     private Map <String, Player> userMap = new HashMap<>();
-    private int totalGames = 0;
-    private static Map<String, CheckersGame> activeGames = new HashMap<>();
+    private static int totalGames = 0;
+    public static Map<String, Game> activeGames = new HashMap<>();
+    //private static Map<String, Game> allGames = TODO Find Valid Data Type to store all games
 
     //
     // Public methods
     //
 
-    /**
-     * Get a new {PlayerServices} object to provide client-specific services to
-     * the client who just connected to this application.
-     *
-     * @return
-     *   A new {PlayerServices}
-     */
-    public PlayerServices newPlayerServices(){
-        LOG.fine("New player services instance created.");
-        return new PlayerServices(this);
-    }
 
     /**
-     * Create a {CheckersGame} game.
+     * Create a new {CheckersGame} game.
      *
      * @return
-     *   A new {@link CheckersGame}
+     *   A new {@link Game}
      */
-    public static CheckersGame getGame(String whitePlayer){
+    public static Game getGame(String whitePlayer){
         return activeGames.getOrDefault(whitePlayer, null);
-    }
-
-    public int getTotalGames(){
-        return totalGames;
+        //TODO Switch to allGames once implemented
     }
 
     /**
      * Collect site wide statistics when a game is finished.
      */
-    public void gameFinished(){
-        synchronized(this){
+    private static void gameFinished(){
             totalGames++;
-        }
-    }
-
-    public ArrayList<Player> getOnlinePlayers(){
-        return onlinePlayers;
     }
 
     /**
@@ -82,12 +63,10 @@ public class PlayerLobby {
     public PostLoginRoute.AddUserStatus saveUser(Player newPlayer) {
         if( newPlayer.getName() == null || !newPlayer.getName().matches("^[a-zA-Z0-9]*$") || newPlayer.getName().matches(".*\\s+.*")){
             LOG.fine("Not alphaNumeric/spaces");
-            System.out.println("invalid char");
             return PostLoginRoute.AddUserStatus.INVLAID;
         }
         if (newPlayer.getName().length() < 1) {
             LOG.fine("Not at least one character");
-            System.out.println("too small");
             return PostLoginRoute.AddUserStatus.INVLAID;
         }
         if (userMap.containsKey(newPlayer.getName())) {
@@ -141,6 +120,11 @@ public class PlayerLobby {
                     waitingPlayers.add(player);
                 }
             }
+            else{
+                if(waitingPlayers.contains(player)){
+                    waitingPlayers.remove(player);
+                }
+            }
         });
         return waitingPlayers;
     }
@@ -162,27 +146,47 @@ public class PlayerLobby {
         return false;
     }
 
+    public static Color getMyColor(Player player){
+        Game me = getGame(player.name);
+        if(me.getRedPlayer().equals(player)){
+            return Color.RED;
+        }
+        else{
+            return Color.WHITE;
+        }
+    }
+
     /**
      * newGame creates a new CheckersGame instance and adds it to the activeGames array
      *
      * @param whitePlayer Player that is starting the game
      */
     public static void newGame(Player whitePlayer){
-        activeGames.put(whitePlayer.getName(), new CheckersGame(whitePlayer, null));
+        activeGames.put(whitePlayer.name, new Game(whitePlayer, null));
+    }
+
+    public static void addGame(Player player, Game game){
+        activeGames.put(player.name, game);
+        //TODO Add game to allGames
+    }
+
+    /**
+     * removeGame removes a game from the activeGames list
+     *
+     * @param player that is starting the game
+     */
+    public static void removeGame(Player player){
+        gameFinished();
+        activeGames.remove(player.name);
     }
 
     /**
      * addOnlinePlayer adds a player to the onlinePlayers list
      *
      * @param player player instance to be added
-     * @return boolean whether or not the player was saved
      */
-    public boolean addOnlinePlayer(Player player){
-        if(player.status != Player.Status.OFFLINE) {
-            onlinePlayers.add(player);
-            return true;
-        }
-        return false;
+    public void addOnlinePlayer(Player player){
+        onlinePlayers.add(player);
     }
 
     /**
@@ -192,9 +196,6 @@ public class PlayerLobby {
      * @return player from map or null if not present
      */
     public Player findPlayer(String username){
-        if(username == null){
-            return null;
-        }
         return userMap.getOrDefault(username, null);
     }
 }
