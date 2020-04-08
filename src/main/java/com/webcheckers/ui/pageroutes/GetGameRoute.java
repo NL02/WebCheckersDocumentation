@@ -24,6 +24,8 @@ public class GetGameRoute implements Route {
     static final String TITLE_ATTR = "title";
     static final String TITLE_YOUR_TURN = "It's your turn!";
     static final String TITLE_OPP_TURN = "It's your opponents turn!";
+    static final String TITLE_WIN = "Congratulations! You won!";
+    static final String TITLE_LOST = "Too bad! Better luck next time!";
     static final String TITLE_WAIT = "Waiting for Opponent";
     static final String GAME_ID_ATTR = "gameID";
     static final String CURRENT_USER_ATTR = "currentUser";
@@ -140,6 +142,12 @@ public class GetGameRoute implements Route {
             GsonBuilder gsonBuilder = new GsonBuilder();
             Gson gson = gsonBuilder.create();
             vm.put(MODE_OPTION, gson.toJson(options));
+            if(game.winner == me){
+                vm.put(TITLE_ATTR, TITLE_WIN);
+            }
+            else{
+                vm.put(TITLE_ATTR, TITLE_LOST);
+            }
 
             // Add the scores to each players scorecard and remove the game from the playerLobby
             whitePlayer.endGame(game.winner == whitePlayer);
