@@ -3,7 +3,6 @@ package com.webcheckers.ui.pageroutes.gameroutes;
 import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.ui.gameroutes.GetSpectatorStopWatchingRoute;
-import com.webcheckers.ui.pageroutes.PostSignOutRoute;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -40,13 +39,6 @@ public class GetSpectatorStopWatchingRouteTest {
      */
     @BeforeEach
     public void setup(){
-        this.request = mock(Request.class);
-        this.response = mock(Response.class);
-        this.session = mock(Session.class);
-
-        this.me = mock(Player.class);
-
-        this.CuT = new GetSpectatorStopWatchingRoute(mock(PlayerLobby.class), mock(TemplateEngine.class));
     }
 
     /**
@@ -55,12 +47,5 @@ public class GetSpectatorStopWatchingRouteTest {
      */
     @Test
     public void testHandle() throws Exception{
-        when(session.attribute("currentUser")).thenReturn(me);
-        CuT.handle(request, response);
-
-        assert(me.status == Player.Status.SEARCHING);
-        assert(me.game == null);
-        assert(request.url().equals("/"));
-
     }
 }

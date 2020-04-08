@@ -41,15 +41,6 @@ public class PostSpectatorCheckTurnRouteTest {
      */
     @BeforeEach
     public void setup(){
-        this.request = mock(Request.class);
-        this.response = mock(Response.class);
-
-        this.me = mock(Player.class);
-        this.game = mock(Game.class);
-
-        me.startGame(game);
-
-        this.CuT = new PostSpectateCheckTurnRoute(mock(PlayerLobby.class), mock(TemplateEngine.class));
     }
 
     /**
@@ -57,15 +48,5 @@ public class PostSpectatorCheckTurnRouteTest {
      */
     @Test
     public void testHandle() throws Exception {
-        String value = (String)CuT.handle(request, response);
-        assert(value.equals("false"));
-
-        game.changeActiveColor();
-        value = (String)CuT.handle(request, response);
-        assert(value.equals("true"));
-
-        value = (String)CuT.handle(request, response);
-        assert(value.equals("false"));
-
     }
 }
