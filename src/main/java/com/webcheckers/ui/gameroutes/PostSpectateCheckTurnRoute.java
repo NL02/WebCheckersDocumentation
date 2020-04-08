@@ -16,7 +16,7 @@ public class PostSpectateCheckTurnRoute implements Route {
 
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
-    private static Color lastActiveColor = Color.RED;
+    private Color lastActiveColor = Color.RED;
 
     public PostSpectateCheckTurnRoute(PlayerLobby playerLobby, final TemplateEngine templateEngine) {
         this.playerLobby = playerLobby;

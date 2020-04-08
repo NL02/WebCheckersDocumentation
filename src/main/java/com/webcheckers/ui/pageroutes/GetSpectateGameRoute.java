@@ -19,7 +19,6 @@ public class GetSpectateGameRoute implements Route {
     // Values for rendering the Game view
     static final String TITLE_ATTR = "title";
     static final String TITLE_START = "Spectating a Game";
-    static final String TITLE_WAIT = "Waiting for Opponent";
     static final String GAME_ID_ATTR = "gameID";
     static final String CURRENT_USER_ATTR = "currentUser";
     static final String VIEW_MODE_ATTR = "viewMode";
