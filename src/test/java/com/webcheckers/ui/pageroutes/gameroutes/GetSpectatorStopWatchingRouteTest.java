@@ -3,14 +3,17 @@ package com.webcheckers.ui.pageroutes.gameroutes;
 import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.ui.gameroutes.GetSpectatorStopWatchingRoute;
+import com.webcheckers.ui.pageroutes.PostSignOutRoute;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.Request;
 import spark.Response;
+import spark.Session;
 import spark.TemplateEngine;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Unit Test Suite for the GetSpectatorStopWatchingRoute handler
@@ -24,6 +27,7 @@ public class GetSpectatorStopWatchingRouteTest {
     /** External Objects */
     private Request request;
     private Response response;
+    private Session session;
 
     /** Project-level Objects */
     private Player me;
@@ -38,6 +42,7 @@ public class GetSpectatorStopWatchingRouteTest {
     public void setup(){
         this.request = mock(Request.class);
         this.response = mock(Response.class);
+        this.session = mock(Session.class);
 
         this.me = mock(Player.class);
 
@@ -50,7 +55,7 @@ public class GetSpectatorStopWatchingRouteTest {
      */
     @Test
     public void testHandle() throws Exception{
-        request.session().attribute("currentUser", me);
+        when(session.attribute("currentUser")).thenReturn(me);
         CuT.handle(request, response);
 
         assert(me.status == Player.Status.SEARCHING);
