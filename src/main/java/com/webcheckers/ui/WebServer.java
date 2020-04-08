@@ -57,12 +57,15 @@ public class WebServer {
   public static final String HOME_URL = "/";
   public static final String LOGIN_URL = "/signin";
   public static final String GAME_URL = "/game";
+  public static final String SPECTATE_URL = "/spectator/game";
   public static final String LOGOUT_URL = "/signout";
   public static final String RESIGN_URL = "/resignGame";
   public static final String SUBMIT_URL = "/submitTurn";
   public static final String VALIDATE_URL = "/validateMove";
   public static final String BACKUP_URL = "/backupMove";
   public static final String CHECK_URL = "/checkTurn";
+  public static final String SPECTATE_CHECK_URL = "/spectator/checkTurn";
+  public static final String SPECTATE_STOP_WATCHING_URL = "/spectator/stopWatching";
 
   //
   // Attributes
@@ -152,17 +155,22 @@ public class WebServer {
     get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
     get(LOGIN_URL, new GetLoginRoute(playerLobby, templateEngine));
     get(GAME_URL, new GetGameRoute(playerLobby, templateEngine));
+    get(SPECTATE_URL, new GetSpectateGameRoute(playerLobby, templateEngine));
 
     // Post a Login attempt.
     post(LOGIN_URL, new PostLoginRoute(playerLobby, templateEngine));
     post(LOGOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
 
+    // Game Routes
     post(VALIDATE_URL, new PostValidateMoveRoute(playerLobby, templateEngine));
     post(SUBMIT_URL, new PostSubmitTurnRoute(playerLobby, templateEngine));
     post(BACKUP_URL, new PostBackupMoveRoute(playerLobby, templateEngine));
     post(RESIGN_URL, new PostResignGameRoute(playerLobby, templateEngine));
     post(CHECK_URL, new PostCheckTurnRoute(playerLobby,templateEngine));
-    //
+
+    // Spectator Routes
+    post(SPECTATE_CHECK_URL, new PostSpectateCheckTurnRoute(playerLobby, templateEngine));
+    get(SPECTATE_STOP_WATCHING_URL, new GetSpectatorStopWatchingRoute(playerLobby, templateEngine));
     LOG.config("WebServer is initialized.");
 
   }

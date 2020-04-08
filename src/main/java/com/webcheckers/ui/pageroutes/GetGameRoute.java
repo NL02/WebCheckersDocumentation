@@ -3,6 +3,7 @@ package com.webcheckers.ui.pageroutes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.appl.Player;
 import com.webcheckers.ui.WebServer;
@@ -21,9 +22,12 @@ public class GetGameRoute implements Route {
 
     // Values used in the view-model map for rendering the home view.
     static final String TITLE_ATTR = "title";
-    static final String TITLE_START = "Let's start the Game!";
+    static final String TITLE_YOUR_TURN = "It's your turn!";
+    static final String TITLE_OPP_TURN = "It's your opponents turn!";
+    static final String TITLE_WIN = "Congratulations! You won!";
+    static final String TITLE_LOST = "Too bad! Better luck next time!";
     static final String TITLE_WAIT = "Waiting for Opponent";
-    static final String GAMEID_ATTR = "gameID";
+    static final String GAME_ID_ATTR = "gameID";
     static final String CURRENT_USER_ATTR = "currentUser";
     static final String VIEW_MODE_ATTR = "viewMode";
     static final String VIEW_MODE = "PLAY";
@@ -78,7 +82,6 @@ public class GetGameRoute implements Route {
 
         Map<String, Object> vm = new HashMap<>();
 
-        vm.put(TITLE_ATTR, TITLE_WAIT);
         vm.put(CURRENT_USER_ATTR, me);
         vm.put(VIEW_MODE_ATTR, VIEW_MODE);
 
@@ -90,6 +93,7 @@ public class GetGameRoute implements Route {
                 game = PlayerLobby.getGame(me.name);
                 me.startGame(game);
                 game.addRedPlayer(ghost);
+                vm.put(TITLE_ATTR, TITLE_WAIT);
             }
         }
         else if(me.status == Player.Status.SEARCHING){
@@ -97,14 +101,24 @@ public class GetGameRoute implements Route {
             game.addRedPlayer(me);
             me.startGame(game);
             playerLobby.addGame(me, game);
-            vm.put(TITLE_ATTR, TITLE_START);
+            vm.put(TITLE_ATTR, TITLE_YOUR_TURN);
         }
         else if (me.status == Player.Status.INGAME){
             game = PlayerLobby.getGame(me.name);
-            vm.put(TITLE_ATTR, TITLE_START);
+            vm.put(TITLE_ATTR, TITLE_OPP_TURN);
         }
         else if (me.status == Player.Status.WAITING){
             game = PlayerLobby.getGame(me.name);
+        }
+
+        if(me == game.getRedPlayer() && game.getActiveColor() == Color.RED){
+            vm.put(TITLE_ATTR, TITLE_YOUR_TURN);
+        }
+        else if(me == game.getWhitePlayer() && game.getActiveColor() == Color.WHITE){
+            vm.put(TITLE_ATTR, TITLE_YOUR_TURN);
+        }
+        else{
+            vm.put(TITLE_ATTR, TITLE_OPP_TURN);
         }
 
 
@@ -128,6 +142,12 @@ public class GetGameRoute implements Route {
             GsonBuilder gsonBuilder = new GsonBuilder();
             Gson gson = gsonBuilder.create();
             vm.put(MODE_OPTION, gson.toJson(options));
+            if(game.winner == me){
+                vm.put(TITLE_ATTR, TITLE_WIN);
+            }
+            else{
+                vm.put(TITLE_ATTR, TITLE_LOST);
+            }
 
             // Add the scores to each players scorecard and remove the game from the playerLobby
             whitePlayer.endGame(game.winner == whitePlayer);

@@ -4,9 +4,7 @@ import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.ui.pageroutes.PostLoginRoute;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -28,7 +26,6 @@ public class PlayerLobby {
     private Map <String, Player> userMap = new HashMap<>();
     private static int totalGames = 0;
     public static Map<String, Game> activeGames = new HashMap<>();
-    //private static Map<String, Game> allGames = TODO Find Valid Data Type to store all games
 
     //
     // Public methods
@@ -43,7 +40,18 @@ public class PlayerLobby {
      */
     public static Game getGame(String whitePlayer){
         return activeGames.getOrDefault(whitePlayer, null);
-        //TODO Switch to allGames once implemented
+    }
+
+    public Collection<Game> getAllGames(){
+        ArrayList<Game> gameList = new ArrayList<>();
+        Game game;
+        for(String key : activeGames.keySet()){
+            game = activeGames.get(key);
+            if(!gameList.contains(game) && !game.getRedPlayer().name.equals("Waiting for Player")){
+                gameList.add(game);
+            }
+        }
+        return gameList;
     }
 
     /**
