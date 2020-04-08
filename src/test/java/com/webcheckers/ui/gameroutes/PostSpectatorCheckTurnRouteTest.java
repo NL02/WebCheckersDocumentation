@@ -1,4 +1,4 @@
-package com.webcheckers.ui.pageroutes.gameroutes;
+package com.webcheckers.ui.gameroutes;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.Player;

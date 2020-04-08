@@ -1,4 +1,4 @@
-package com.webcheckers.ui.pageroutes.gameroutes;
+package com.webcheckers.ui.gameroutes;
 
 import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
