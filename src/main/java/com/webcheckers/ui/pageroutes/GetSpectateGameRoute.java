@@ -50,6 +50,8 @@ public class GetSpectateGameRoute implements Route {
 
         Session session = request.session();
         Player me = session.attribute(CURRENT_USER_ATTR);
+        me.startGame(game);
+
         Map<String, Object> vm = new HashMap<>();
 
         vm.put(CURRENT_USER_ATTR, me);

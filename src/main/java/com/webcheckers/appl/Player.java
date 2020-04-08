@@ -63,12 +63,17 @@ public class Player {
      * endGame sets the player game to null
      */
     public void endGame(boolean hasWon){
-        this.status = Status.SEARCHING;
-        this.game = null;
-        gamesPlayed++;
-        if(hasWon){
-            gamesWon++;
+        if(this.status == Status.SPECTATING){
+            this.game = null;
         }
+        else {
+            this.game = null;
+            gamesPlayed++;
+            if (hasWon) {
+                gamesWon++;
+            }
+        }
+        this.status = Status.SEARCHING;
     }
 
     public void endSession(){

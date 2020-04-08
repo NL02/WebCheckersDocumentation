@@ -24,12 +24,17 @@
 
   <#if currentUser??>
     <h2>Available Opponents:</h2></br>
+
     <#list playerList as player>
+        <#if player != currentUser>
         <p><a href="/game?opponent=${player.name}">${player.name}</a></p>
+        </#if>
     </#list>
+
     <h2>Available games to spectate:</h2></br>
+
     <#list gameList as game>
-        <p><a href="/spectate/game?player=${game.redPlayer.name}">${game.redPlayer.name} vs. ${game.whitePlayer.name}</a></p>
+        <p><a href="/spectator/game?player=${game.redPlayer.name}">${game.redPlayer.name} vs. ${game.whitePlayer.name}</a></p>
     </#list>
   </#if>
 
