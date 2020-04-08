@@ -27,10 +27,10 @@ public class BoardView implements Iterable<Row> {
 
         Color playerColor;
 
-        if (game.getRedPlayer().name.equals(me.name)) {
-            playerColor = Color.RED;
-        } else {
+        if (game.getWhitePlayer().name.equals(me.name)) {
             playerColor = Color.WHITE;
+        } else {
+            playerColor = Color.RED;
         }
         if (playerColor == Color.WHITE) {
             for (int r = 0; r < 8; r++) {

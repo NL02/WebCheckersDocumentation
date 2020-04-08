@@ -23,7 +23,7 @@ public class GetGameRoute implements Route {
     static final String TITLE_ATTR = "title";
     static final String TITLE_START = "Let's start the Game!";
     static final String TITLE_WAIT = "Waiting for Opponent";
-    static final String GAMEID_ATTR = "gameID";
+    static final String GAME_ID_ATTR = "gameID";
     static final String CURRENT_USER_ATTR = "currentUser";
     static final String VIEW_MODE_ATTR = "viewMode";
     static final String VIEW_MODE = "PLAY";
