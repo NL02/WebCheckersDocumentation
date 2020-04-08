@@ -170,7 +170,7 @@ public class WebServer {
 
     // Spectator Routes
     post(SPECTATE_CHECK_URL, new PostSpectateCheckTurnRoute(playerLobby, templateEngine));
-    get(SPECTATE_STOP_WATCHING_URL, new PostSpectatorStopWatchingRoute(playerLobby, templateEngine));
+    get(SPECTATE_STOP_WATCHING_URL, new GetSpectatorStopWatchingRoute(playerLobby, templateEngine));
     LOG.config("WebServer is initialized.");
 
   }

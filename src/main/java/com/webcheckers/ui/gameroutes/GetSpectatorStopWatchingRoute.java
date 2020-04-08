@@ -9,22 +9,22 @@ import java.util.logging.Logger;
 
 import static spark.Spark.halt;
 
-public class PostSpectatorStopWatchingRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(PostSpectatorStopWatchingRoute.class.getName());
+public class GetSpectatorStopWatchingRoute implements Route {
+    private static final Logger LOG = Logger.getLogger(GetSpectatorStopWatchingRoute.class.getName());
 
     private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
 
-    public PostSpectatorStopWatchingRoute(PlayerLobby playerLobby, TemplateEngine templateEngine){
+    public GetSpectatorStopWatchingRoute(PlayerLobby playerLobby, TemplateEngine templateEngine){
         this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
 
-        LOG.config("PostSpectatorStopWatchingRoute initialized");
+        LOG.config("GetSpectatorStopWatchingRoute initialized");
     }
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        LOG.fine("PostSpectatorStopWatchingRoute invoked");
+        LOG.fine("GetSpectatorStopWatchingRoute invoked");
 
         Session session = request.session();
         Player me = session.attribute("currentUser");
