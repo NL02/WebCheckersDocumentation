@@ -23,8 +23,13 @@
     <#include "message.ftl" />
 
   <#if currentUser??>
+    <h2>Available Opponents:</h2></br>
     <#list playerList as player>
         <p><a href="/game?opponent=${player.name}">${player.name}</a></p>
+    </#list>
+    <h2>Available games to spectate:</h2></br>
+    <#list gameList as game>
+        <p><a href="/spectate/game?player=${game.redPlayer}">${game.redPlayer.name} vs. ${game.whitePlayer.name}</a></p>
     </#list>
   </#if>
 

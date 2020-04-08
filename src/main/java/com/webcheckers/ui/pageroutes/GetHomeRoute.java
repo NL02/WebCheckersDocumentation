@@ -38,6 +38,7 @@ public class  GetHomeRoute implements Route {
   static final String NEW_PLAYER_ATTR = "newPlayer";
   static final String CURRENT_USER_ATTR = "currentUser";
   static final String PLAYER_LIST_ATTR = "playerList";
+  static final String GAME_LIST_ATTR = "gameList";
 
 
   //
@@ -91,6 +92,9 @@ public class  GetHomeRoute implements Route {
 
     // list all logged-in players
     vm.put(PLAYER_LIST_ATTR, playerLobby.getWaitingPlayer());
+
+    // list all active games
+    vm.put(GAME_LIST_ATTR, playerLobby.getAllGames());
 
 
     Player currentUser = request.session().attribute("currentUser");
