@@ -76,7 +76,7 @@ public class Player {
         this.status = Status.SEARCHING;
     }
 
-    public void endSession(){
+    public void endSession() {
         this.status = Status.OFFLINE;
         this.game = null;
     }
@@ -96,6 +96,6 @@ public class Player {
             return false;
         }
         final Player that = (Player) obj;
-        return this.name == that.getName();
+        return this.name.equals(that.getName());
     }
 }
