@@ -23,6 +23,7 @@ public class RowTest {
 
     @BeforeEach
     public void setup() {
+        // creates space array
         Space[] spaces = new Space[NUM_SQUARES];
         for (int i = 0; i < NUM_SQUARES; i++) {
             spaces[i] = new Space(i, true);
