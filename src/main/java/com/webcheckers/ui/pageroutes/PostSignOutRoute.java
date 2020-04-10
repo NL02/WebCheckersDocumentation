@@ -37,6 +37,7 @@ public class PostSignOutRoute implements Route{
         this.templateEngine = templateEngine;
         LOG.config("PostSignOutRoute is initialized");
     }
+
     //
     // TemplateViewRoute method
     //
@@ -52,11 +53,12 @@ public class PostSignOutRoute implements Route{
             game.gameOver(String.format(GAME_OVER_MSG, currentPlayer.name), game.getRedPlayer() == currentPlayer ? game.getWhitePlayer() : game.getRedPlayer());
         }
 
+        currentPlayer.status = Player.Status.OFFLINE;
         playerLobby.endSession(currentPlayer);
         httpSession.attribute(CURRENT_USER_ATTR, null);
-
         response.redirect(WebServer.HOME_URL);
-        halt();
+
+        //halt();
         return null;
     }
 }
