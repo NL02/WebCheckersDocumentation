@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit test for Piece class.
  *
- * Author: May Wu
+ * @author May Wu
  */
 @Tag("Model-tier")
 public class PieceTest {

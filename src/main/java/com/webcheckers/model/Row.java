@@ -45,23 +45,6 @@ public class Row implements Iterable<Space> {
         return this.index;
     }
 
-    /**
-     * Returns a piece to be initially placed in a constructed square if it is
-     * a valid square in the first/last three rows.
-     *
-     * @param i Index of the square in the row
-     * @return null if ineligible space, otherwise white or red CheckersPiece
-     */
-    private Piece makePiece(int i, Color playerColor) {
-        // Determine if a square can start with a piece; return null if not
-        if ((index - i) % 2 == 0 || (index > 2 && index < 5)) {
-            return null;
-        }
-        // Determine the right color and return a piece of that color
-        else {
-            return new Piece(index < 3 ? (playerColor == Color.WHITE ? Color.RED : Color.WHITE) : playerColor);
-        }
-    }
 
     /**
      * Creates an iterator over this row's squares.
