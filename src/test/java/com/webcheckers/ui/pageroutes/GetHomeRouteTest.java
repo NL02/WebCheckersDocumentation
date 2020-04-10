@@ -1,4 +1,4 @@
 package com.webcheckers.ui.pageroutes;
 
-public class GetLoginRoute {
+public class GetHomeRouteTest {
 }

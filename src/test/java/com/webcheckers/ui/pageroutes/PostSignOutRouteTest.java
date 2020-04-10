@@ -1,4 +1,4 @@
 package com.webcheckers.ui.pageroutes;
 
-public class PostLoginRoute {
+public class PostSignOutRouteTest {
 }
