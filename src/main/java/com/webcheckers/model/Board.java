@@ -181,6 +181,10 @@ public class Board {
         return NO_MOVES;
     }
 
+    protected boolean checkCanMove(int row, int col){
+        return checkJumps(row, col) || checkSimpleMoves(row, col);
+    }
+
     /**
      * Check to see if any of four potential jump moves from a space are valid.
      * Used when verifying if a jump is available when submitting a turn.

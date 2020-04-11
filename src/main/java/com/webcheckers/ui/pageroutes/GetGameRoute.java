@@ -142,6 +142,7 @@ public class GetGameRoute implements Route {
         vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
 
         // Determine if the game is over
+        game.checkEndGame();
         if(game.isGameOver() != null){
             final Map<String, Object> options = new HashMap<>(2);
             options.put(IS_GAME_OVER, true);

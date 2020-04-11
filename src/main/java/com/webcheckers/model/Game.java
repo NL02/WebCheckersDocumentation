@@ -97,7 +97,7 @@ public class Game {
     }
 
     public String isGameOver(){
-        return this.board.isGameOver();
+        return gameOverMsg;
     }
 
     public synchronized Player getWhitePlayer() {
@@ -110,5 +110,40 @@ public class Game {
 
     public synchronized Board getBoard() {
         return this.board;
+    }
+
+    public void checkEndGame() {
+        int pieces = 0;
+        int validMoves = 0;
+        Space space;
+        Piece piece;
+        for (int i = 0; i < 8; i++) {
+            if (validMoves != 0) {
+                break;
+            }
+            for (int j = 0; j < 8; j++) {
+                if (validMoves != 0) {
+                    break;
+                }
+                space = board.getBoard()[i][j];
+                if(!space.isValid() || space.getPiece() == null || space.getPiece().getColor() != activeColor){
+                    continue;
+                }
+                pieces++;
+                if(board.checkCanMove(i, j)){
+                    validMoves++;
+                }
+            }
+
+        }
+        if (validMoves != 0) {
+            return;
+        }
+        Player winner = activePlayer == whitePlayer ? redPlayer : whitePlayer;
+        Player loser = activePlayer == whitePlayer ? whitePlayer : redPlayer;
+        if (pieces == 0) {
+            gameOver(loser.name + " has no pieces remaining! " + winner.name + " is the winner!", winner);
+        }
+        gameOver(loser.name + " has no valid moves to make! " + winner.name + " is the winner!", winner);
     }
 }
