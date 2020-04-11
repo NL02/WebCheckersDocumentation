@@ -87,7 +87,7 @@ public class Player {
     }
 
     public float getWinPercent(){
-        return  gamesPlayed != 0 ? (float)gamesWon/(float)gamesPlayed : 0;
+        return  gamesPlayed != 0 ? (float)gamesWon/(float)gamesPlayed * 100 : 0;
     }
 
     /**
