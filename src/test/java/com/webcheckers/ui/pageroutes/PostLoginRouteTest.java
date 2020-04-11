@@ -2,14 +2,18 @@ package com.webcheckers.ui.pageroutes;
 
 import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.ui.TemplateEngineTester;
 import com.webcheckers.ui.WebServer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import spark.*;
+import spark.Request;
+import spark.Response;
+import spark.Session;
+import spark.TemplateEngine;
 
 import static org.mockito.Mockito.*;
+
+//import com.webcheckers.ui.TemplateEngineTester;
 
 @Tag("UI-Tier")
 public class PostLoginRouteTest {
@@ -67,8 +71,6 @@ public class PostLoginRouteTest {
         when(playerLobby.findPlayer("validPlayer")).thenReturn(currUser);
 
 //        when(Message.error(PostLoginRoute.INVALID_USERNAME)).thenReturn(Message.error(PostLoginRoute.INVALID_USERNAME));
-        final TemplateEngineTester testHelper = new TemplateEngineTester();
-
 
         CuT.handle(request,response);
         verifyZeroInteractions(response);

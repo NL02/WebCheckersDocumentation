@@ -1,17 +1,18 @@
 package com.webcheckers.ui.pageroutes;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.Player;
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.ui.WebServer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import spark.*;
+import spark.Request;
+import spark.Response;
+import spark.Session;
+import spark.TemplateEngine;
 
-import java.io.PipedOutputStream;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 /**
  * The unit test suite for the PostSignOutTester
@@ -51,7 +52,7 @@ public class PostSignOutRouteTest {
         engine = mock(TemplateEngine.class);
 
         player = new Player("Player name");
-        CuT = new PostSignOutRoute(lobby, engine);
+        CuT = new PostSignOutRoute(lobby);
     }
 
     /**
@@ -61,7 +62,7 @@ public class PostSignOutRouteTest {
     @Test
     public void removePlayerWasSearching() throws Exception {
         when(session.attribute(PostSignOutRoute.CURRENT_USER_ATTR)).thenReturn(player);
-        when(lobby.removeUser(player)).thenReturn(true);
+//        when(lobby.removeUser(player)).thenReturn(true);
 
         // Invoke test
         CuT.handle(request, response);
@@ -78,7 +79,7 @@ public class PostSignOutRouteTest {
     @Test
     public void removePlayerWasWaiting() throws Exception {
         when(session.attribute(PostSignOutRoute.CURRENT_USER_ATTR)).thenReturn(player);
-        when(lobby.removeUser(player)).thenReturn(true);
+//        when(lobby.removeUser(player)).thenReturn(true);
         player.status = Player.Status.WAITING;
 
         // Invoke test
@@ -96,7 +97,7 @@ public class PostSignOutRouteTest {
     @Test
     public void removePlayerWasInGame() throws Exception {
         when(session.attribute(PostSignOutRoute.CURRENT_USER_ATTR)).thenReturn(player);
-        when(lobby.removeUser(player)).thenReturn(true);
+//        when(lobby.removeUser(player)).thenReturn(true);
         final String GAME_OVER_MSG = "%s has resigned from the game";
         game = mock(Game.class);
         player.startGame(game);
@@ -120,7 +121,7 @@ public class PostSignOutRouteTest {
     @Test
     public void removePlayerWasNotOnline() throws Exception {
         when(session.attribute(PostSignOutRoute.CURRENT_USER_ATTR)).thenReturn(player);
-        when(lobby.removeUser(player)).thenReturn(false);
+//        when(lobby.removeUser(player)).thenReturn(false);
         player.status = Player.Status.OFFLINE;
 
         //Invoke Test

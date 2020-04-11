@@ -1,9 +1,9 @@
 package com.webcheckers.ui.pageroutes;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
-import com.webcheckers.appl.Player;
 import com.webcheckers.ui.board.BoardView;
 import spark.*;
 
@@ -190,4 +190,6 @@ public class GetGameRoute implements Route {
 
         return templateEngine.render(new ModelAndView(vm, "game.ftl"));
     }
+
+
 }
