@@ -54,10 +54,14 @@ public class PlayerLobby {
         return gameList;
     }
 
+    public ArrayList<Player> getOnlinePlayers() {
+        return onlinePlayers;
+    }
+
     /**
      * Collect site wide statistics when a game is finished.
      */
-    private static void gameFinished(){
+    protected static void gameFinished(){
             totalGames++;
     }
 
@@ -187,8 +191,12 @@ public class PlayerLobby {
      *
      * @param player player instance to be added
      */
-    public void addOnlinePlayer(Player player){
-        onlinePlayers.add(player);
+    public boolean addOnlinePlayer(Player player){
+        if(player.status != Player.Status.OFFLINE) {
+            onlinePlayers.add(player);
+            return true;
+        }
+        return false;
     }
 
     /**
