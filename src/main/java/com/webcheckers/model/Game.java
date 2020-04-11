@@ -116,7 +116,6 @@ public class Game {
         int pieces = 0;
         int validMoves = 0;
         Space space;
-        Piece piece;
         for (int i = 0; i < 8; i++) {
             if (validMoves != 0) {
                 break;
@@ -126,11 +125,11 @@ public class Game {
                     break;
                 }
                 space = board.getBoard()[i][j];
-                if(!space.isValid() || space.getPiece() == null || space.getPiece().getColor() != activeColor){
+                if (!space.isValid() || space.getPiece() == null || space.getPiece().getColor() != activeColor) {
                     continue;
                 }
                 pieces++;
-                if(board.checkCanMove(i, j)){
+                if (board.checkCanMove(i, j)) {
                     validMoves++;
                 }
             }
@@ -143,7 +142,8 @@ public class Game {
         Player loser = activePlayer == whitePlayer ? whitePlayer : redPlayer;
         if (pieces == 0) {
             gameOver(loser.name + " has no pieces remaining! " + winner.name + " is the winner!", winner);
+        } else {
+            gameOver(loser.name + " has no valid moves to make! " + winner.name + " is the winner!", winner);
         }
-        gameOver(loser.name + " has no valid moves to make! " + winner.name + " is the winner!", winner);
     }
 }

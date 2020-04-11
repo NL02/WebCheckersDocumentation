@@ -63,17 +63,31 @@ public class Player {
     /**
      * endGame sets the player game to null
      */
-    public void endGame(boolean hasWon){
+    public void endGame(boolean hasWon) {
+        if (this.status != Status.ENDGAME) {
             gamesPlayed++;
             if (hasWon) {
                 gamesWon++;
             }
-        this.status = Status.ENDGAME;
+            this.status = Status.ENDGAME;
+        }
     }
 
     public void endSession(){
         this.status = Status.OFFLINE;
         this.game = null;
+    }
+
+    public int getGamesPlayed(){
+        return gamesPlayed;
+    }
+
+    public int getGamesWon(){
+        return gamesWon;
+    }
+
+    public float getWinPercent(){
+        return  gamesPlayed != 0 ? (float)gamesWon/(float)gamesPlayed : 0;
     }
 
     /**
