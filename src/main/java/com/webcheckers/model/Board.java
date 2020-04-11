@@ -345,19 +345,6 @@ public class Board {
         }
     }
 
-    /**
-     * @return true if the pending move is a jump
-     */
-    public boolean isJumping() {
-        return isJumping;
-    }
-
-    /**
-     * @return true if a piece is moving
-     */
-    public boolean isMoving() {
-        return isMoving;
-    }
 
     @Override
     public String toString(){
