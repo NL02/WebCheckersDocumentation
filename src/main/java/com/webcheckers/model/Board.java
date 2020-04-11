@@ -147,7 +147,6 @@ public class Board {
                         // Verify a piece of the active color is at this cell
                         if (board[row][cell].getPiece() != null
                                 && board[row][cell].getPiece().getColor() == activeColor) {
-                            System.out.println(board[row][cell].getPiece().getColor());
                             if (checkJumps(row, cell)) {
                                 return JUMP_AVAILABLE;
                             }
@@ -232,8 +231,6 @@ public class Board {
      * @return true if jump is possible; else false
      */
     private boolean canJump(Move move) {
-        System.out.println(move.getStart().getRow() + ", " + move.getStart().getCell() + " to "
-                            + move.getEnd().getRow() + ", " + move.getEnd().getCell());
         move.setMidpoint();
         int midX = move.getMidpoint().getRow();
         int midY = move.getMidpoint().getCell();

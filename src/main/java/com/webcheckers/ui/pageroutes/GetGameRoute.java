@@ -45,16 +45,14 @@ public class GetGameRoute implements Route {
     // Attributes
     //
     private final TemplateEngine templateEngine;
-    private final PlayerLobby playerLobby;
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
      *
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public GetGameRoute(PlayerLobby playerLobby, TemplateEngine templateEngine) {
+    public GetGameRoute(TemplateEngine templateEngine) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-        this.playerLobby = playerLobby;
         //
         LOG.config("GetGameRoute is initialized.");
     }

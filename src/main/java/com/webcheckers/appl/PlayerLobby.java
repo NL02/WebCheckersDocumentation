@@ -1,6 +1,5 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.ui.pageroutes.PostLoginRoute;
 
@@ -129,9 +128,7 @@ public class PlayerLobby {
                 }
             }
             else{
-                if(waitingPlayers.contains(player)){
                     waitingPlayers.remove(player);
-                }
             }
         });
         return waitingPlayers;
@@ -141,17 +138,15 @@ public class PlayerLobby {
      * removeUser removes a user from the list of online players (onlinePlayers)
      *
      * @param player player instance to be removed from onlinePlayers
-     * @return boolean based on whether or not the remove was successful
      */
-    public boolean removeUser(Player player){
+    public void removeUser(Player player){
         // checking if user exists in array just in case
         for(int i = 0; i < onlinePlayers.size(); i ++) {
             if (onlinePlayers.get(i).equals(player)) {
                 onlinePlayers.remove(player);
-                return true;
+                return;
             }
         }
-        return false;
     }
 
     public static int getTotalGames(){
@@ -201,10 +196,10 @@ public class PlayerLobby {
         return userMap.getOrDefault(username, null);
     }
 
-    public boolean endSession(Player player){
+    public void endSession(Player player){
         removeUser(player);
         decrement();
         player.endSession();
-        return findPlayer(player.name) == null;
+        findPlayer(player.name);
     }
 }

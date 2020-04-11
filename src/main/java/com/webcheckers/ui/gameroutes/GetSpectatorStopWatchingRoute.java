@@ -1,7 +1,6 @@
 package com.webcheckers.ui.gameroutes;
 
 import com.webcheckers.appl.Player;
-import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -12,13 +11,7 @@ import static spark.Spark.halt;
 public class GetSpectatorStopWatchingRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSpectatorStopWatchingRoute.class.getName());
 
-    private final TemplateEngine templateEngine;
-    private final PlayerLobby playerLobby;
-
-    public GetSpectatorStopWatchingRoute(PlayerLobby playerLobby, TemplateEngine templateEngine){
-        this.playerLobby = playerLobby;
-        this.templateEngine = templateEngine;
-
+    public GetSpectatorStopWatchingRoute(){
         LOG.config("GetSpectatorStopWatchingRoute initialized");
     }
 

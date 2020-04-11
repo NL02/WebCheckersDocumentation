@@ -57,7 +57,7 @@ public class BoardView implements Iterable<Row> {
     /**
      * Iterator that iterates over BoardView's rows.
      */
-    public class BoardIterator implements Iterator<Row> {
+    public static class BoardIterator implements Iterator<Row> {
 
         private int index;              // Current index
         private final Row[] rows;  // Rows to iterate over

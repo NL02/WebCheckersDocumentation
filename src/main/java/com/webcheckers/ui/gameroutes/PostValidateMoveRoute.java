@@ -1,24 +1,22 @@
 package com.webcheckers.ui.gameroutes;
 
 import com.google.gson.Gson;
-import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Move;
 import com.webcheckers.appl.Player;
+import com.webcheckers.model.Move;
 import com.webcheckers.util.Message;
-import spark.*;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import spark.Session;
 
 import java.util.logging.Logger;
 
 public class PostValidateMoveRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostValidateMoveRoute.class.getName());
 
-    private final TemplateEngine templateEngine;
-    private final PlayerLobby playerLobby;
     static final String CURRENT_USER_ATTR = "currentUser";
 
-    public PostValidateMoveRoute(PlayerLobby playerLobby, final TemplateEngine templateEngine) {
-        this.templateEngine = templateEngine;
-        this.playerLobby = playerLobby;
+    public PostValidateMoveRoute() {
 
         LOG.config("PostValidateMoveRoute is initialized.");
     }
@@ -34,10 +32,10 @@ public class PostValidateMoveRoute implements Route {
         System.out.println(move.getEnd().getRow());
         System.out.println(move.getEnd().getCell());
 
-        Player player = httpSession.attribute("currentUser");
+        Player player = httpSession.attribute(CURRENT_USER_ATTR);
         Message moveMessage = player.getGame().validateMove(move);
 
-        return gson.toJson(moveMessage); //moveMessage);
+        return gson.toJson(moveMessage);
     }
 
 }

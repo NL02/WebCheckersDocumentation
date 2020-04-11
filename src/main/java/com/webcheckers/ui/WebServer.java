@@ -72,7 +72,6 @@ public class WebServer {
   //
 
   private final TemplateEngine templateEngine;
-  private final Gson gson;
   private final PlayerLobby playerLobby;
 
   //
@@ -96,7 +95,6 @@ public class WebServer {
     Objects.requireNonNull(gson, "gson must not be null");
     //
     this.templateEngine = templateEngine;
-    this.gson = gson;
     this.playerLobby = new PlayerLobby();
   }
 
@@ -153,24 +151,24 @@ public class WebServer {
 
     // Shows the Checkers game Home page.
     get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
-    get(LOGIN_URL, new GetLoginRoute(playerLobby, templateEngine));
-    get(GAME_URL, new GetGameRoute(playerLobby, templateEngine));
-    get(SPECTATE_URL, new GetSpectateGameRoute(playerLobby, templateEngine));
+    get(LOGIN_URL, new GetLoginRoute(templateEngine));
+    get(GAME_URL, new GetGameRoute(templateEngine));
+    get(SPECTATE_URL, new GetSpectateGameRoute(templateEngine));
 
     // Post a Login attempt.
     post(LOGIN_URL, new PostLoginRoute(playerLobby, templateEngine));
-    post(LOGOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
+    post(LOGOUT_URL, new PostSignOutRoute(playerLobby));
 
     // Game Routes
-    post(VALIDATE_URL, new PostValidateMoveRoute(playerLobby, templateEngine));
-    post(SUBMIT_URL, new PostSubmitTurnRoute(playerLobby, templateEngine));
-    post(BACKUP_URL, new PostBackupMoveRoute(playerLobby, templateEngine));
-    post(RESIGN_URL, new PostResignGameRoute(playerLobby, templateEngine));
-    post(CHECK_URL, new PostCheckTurnRoute(playerLobby,templateEngine));
+    post(VALIDATE_URL, new PostValidateMoveRoute());
+    post(SUBMIT_URL, new PostSubmitTurnRoute());
+    post(BACKUP_URL, new PostBackupMoveRoute());
+    post(RESIGN_URL, new PostResignGameRoute());
+    post(CHECK_URL, new PostCheckTurnRoute());
 
     // Spectator Routes
-    post(SPECTATE_CHECK_URL, new PostSpectateCheckTurnRoute(playerLobby, templateEngine));
-    get(SPECTATE_STOP_WATCHING_URL, new GetSpectatorStopWatchingRoute(playerLobby, templateEngine));
+    post(SPECTATE_CHECK_URL, new PostSpectateCheckTurnRoute());
+    get(SPECTATE_STOP_WATCHING_URL, new GetSpectatorStopWatchingRoute());
     LOG.config("WebServer is initialized.");
 
   }

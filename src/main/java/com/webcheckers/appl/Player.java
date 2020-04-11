@@ -20,7 +20,7 @@ public class Player {
         SEARCHING, //Player is not in a game, nor looking for a game
         WAITING, //Player has created a new game and is waiting for
         INGAME, //Player is currently in a game or spectating
-        SPECTATING;
+        SPECTATING
     }
 
     /**
@@ -96,6 +96,6 @@ public class Player {
             return false;
         }
         final Player that = (Player) obj;
-        return this.name == that.getName();
+        return this.name.equals(that.getName());
     }
 }

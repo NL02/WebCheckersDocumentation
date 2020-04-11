@@ -15,7 +15,6 @@ public class GetLoginRoute implements Route {
     static final String VIEW_NAME = "signin.ftl";
     private static final Logger LOG = Logger.getLogger(GetLoginRoute.class.getName());
     private final TemplateEngine templateEngine;
-    private final PlayerLobby playerLobby;
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
@@ -23,9 +22,8 @@ public class GetLoginRoute implements Route {
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public GetLoginRoute(PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+    public GetLoginRoute(final TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
-        this.playerLobby = playerLobby;
         LOG.config("GetLoginRoute is initialized.");
     }
 

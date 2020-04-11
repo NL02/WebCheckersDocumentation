@@ -35,7 +35,6 @@ public class  GetHomeRoute implements Route {
   static final String NUM_PLAYERS_MSG = "There are %d players signed on.";
   static final String MESSAGE_ATTR = "message";
   static final String VIEW_NAME = "home.ftl";
-  static final String NEW_PLAYER_ATTR = "newPlayer";
   static final String CURRENT_USER_ATTR = "currentUser";
   static final String PLAYER_LIST_ATTR = "playerList";
   static final String GAME_LIST_ATTR = "gameList";
