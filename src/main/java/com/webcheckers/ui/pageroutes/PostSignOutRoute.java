@@ -1,17 +1,13 @@
 package com.webcheckers.ui.pageroutes;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.ui.WebServer;
 import spark.*;
-import com.webcheckers.appl.Player;
 
 import java.util.Objects;
 import java.util.logging.Logger;
-
-import static spark.Spark.halt;
 
 public class PostSignOutRoute implements Route{
 
@@ -56,7 +52,7 @@ public class PostSignOutRoute implements Route{
         httpSession.attribute(CURRENT_USER_ATTR, null);
 
         response.redirect(WebServer.HOME_URL);
-        halt();
+//        halt();
         return null;
     }
 }
