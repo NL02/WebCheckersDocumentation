@@ -19,8 +19,9 @@ public class Player {
         OFFLINE, //Player is not online
         SEARCHING, //Player is not in a game, nor looking for a game
         WAITING, //Player has created a new game and is waiting for
-        INGAME, //Player is currently in a game or spectating
-        SPECTATING;
+        INGAME, //Player is currently in a game
+        ENDGAME, //Player is currently in a game that has ended
+        SPECTATING //Player is currently spectating a game
     }
 
     /**
@@ -64,7 +65,7 @@ public class Player {
      */
     public void endGame(boolean hasWon){
         if(this.status == Status.SPECTATING){
-            this.game = null;
+            return;
         }
         else {
             this.game = null;
@@ -73,7 +74,7 @@ public class Player {
                 gamesWon++;
             }
         }
-        this.status = Status.SEARCHING;
+        this.status = Status.ENDGAME;
     }
 
     public void endSession() {
