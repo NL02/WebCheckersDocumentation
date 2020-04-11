@@ -7,7 +7,7 @@ public class Player {
     public final String name;
     public Status status;
     public Game game;
-    public int playerID;
+//    public int playerID;
 
     private int gamesPlayed = 0;
     private int gamesWon = 0;
@@ -32,7 +32,7 @@ public class Player {
     public Player(String username) {
         this.name = username;
         this.status = Status.SEARCHING;
-        playerID = username.hashCode();
+//        playerID = username.hashCode();
     }
 
     //private int getPlayerID() {

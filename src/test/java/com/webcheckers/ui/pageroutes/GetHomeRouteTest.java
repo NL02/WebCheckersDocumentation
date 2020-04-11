@@ -105,7 +105,6 @@ public class GetHomeRouteTest {
         when(playerLobby.getWaitingPlayer()).thenReturn(onlinePlayers);
         when(playerLobby.getAllGames()).thenReturn(gameList);
         CuT.handle(request, response);
-        System.out.println("Beepboop");
         //Analyze the results:
         //* redirects to the GameView
         assertEquals(Player.Status.SEARCHING, currUser.status);

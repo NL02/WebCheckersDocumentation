@@ -67,7 +67,6 @@ public class PostLoginRoute implements Route {
 
         Player newPlayer;
         AddUserStatus is_added;
-
         if(playerLobby.findPlayer(username) == null) {
             newPlayer = new Player(username);
             playerLobby.addOnlinePlayer(newPlayer);
@@ -82,7 +81,7 @@ public class PostLoginRoute implements Route {
                 is_added = AddUserStatus.SUCCESS;
             }
         }
-
+        System.out.println(is_added);
         if(is_added == AddUserStatus.SUCCESS){
             httpSession.attribute(CURRENT_USER_ATTR, newPlayer);
         }
