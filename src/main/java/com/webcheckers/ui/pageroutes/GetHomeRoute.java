@@ -1,22 +1,14 @@
 package com.webcheckers.ui.pageroutes;
 
+import com.webcheckers.appl.Player;
+import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.util.Message;
+import spark.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-
-import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.appl.Player;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.Session;
-import spark.TemplateEngine;
-
-import com.webcheckers.util.Message;
-
-import static spark.Spark.halt;
 
 /**
  * The UI Controller to GET the Home page.
@@ -100,11 +92,11 @@ public class  GetHomeRoute implements Route {
     Player currentUser = request.session().attribute("currentUser");
     if(currentUser != null && currentUser.status == Player.Status.INGAME){
       response.redirect("/game");
-      halt();
+//      halt();
     }
-    if(currentUser != null && currentUser.status != Player.Status.SEARCHING) {
+    else if(currentUser != null && currentUser.status != Player.Status.SEARCHING) {
       currentUser.status = Player.Status.SEARCHING;
-      playerLobby.removeGame(currentUser);
+      PlayerLobby.removeGame(currentUser);
     }
     // render the View
     return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
