@@ -6,28 +6,28 @@ import java.util.ArrayList;
 
 public class Board {
     // Move validation messages
-    private static final Message VALID_MOVE = Message.info("Move is valid");
-    private static final Message OUT_OF_BOUNDS = Message.error("Move is out of bounds");
-    private static final Message INVALID_SPACE = Message.error("Cannot move to white space");
-    private static final Message SPACE_OCCUPIED = Message.error("A piece occupies this space");
-    private static final Message TOO_FAR = Message.error("Move is too far");
-    private static final Message ILLEGAL_COMBO = Message.error("Cannot make simple move and jump in same turn");
-    private static final Message NOT_DIAGONAL = Message.error("Cannot move that direction");
-    private static final Message NO_PIECE = Message.error("No piece to jump");
-    private static final Message NOT_KING = Message.error("Only king pieces can move backwards");
-    private static final Message OWN_PIECE = Message.error("Can't jump own piece");
+    static final Message VALID_MOVE = Message.info("Move is valid");
+    static final Message OUT_OF_BOUNDS = Message.error("Move is out of bounds");
+    static final Message INVALID_SPACE = Message.error("Cannot move to white space");
+    static final Message SPACE_OCCUPIED = Message.error("A piece occupies this space");
+    static final Message TOO_FAR = Message.error("Move is too far");
+    static final Message ILLEGAL_COMBO = Message.error("Cannot make simple move and jump in same turn");
+    static final Message NOT_DIAGONAL = Message.error("Cannot move that direction");
+    static final Message NO_PIECE = Message.error("No piece to jump");
+    static final Message NOT_KING = Message.error("Only king pieces can move backwards");
+    static final Message OWN_PIECE = Message.error("Can't jump own piece");
 
     // Submit turn messages
-    private static final Message JUMP_AVAILABLE = Message.error("A jump is available, so you must make a jump move");
+    static final Message JUMP_AVAILABLE = Message.error("A jump is available, so you must make a jump move");
 
     // Backup move messages
-    private static final Message BACKUP_SUCCESSFUL = Message.info("Move undone");
-    private static final Message NO_MOVES = Message.error("No moves to back up");
+    static final Message BACKUP_SUCCESSFUL = Message.info("Move undone");
+    static final Message NO_MOVES = Message.error("No moves to back up");
 
-    private static final int ROWS = 8;
-    private static final int COLS = 8;
+    static final int ROWS = 8;
+    static final int COLS = 8;
 
-    private static Color activeColor;
+    static Color activeColor;
 
     private Space[][] board; // board representation
 
