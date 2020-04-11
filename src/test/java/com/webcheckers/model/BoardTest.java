@@ -29,7 +29,7 @@ public class BoardTest {
     public void setup() {
         CuT = new Board();
     }
-
+/*
     @Test
     public void initColor() {
         assertEquals(Color.RED,CuT.getActiveColor());
@@ -40,7 +40,7 @@ public class BoardTest {
         CuT.changeActiveColor();
         assertEquals(Color.WHITE,CuT.getActiveColor());
     }
-
+*/
     @Test
     public void gettingBoard() {
         anotherBoard = mock(Space[][].class);
