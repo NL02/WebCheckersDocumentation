@@ -234,11 +234,63 @@ public class Board {
         move.setMidpoint();
         int midX = move.getMidpoint().getRow();
         int midY = move.getMidpoint().getCell();
+
+        return board[midX][midY].getPiece() != null && endSpaceOpen(move)
+                && board[midX][midY].getPiece().getColor() != activeColor;
+    }
+
+    /**
+     * Verify that there is a simple move open to this piece.
+     *
+     * @param row Starting row index
+     * @param cell Starting cell index
+     * @return true if a move is open; else false
+     */
+    private boolean checkSimpleMoves(int row, int cell) {
+        Piece piece = board[row][cell].getPiece();
+        Position start = new Position(row, cell);
+        Position northWest = null;
+        Position northEast = null;
+        Position southWest = null;
+        Position southEast = null;
+
+        if (piece.getType() == Piece.PieceType.KING || piece.getColor() == Color.WHITE) {
+            if (row > 0 && cell > 0)
+                northWest = new Position(row - 1, cell - 1);
+            if (row > 0 && cell < 7)
+                northEast = new Position(row - 1, cell + 1);
+        }
+        if (piece.getType() == Piece.PieceType.KING || piece.getColor() == Color.RED) {
+            if (row < 7 && cell > 0)
+                southWest = new Position(row + 1, cell - 1);
+            if (row < 7 && cell < 7)
+                southEast = new Position(row + 1, cell + 1);
+        }
+
+        Position[] testPositions = new Position[]{northWest, northEast, southWest, southEast};
+
+        for (Position p : testPositions) {
+            if (p != null) {
+                if (endSpaceOpen(new Move(start, p))) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Verify that the end space of this move is not occupied.
+     *
+     * @param move Move to check
+     * @return true if end space has no piece; else false
+     */
+    private boolean endSpaceOpen(Move move) {
         int endX = move.getEnd().getRow();
         int endY = move.getEnd().getCell();
 
-        return board[midX][midY].getPiece() != null && board[endX][endY].getPiece() == null
-                && board[midX][midY].getPiece().getColor() != activeColor;
+        return board[endX][endY].getPiece() == null;
     }
 
     /**

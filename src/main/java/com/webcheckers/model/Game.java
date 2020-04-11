@@ -97,7 +97,7 @@ public class Game {
     }
 
     public String isGameOver(){
-        return gameOverMsg;
+        return this.board.isGameOver();
     }
 
     public synchronized Player getWhitePlayer() {
