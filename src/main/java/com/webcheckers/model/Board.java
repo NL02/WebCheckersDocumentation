@@ -353,7 +353,7 @@ public class Board {
         if(test){
             board[0][1].setPiece(new Piece(Color.RED));
             board[2][1].setPiece(new Piece(Color.WHITE));
-            board[3][2].setPiece(new Piece(Color.WHITE));
+            board[4][3].setPiece(new Piece(Color.WHITE));
         }
         else{
             PopulateBoard();
