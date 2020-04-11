@@ -36,7 +36,6 @@ public class GetGameRoute implements Route {
     static final String RED_PLAYER_ATTR = "redPlayer";
     static final String WHITE_PLAYER_ATTR = "whitePlayer";
     static final String ACTIVE_COLOR_ATTR = "activeColor";
-    static final String ACTIVE_COLOR = "RED";
     static final String BOARD_ATTR = "board";
     static final String IS_GAME_OVER = "isGameOver";
     static final String GAME_OVER_ATTR = "gameOverMessage";
@@ -162,8 +161,8 @@ public class GetGameRoute implements Route {
             // Add the scores to each players scorecard and remove the game from the playerLobby
             whitePlayer.endGame(game.winner == whitePlayer);
             redPlayer.endGame(game.winner == redPlayer);
-            playerLobby.removeGame(game.getWhitePlayer());
-            playerLobby.removeGame(game.getRedPlayer());
+            PlayerLobby.removeGame(game.getWhitePlayer());
+            PlayerLobby.removeGame(game.getRedPlayer());
         }
 
         // Determine my POV
