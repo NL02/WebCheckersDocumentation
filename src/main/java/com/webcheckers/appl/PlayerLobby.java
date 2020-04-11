@@ -76,21 +76,8 @@ public class PlayerLobby {
             LOG.fine("Not at least one character");
             return PostLoginRoute.AddUserStatus.INVLAID;
         }
-        if (userMap.containsKey(newPlayer.getName())) {
-            if(userMap.get(newPlayer.getName()).status == Player.Status.OFFLINE){
-                newPlayer.status = Player.Status.SEARCHING;
-                increment();
-                return PostLoginRoute.AddUserStatus.SUCCESS;
-            }
-            else {
-                return PostLoginRoute.AddUserStatus.PICKANOTHER;
-            }
-        }
-        else{
-            userMap.put(newPlayer.getName(), newPlayer);
-            increment();
-            return PostLoginRoute.AddUserStatus.SUCCESS;
-        }
+        userMap.put(newPlayer.getName(), newPlayer);
+        return PostLoginRoute.AddUserStatus.SUCCESS;
     }
 
     /**
@@ -183,6 +170,7 @@ public class PlayerLobby {
      * @param player player instance to be added
      */
     public void addOnlinePlayer(Player player){
+        increment();
         onlinePlayers.add(player);
     }
 
