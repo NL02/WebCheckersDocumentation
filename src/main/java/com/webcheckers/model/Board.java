@@ -384,7 +384,7 @@ public class Board {
         return board[index];
     }
 
-    public Space[] getRowReversesd( int index ) {
+    public Space[] getRowReversed(int index ) {
         Space[] row = getRow(index);
         Space[] reversed = new Space[ROWS];
         int indexing = ROWS;
