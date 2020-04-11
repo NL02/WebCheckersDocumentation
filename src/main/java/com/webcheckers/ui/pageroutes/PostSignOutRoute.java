@@ -1,13 +1,14 @@
 package com.webcheckers.ui.pageroutes;
 
-import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.ui.WebServer;
 import spark.*;
+import com.webcheckers.appl.Player;
 
-import java.util.Objects;
 import java.util.logging.Logger;
+
+import static spark.Spark.halt;
 
 public class PostSignOutRoute implements Route{
 
@@ -19,21 +20,16 @@ public class PostSignOutRoute implements Route{
     //
     // Attributes
     //
-    private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
     /**
      * Create the Spark Route (UI controller) to handle all {@code POST /} HTTP requests.
-     * @param playerLobby
-     * @param templateEngine
+     * @param playerLobby PlayerLobby instance for the web server
      */
-    public PostSignOutRoute( PlayerLobby playerLobby, TemplateEngine templateEngine){
-        Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+    public PostSignOutRoute(PlayerLobby playerLobby){
 
         this.playerLobby = playerLobby;
-        this.templateEngine = templateEngine;
         LOG.config("PostSignOutRoute is initialized");
     }
-
     //
     // TemplateViewRoute method
     //
@@ -49,12 +45,11 @@ public class PostSignOutRoute implements Route{
             game.gameOver(String.format(GAME_OVER_MSG, currentPlayer.name), game.getRedPlayer() == currentPlayer ? game.getWhitePlayer() : game.getRedPlayer());
         }
 
-        currentPlayer.status = Player.Status.OFFLINE;
         playerLobby.endSession(currentPlayer);
         httpSession.attribute(CURRENT_USER_ATTR, null);
-        response.redirect(WebServer.HOME_URL);
 
-        //halt();
+        response.redirect(WebServer.HOME_URL);
+        halt();
         return null;
     }
 }

@@ -1,6 +1,5 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.ui.pageroutes.PostLoginRoute;
 
@@ -54,14 +53,10 @@ public class PlayerLobby {
         return gameList;
     }
 
-    public ArrayList<Player> getOnlinePlayers() {
-        return onlinePlayers;
-    }
-
     /**
      * Collect site wide statistics when a game is finished.
      */
-    protected static void gameFinished(){
+    private static void gameFinished(){
             totalGames++;
     }
 
@@ -81,21 +76,8 @@ public class PlayerLobby {
             LOG.fine("Not at least one character");
             return PostLoginRoute.AddUserStatus.INVLAID;
         }
-        if (userMap.containsKey(newPlayer.getName())) {
-            if(userMap.get(newPlayer.getName()).status == Player.Status.OFFLINE){
-                newPlayer.status = Player.Status.SEARCHING;
-                increment();
-                return PostLoginRoute.AddUserStatus.SUCCESS;
-            }
-            else {
-                return PostLoginRoute.AddUserStatus.PICKANOTHER;
-            }
-        }
-        else{
-            userMap.put(newPlayer.getName(), newPlayer);
-            increment();
-            return PostLoginRoute.AddUserStatus.SUCCESS;
-        }
+        userMap.put(newPlayer.getName(), newPlayer);
+        return PostLoginRoute.AddUserStatus.SUCCESS;
     }
 
     /**
@@ -133,9 +115,7 @@ public class PlayerLobby {
                 }
             }
             else{
-                if(waitingPlayers.contains(player)){
                     waitingPlayers.remove(player);
-                }
             }
         });
         return waitingPlayers;
@@ -145,17 +125,15 @@ public class PlayerLobby {
      * removeUser removes a user from the list of online players (onlinePlayers)
      *
      * @param player player instance to be removed from onlinePlayers
-     * @return boolean based on whether or not the remove was successful
      */
-    public boolean removeUser(Player player){
+    public void removeUser(Player player){
         // checking if user exists in array just in case
         for(int i = 0; i < onlinePlayers.size(); i ++) {
             if (onlinePlayers.get(i).equals(player)) {
                 onlinePlayers.remove(player);
-                return true;
+                return;
             }
         }
-        return false;
     }
 
     public static int getTotalGames(){
@@ -191,12 +169,9 @@ public class PlayerLobby {
      *
      * @param player player instance to be added
      */
-    public boolean addOnlinePlayer(Player player){
-        if(player.status != Player.Status.OFFLINE) {
-            onlinePlayers.add(player);
-            return true;
-        }
-        return false;
+    public void addOnlinePlayer(Player player){
+        increment();
+        onlinePlayers.add(player);
     }
 
     /**
@@ -209,10 +184,10 @@ public class PlayerLobby {
         return userMap.getOrDefault(username, null);
     }
 
-    public boolean endSession(Player player){
+    public void endSession(Player player){
         removeUser(player);
         decrement();
         player.endSession();
-        return findPlayer(player.name) == null;
+        findPlayer(player.name);
     }
 }

@@ -24,10 +24,7 @@ public class Move {
         if (Math.abs(start.getRow() - end.getRow()) != 1) {
             return false;
         }
-        if (Math.abs(start.getCell() - end.getCell()) != 1) {
-            return false;
-        }
-        return true;
+        return Math.abs(start.getCell() - end.getCell()) == 1;
     }
 
     /**

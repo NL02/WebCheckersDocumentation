@@ -75,6 +75,7 @@ public class GetGameRoute implements Route {
         }
 
         Game game = me.getGame();
+        game.checkEndGame();
         if(me.status == Player.Status.ENDGAME || me.game.isGameOver() != null){
             return handleEndGame(request, response);
         }

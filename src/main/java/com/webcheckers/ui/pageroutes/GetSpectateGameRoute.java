@@ -6,12 +6,13 @@ import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.ui.board.BoardView;
-import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
+
+import static spark.Spark.halt;
 
 public class GetSpectateGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSpectateGameRoute.class.getName());
@@ -19,7 +20,6 @@ public class GetSpectateGameRoute implements Route {
     // Values for rendering the Game view
     static final String TITLE_ATTR = "title";
     static final String TITLE_START = "Spectating a Game";
-    static final String GAME_ID_ATTR = "gameID";
     static final String CURRENT_USER_ATTR = "currentUser";
     static final String VIEW_MODE_ATTR = "viewMode";
     static final String VIEW_MODE = "SPECTATOR";
@@ -32,25 +32,28 @@ public class GetSpectateGameRoute implements Route {
     static final String MODE_OPTION = "modeOptionsAsJSON";
 
     private final TemplateEngine templateEngine;
-    private final PlayerLobby playerLobby;
 
-    public GetSpectateGameRoute(PlayerLobby playerLobby, TemplateEngine templateEngine){
-        this.playerLobby = playerLobby;
+    public GetSpectateGameRoute(TemplateEngine templateEngine){
         this.templateEngine = templateEngine;
 
         LOG.config("GetSpectateGameRoute is initialized");
     }
+
     @Override
     public Object handle(Request request, Response response) throws Exception {
         LOG.fine("SpectateGameRoute invoked");
 
         String player = request.queryParams("player");
-        Game game = playerLobby.getGame(player);
+        Game game = PlayerLobby.getGame(player);
 
         Session session = request.session();
         Player me = session.attribute(CURRENT_USER_ATTR);
         me.startGame(game);
 
+        if(game == null){
+            response.redirect("/");
+            halt();
+        }
         Map<String, Object> vm = new HashMap<>();
 
         vm.put(CURRENT_USER_ATTR, me);

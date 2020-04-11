@@ -7,7 +7,7 @@ public class Player {
     public final String name;
     public Status status;
     public Game game;
-//    public int playerID;
+    public int playerID;
 
     private int gamesPlayed = 0;
     private int gamesWon = 0;
@@ -19,9 +19,9 @@ public class Player {
         OFFLINE, //Player is not online
         SEARCHING, //Player is not in a game, nor looking for a game
         WAITING, //Player has created a new game and is waiting for
-        INGAME, //Player is currently in a game
-        ENDGAME, //Player is currently in a game that has ended
-        SPECTATING //Player is currently spectating a game
+        INGAME, //Player is currently in a game or spectating
+        ENDGAME,
+        SPECTATING
     }
 
     /**
@@ -32,7 +32,7 @@ public class Player {
     public Player(String username) {
         this.name = username;
         this.status = Status.SEARCHING;
-//        playerID = username.hashCode();
+        playerID = username.hashCode();
     }
 
     //private int getPlayerID() {
@@ -63,23 +63,31 @@ public class Player {
     /**
      * endGame sets the player game to null
      */
-    public void endGame(boolean hasWon){
-        if(this.status == Status.SPECTATING){
-            return;
-        }
-        else {
-            this.game = null;
+    public void endGame(boolean hasWon) {
+        if (this.status != Status.ENDGAME) {
             gamesPlayed++;
             if (hasWon) {
                 gamesWon++;
             }
+            this.status = Status.ENDGAME;
         }
-        this.status = Status.ENDGAME;
     }
 
-    public void endSession() {
+    public void endSession(){
         this.status = Status.OFFLINE;
         this.game = null;
+    }
+
+    public int getGamesPlayed(){
+        return gamesPlayed;
+    }
+
+    public int getGamesWon(){
+        return gamesWon;
+    }
+
+    public float getWinPercent(){
+        return  gamesPlayed != 0 ? (float)gamesWon/(float)gamesPlayed * 100 : 0;
     }
 
     /**

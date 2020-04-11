@@ -14,7 +14,7 @@ public class Position {
      * @return true if Position is a valid space, false otherwise
      */
     public boolean isValid() {
-        return (0 <= this.row && this.row <= 7) && (0 <= this.cell && this.cell <= 7);
+        return (0 < this.row && this.row < 7) && (0 < this.cell && this.cell < 7);
     }
 
     /**

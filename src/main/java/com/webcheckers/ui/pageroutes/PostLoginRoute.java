@@ -27,7 +27,7 @@ public class PostLoginRoute implements Route {
     public enum AddUserStatus{
         INVLAID, // if the player picks a name that is less than one character or
         PICKANOTHER, // if the player picks a name that is already in use
-        SUCCESS; // successfully picked a username
+        SUCCESS // successfully picked a username
     }
 
     //
@@ -38,8 +38,8 @@ public class PostLoginRoute implements Route {
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code POST /} HTTP requests.
-     * @param playerLobby
-     * @param templateEngine
+     * @param playerLobby The PlayeLobby instance of the server
+     * @param templateEngine The rendering engine that will be used
      */
     public PostLoginRoute( PlayerLobby playerLobby, TemplateEngine templateEngine) {
         //validation
@@ -67,6 +67,7 @@ public class PostLoginRoute implements Route {
 
         Player newPlayer;
         AddUserStatus is_added;
+
         if(playerLobby.findPlayer(username) == null) {
             newPlayer = new Player(username);
             playerLobby.addOnlinePlayer(newPlayer);
@@ -81,7 +82,7 @@ public class PostLoginRoute implements Route {
                 is_added = AddUserStatus.SUCCESS;
             }
         }
-        System.out.println(is_added);
+
         if(is_added == AddUserStatus.SUCCESS){
             httpSession.attribute(CURRENT_USER_ATTR, newPlayer);
         }
