@@ -20,7 +20,8 @@ public class Player {
         SEARCHING, //Player is not in a game, nor looking for a game
         WAITING, //Player has created a new game and is waiting for
         INGAME, //Player is currently in a game or spectating
-        SPECTATING;
+        ENDGAME,
+        SPECTATING
     }
 
     /**
@@ -62,23 +63,31 @@ public class Player {
     /**
      * endGame sets the player game to null
      */
-    public void endGame(boolean hasWon){
-        if(this.status == Status.SPECTATING){
-            this.game = null;
-        }
-        else {
-            this.game = null;
+    public void endGame(boolean hasWon) {
+        if (this.status != Status.ENDGAME) {
             gamesPlayed++;
             if (hasWon) {
                 gamesWon++;
             }
+            this.status = Status.ENDGAME;
         }
-        this.status = Status.SEARCHING;
     }
 
     public void endSession(){
         this.status = Status.OFFLINE;
         this.game = null;
+    }
+
+    public int getGamesPlayed(){
+        return gamesPlayed;
+    }
+
+    public int getGamesWon(){
+        return gamesWon;
+    }
+
+    public float getWinPercent(){
+        return  gamesPlayed != 0 ? (float)gamesWon/(float)gamesPlayed : 0;
     }
 
     /**
@@ -96,6 +105,6 @@ public class Player {
             return false;
         }
         final Player that = (Player) obj;
-        return this.name == that.getName();
+        return this.name.equals(that.getName());
     }
 }

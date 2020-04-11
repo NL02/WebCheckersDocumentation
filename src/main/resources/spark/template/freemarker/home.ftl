@@ -17,6 +17,7 @@
   <div class="body">
 
   <#if currentUser??>
+
     <h2><a href="/game">Create Game</a></h2>
   </#if>
     <!-- Provide a message to the user, if supplied. -->
@@ -34,7 +35,11 @@
     <h2>Available games to spectate:</h2></br>
 
     <#list gameList as game>
-        <p><a href="/spectator/game?player=${game.redPlayer.name}">${game.redPlayer.name} vs. ${game.whitePlayer.name}</a></p>
+        <#if game.whitePlayer != currentUser>
+            <#if game.redPlayer != currentUser>
+        <p><a href="/spectator/game?player=${game.whitePlayer.name}">${game.redPlayer.name} vs. ${game.whitePlayer.name}</a></p>
+            </#if>
+        </#if>
     </#list>
   </#if>
 

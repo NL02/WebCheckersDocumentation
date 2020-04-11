@@ -75,7 +75,7 @@ public class Row implements Iterable<Space> {
     /**
      * Iterator that iterates over a BoardRow's squares.
      */
-    public class RowIterator implements Iterator<Space> {
+    public static class RowIterator implements Iterator<Space> {
 
         private int index;              // Current index
         private Space[] spaces;  // Array of squares from row

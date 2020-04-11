@@ -59,12 +59,9 @@ public class Space {
     }
 
 
-    public boolean setPiece(Piece newPiece) {
+    public void setPiece(Piece newPiece) {
         if (piece == null){
             piece = newPiece;
-            return true;
-        } else {
-            return false;
         }
     }
 

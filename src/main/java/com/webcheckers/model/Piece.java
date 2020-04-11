@@ -15,7 +15,7 @@ public class Piece {
     // Enum representing the two types of pieces.
     public enum PieceType {
         SINGLE,
-        KING;
+        KING
     }
 
 
