@@ -40,7 +40,7 @@ public class Board {
 
     public Board() {
         InitializeSpaces();
-        PopulateBoard(true);
+        PopulateBoard(false);
         pendingMoves = new ArrayList<>();
         activeColor = Color.RED;
     }
