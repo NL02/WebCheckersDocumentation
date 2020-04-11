@@ -84,7 +84,7 @@ public class  GetHomeRoute implements Route {
 
     // display a user message in the Home page
     vm.put(MESSAGE_ATTR, WELCOME_MSG);
-    Message num_players = Message.info(String.format(NUM_PLAYERS_MSG, playerLobby.getLiveCount()));
+    Message num_players = Message.info(String.format(NUM_PLAYERS_MSG, PlayerLobby.getLiveCount()));
     vm.put( NUM_PLAYERS_ATTR, num_players);
 
     // display navbar
@@ -104,7 +104,7 @@ public class  GetHomeRoute implements Route {
     }
     if(currentUser != null && currentUser.status != Player.Status.SEARCHING) {
       currentUser.status = Player.Status.SEARCHING;
-      playerLobby.removeGame(currentUser);
+      PlayerLobby.removeGame(currentUser);
     }
     // render the View
     return templateEngine.render(new ModelAndView(vm , VIEW_NAME));

@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import static spark.Spark.halt;
+
 
 public class GetGameRoute implements Route {
 
@@ -85,6 +87,7 @@ public class GetGameRoute implements Route {
         vm.put(CURRENT_USER_ATTR, me);
         vm.put(VIEW_MODE_ATTR, VIEW_MODE);
 
+        // Figure out if I am waiting for an opponent or if I have one
         if(me.status != Player.Status.WAITING && me.status != Player.Status.INGAME
                 && opponent == null){
             me.status = Player.Status.WAITING;
@@ -100,7 +103,7 @@ public class GetGameRoute implements Route {
             game = PlayerLobby.getGame(opponent);
             game.addRedPlayer(me);
             me.startGame(game);
-            playerLobby.addGame(me, game);
+            PlayerLobby.addGame(me, game);
             vm.put(TITLE_ATTR, TITLE_YOUR_TURN);
         }
         else if (me.status == Player.Status.INGAME){
@@ -111,17 +114,24 @@ public class GetGameRoute implements Route {
             game = PlayerLobby.getGame(me.name);
         }
 
-        if(me == game.getRedPlayer() && game.getActiveColor() == Color.RED){
-            vm.put(TITLE_ATTR, TITLE_YOUR_TURN);
-        }
-        else if(me == game.getWhitePlayer() && game.getActiveColor() == Color.WHITE){
-            vm.put(TITLE_ATTR, TITLE_YOUR_TURN);
-        }
-        else{
-            vm.put(TITLE_ATTR, TITLE_OPP_TURN);
+        // Catch NullPointer that we often get at end of games
+        if(game == null){
+            response.redirect("/");
+            halt();
         }
 
+        // Determine title
+        if(game.getRedPlayer() != ghost) {
+            if (me == game.getRedPlayer() && game.getActiveColor() == Color.RED) {
+                vm.put(TITLE_ATTR, TITLE_YOUR_TURN);
+            } else if (me == game.getWhitePlayer() && game.getActiveColor() == Color.WHITE) {
+                vm.put(TITLE_ATTR, TITLE_YOUR_TURN);
+            } else {
+                vm.put(TITLE_ATTR, TITLE_OPP_TURN);
+            }
+        }
 
+        // Determine players
         Player redPlayer = game.getRedPlayer();
         Player whitePlayer = game.getWhitePlayer();
         if(!redPlayer.equals(ghost)) {
