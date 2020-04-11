@@ -20,6 +20,7 @@ public class Player {
         SEARCHING, //Player is not in a game, nor looking for a game
         WAITING, //Player has created a new game and is waiting for
         INGAME, //Player is currently in a game or spectating
+        ENDGAME,
         SPECTATING
     }
 
@@ -63,17 +64,11 @@ public class Player {
      * endGame sets the player game to null
      */
     public void endGame(boolean hasWon){
-        if(this.status == Status.SPECTATING){
-            this.game = null;
-        }
-        else {
-            this.game = null;
             gamesPlayed++;
             if (hasWon) {
                 gamesWon++;
             }
-        }
-        this.status = Status.SEARCHING;
+        this.status = Status.ENDGAME;
     }
 
     public void endSession(){

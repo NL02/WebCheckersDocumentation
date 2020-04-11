@@ -34,7 +34,7 @@
     <h2>Available games to spectate:</h2></br>
 
     <#list gameList as game>
-        <p><a href="/spectator/game?player=${game.redPlayer.name}">${game.redPlayer.name} vs. ${game.whitePlayer.name}</a></p>
+        <p><a href="/spectator/game?player=${game.whitePlayer.name}">${game.redPlayer.name} vs. ${game.whitePlayer.name}</a></p>
     </#list>
   </#if>
 
