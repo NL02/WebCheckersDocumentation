@@ -24,25 +24,39 @@ public class PositionTest {
         CuT = new Position(5, 6);
     }
 
+    /**
+     * Test that constructor works
+     */
     @Test
     public void ctor_Arg() {
         assertNotNull(CuT);
     }
 
+    /**
+     * Tests that positions are valid
+     */
     @Test
     public void test_isValid() {
         assertTrue(CuT.isValid(), "CuT is a valid position");
+        // create invalid Position
         Position invalidRow = new Position(8, 0);
         assertFalse(invalidRow.isValid(), "Position has an invalid row");
+        // create invalid Position
         Position invalidCell = new Position(2, 10);
         assertFalse(invalidCell.isValid(), "Position has an invalid cell");
     }
 
+    /**
+     * Test that correct row is returned
+     */
     @Test
     public void test_getRow() {
         assertEquals(5, CuT.getRow(), "Incorrect Row");
     }
 
+    /**
+     * Test that correct cell is returned
+     */
     @Test
     public void test_getCell() {
         assertEquals(6, CuT.getCell(), "Incorrect Cell");

@@ -31,26 +31,41 @@ public class RowTest {
         CuT = new Row(0, spaces);
     }
 
+    /**
+     * Tests that constructing a Row is not null
+     */
     @Test
     public void ctor_exists() {
         assertNotNull(CuT);
     }
 
+    /**
+     * Test getting index of row
+     */
     @Test
     public void test_getIndex() {
         assertEquals(0, CuT.getIndex(), "Invalid index");
     }
 
+    /**
+     * Test iterator exists
+     */
     @Test
     public void test_iterator() {
         assertNotNull(CuT.iterator());
     }
 
+    /**
+     * Test iterator functions
+     */
     @Test
     public void test_hasNext() {
         assertTrue(CuT.iterator().hasNext());
     }
 
+    /**
+     * Test iterator functions
+     */
     @Test
     public void test_next() {
         assertNotNull(CuT.iterator().next());
