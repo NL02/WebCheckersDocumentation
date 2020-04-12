@@ -11,7 +11,11 @@ Running the application:
 5. To test with a second player on the same computer, open a new window in
    incognito mode or your browser's equivalent, and go to localhost:4567 as
    before.
-6. 
+6. Testing spectator mode will require two devices. As before, use localhost:4567
+   if the spectator will be on the host's device and replace localhost with the
+   IP address if it will be a separate device.
+7. Computers are required to test game functionality, but spectate mode can be
+   tested via smartphone.
 
 Notes on our implementation:
 1. There is a known bug where dropping a piece onto another piece causes an
