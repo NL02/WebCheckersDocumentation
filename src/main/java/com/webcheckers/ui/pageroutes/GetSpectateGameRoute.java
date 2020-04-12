@@ -12,8 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import static spark.Spark.halt;
-
 public class GetSpectateGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSpectateGameRoute.class.getName());
 
@@ -50,10 +48,10 @@ public class GetSpectateGameRoute implements Route {
         Player me = session.attribute(CURRENT_USER_ATTR);
         me.startGame(game);
 
-        if(game == null){
-            response.redirect("/");
-            halt();
-        }
+//        if(game == null){
+//            response.redirect("/");
+//            halt();
+//        }
         Map<String, Object> vm = new HashMap<>();
 
         vm.put(CURRENT_USER_ATTR, me);
