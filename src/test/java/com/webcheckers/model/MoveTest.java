@@ -39,6 +39,9 @@ public class MoveTest {
      */
     @Test
     public void test_isValid_true() {
+        Position start = new Position(4,1);
+        Position end = new Position (3,2);
+        CuT = new Move(start,end);
         assertTrue(CuT.isValid(), "Move is valid");
     }
 

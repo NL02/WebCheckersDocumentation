@@ -9,11 +9,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.Request;
 import spark.Response;
-import spark.Session;
 import spark.TemplateEngine;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.mockito.Mockito.mock;
 
@@ -46,6 +42,17 @@ public class GetSpectateGameRouteTest {
      */
     @BeforeEach
     public void setup(){
+        request = mock(Request.class);
+        response = mock(Response.class);
+        templateEngine = mock(TemplateEngine.class);
+        engineTester = mock(TemplateEngineTester.class);
+
+        playerLobby = mock(PlayerLobby.class);
+        game = mock(Game.class);
+        me = mock(Player.class);
+
+        CuT = new GetSpectateGameRoute(templateEngine);
+
     }
 
     /**

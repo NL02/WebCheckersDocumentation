@@ -13,8 +13,7 @@ import spark.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @Tag("UI-Tier")
@@ -89,6 +88,7 @@ public class GetHomeRouteTest {
         when(playerLobby.getAllGames()).thenReturn(gameList);
         try {
             CuT.handle(request, response);
+            fail("Redirects invoke halt exceptions.");
         }catch (Exception e) {
             //expected
         }
