@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -29,7 +28,6 @@ public class PlayerLobbyTest {
     private Player player1;
     private Player player2;
     private Player player3;
-    private Game game;
 
     @BeforeEach
     public void setup() {
@@ -43,6 +41,7 @@ public class PlayerLobbyTest {
     @Test
     public void test_make_game(){
         player1 = mock(Player.class);
+        Game game = mock(Game.class);
         when(player1.getName()).thenReturn("Avdol");
         CuT.saveUser(player1);
 
@@ -136,47 +135,6 @@ public class PlayerLobbyTest {
     }
 
     /**
-     * Test the ability to not save a user that gave a name that is already in use
-     */
-    @Test
-    public void test_save_user_need_new_name(){
-        player1 = mock(Player.class);
-        player2 = mock(Player.class);
-        when(player2.getName()).thenReturn("Johnathan");
-        when(player1.getName()).thenReturn("Johnathan");
-
-        //Invoke test
-        PostLoginRoute.AddUserStatus first = CuT.saveUser(player1);
-        PostLoginRoute.AddUserStatus second = CuT.saveUser(player2);
-
-        //Analyze results:
-        assertEquals(PostLoginRoute.AddUserStatus.SUCCESS, first);
-        assertEquals(PostLoginRoute.AddUserStatus.PICKANOTHER, second);
-        assertEquals(CuT.findPlayer("Johnathan"), player1);
-    }
-
-
-    /**
-     * Test the ability to save a user that has just logged in and is a returning player
-     */
-    @Test
-    public void test_save_user_returning_player(){
-        player1 = mock(Player.class);
-        when(player1.getName()).thenReturn("Joseph");
-        PostLoginRoute.AddUserStatus first = CuT.saveUser(player1);
-        player1.status = Player.Status.OFFLINE;
-
-        // Invoke test
-        PostLoginRoute.AddUserStatus second = CuT.saveUser(player1);
-
-        // Analyze results:
-        assertEquals(PostLoginRoute.AddUserStatus.SUCCESS, first);
-        assertEquals(PostLoginRoute.AddUserStatus.SUCCESS, second);
-        assertEquals(CuT.findPlayer("Joseph"), player1);
-        assertEquals(Player.Status.SEARCHING, player1.status);
-    }
-
-    /**
      * Test the ability to get a list of waiting players when there are no waiting players
      */
     @Test
@@ -260,59 +218,7 @@ public class PlayerLobbyTest {
         assertEquals(player2, playerList.get(1));
     }
 
-    /**
-     * Test the ability to remove a user from the list of online players
-     */
-    @Test
-    public void test_remove_user_online(){
-        player1 = mock(Player.class);
-        when(player1.getName()).thenReturn("Jolyne");
-        CuT.saveUser(player1);
-        player1.status = Player.Status.SEARCHING;
-        CuT.addOnlinePlayer(player1);
 
-        player2 = mock(Player.class);
-        when(player2.getName()).thenReturn("Gappy");
-        CuT.saveUser(player2);
-        player2.status = Player.Status.SEARCHING;
-        CuT.addOnlinePlayer(player2);
-
-        // Invoke test
-//        boolean result = CuT.removeUser(player1);
-//        ArrayList<Player> onlinePlayersList = CuT.getOnlinePlayers();
-
-        // Analyze results:
-//        assertEquals(true, result);
-//        assertEquals(1, onlinePlayersList.size());
-//        assertEquals(player2, onlinePlayersList.get(0));
-    }
-
-    /**
-     * Test the ability to add a player to the list of online players
-     */
-    @Test
-    public void test_add_online_player(){
-        player1 = mock(Player.class);
-        when(player1.getName()).thenReturn("Jolyne");
-        CuT.saveUser(player1);
-        player1.status = Player.Status.OFFLINE;
-
-        player2 = mock(Player.class);
-        when(player2.getName()).thenReturn("Gappy");
-        CuT.saveUser(player2);
-        player2.status = Player.Status.SEARCHING;
-
-        // Invoke test
-//        boolean result1 = CuT.addOnlinePlayer(player1);
-//        boolean result2 = CuT.addOnlinePlayer(player2);
-//        ArrayList<Player> onlinePlayersList = CuT.getOnlinePlayers();
-
-        // Analyze results:
-//        assertEquals(false, result1);
-//        assertEquals(true, result2);
-//        assertEquals(1, onlinePlayersList.size());
-//        assertEquals(player2, onlinePlayersList.get(0));
-    }
 
     /**
      * Test the ability to find a player in the user Map when the given player is null

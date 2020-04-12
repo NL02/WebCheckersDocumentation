@@ -124,17 +124,17 @@ public class PlayerLobby {
     /**
      * removeUser removes a user from the list of online players (onlinePlayers)
      *
-     * @param player player instance to be removed from onlinePlayers
+   //  * @param player player instance to be removed from onlinePlayers
      */
-    public void removeUser(Player player){
-        // checking if user exists in array just in case
-        for(int i = 0; i < onlinePlayers.size(); i ++) {
-            if (onlinePlayers.get(i).equals(player)) {
-                onlinePlayers.remove(player);
-                return;
-            }
-        }
-    }
+//    public void removeUser(Player player){
+//        // checking if user exists in array just in case
+//        for(int i = 0; i < onlinePlayers.size(); i ++) {
+//            if (onlinePlayers.get(i).equals(player)) {
+//                onlinePlayers.remove(player);
+//                return;
+//            }
+//        }
+//    }
 
     public static int getTotalGames(){
         return totalGames;
@@ -171,7 +171,7 @@ public class PlayerLobby {
      */
     public void addOnlinePlayer(Player player){
         increment();
-        onlinePlayers.add(player);
+        //onlinePlayers.add(player);
     }
 
     /**
@@ -185,7 +185,7 @@ public class PlayerLobby {
     }
 
     public void endSession(Player player){
-        removeUser(player);
+        //removeUser(player);
         decrement();
         player.endSession();
         findPlayer(player.name);
