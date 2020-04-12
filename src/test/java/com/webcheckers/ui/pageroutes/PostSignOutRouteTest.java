@@ -9,9 +9,8 @@ import org.junit.jupiter.api.Test;
 import spark.Request;
 import spark.Response;
 import spark.Session;
-import spark.TemplateEngine;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -30,12 +29,11 @@ public class PostSignOutRouteTest {
     // mock objects
     private Request request;
     private Session session;
-    private TemplateEngine engine;
-    private PlayerLobby lobby;
     private Response response;
     private Game game;
 
     // friendly
+    public PlayerLobby lobby;
     public Player player;
 
 
@@ -48,9 +46,8 @@ public class PostSignOutRouteTest {
         session = mock(Session.class);
         when(request.session()).thenReturn(session);
         response = mock(Response.class);
-        lobby = mock(PlayerLobby.class);
-        engine = mock(TemplateEngine.class);
 
+        lobby = new PlayerLobby();
         player = new Player("Player name");
         CuT = new PostSignOutRoute(lobby);
     }
@@ -62,11 +59,14 @@ public class PostSignOutRouteTest {
     @Test
     public void removePlayerWasSearching() throws Exception {
         when(session.attribute(PostSignOutRoute.CURRENT_USER_ATTR)).thenReturn(player);
-//        when(lobby.removeUser(player)).thenReturn(true);
 
         // Invoke test
-        CuT.handle(request, response);
-
+        try {
+            CuT.handle(request, response);
+            fail("Redirects invoke halt exceptions.");
+        }catch (Exception e) {
+            //expected
+        }
         // Analyze results:
         assertEquals(Player.Status.OFFLINE, player.status);
         verify(response).redirect(WebServer.HOME_URL);
@@ -79,12 +79,15 @@ public class PostSignOutRouteTest {
     @Test
     public void removePlayerWasWaiting() throws Exception {
         when(session.attribute(PostSignOutRoute.CURRENT_USER_ATTR)).thenReturn(player);
-//        when(lobby.removeUser(player)).thenReturn(true);
         player.status = Player.Status.WAITING;
 
         // Invoke test
-        CuT.handle(request, response);
-
+        try {
+            CuT.handle(request, response);
+            fail("Redirects invoke halt exceptions.");
+        }catch (Exception e) {
+            //expected
+        }
         // Analyze results:
         assertEquals(Player.Status.OFFLINE, player.status);
         verify(response).redirect(WebServer.HOME_URL);
@@ -97,7 +100,6 @@ public class PostSignOutRouteTest {
     @Test
     public void removePlayerWasInGame() throws Exception {
         when(session.attribute(PostSignOutRoute.CURRENT_USER_ATTR)).thenReturn(player);
-//        when(lobby.removeUser(player)).thenReturn(true);
         final String GAME_OVER_MSG = "%s has resigned from the game";
         game = mock(Game.class);
         player.startGame(game);
@@ -107,27 +109,15 @@ public class PostSignOutRouteTest {
 
         // Invoke test
 
-        CuT.handle(request, response);
-
+        try {
+            CuT.handle(request, response);
+            fail("Redirects invoke halt exceptions.");
+        }catch (Exception e) {
+            //expected
+        }
         // Analyze results:
         assertEquals(Player.Status.OFFLINE, player.status);
-        verify(response).redirect(WebServer.HOME_URL);
-    }
-
-    /**
-     * Test ability to remove a player from the online players list given a player that is
-     * not online
-     */
-    @Test
-    public void removePlayerWasNotOnline() throws Exception {
-        when(session.attribute(PostSignOutRoute.CURRENT_USER_ATTR)).thenReturn(player);
-//        when(lobby.removeUser(player)).thenReturn(false);
-        player.status = Player.Status.OFFLINE;
-
-        //Invoke Test
-        CuT.handle(request, response);
-
-        assertEquals(Player.Status.OFFLINE, player.status);
+        assertNotEquals(player.game, game);
         verify(response).redirect(WebServer.HOME_URL);
     }
 }
