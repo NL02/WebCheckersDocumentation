@@ -1,24 +1,23 @@
 package com.webcheckers.ui.gameroutes;
 
 import com.webcheckers.appl.Player;
-import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.ui.gameroutes.GetSpectatorStopWatchingRoute;
+import com.webcheckers.ui.WebServer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.Request;
 import spark.Response;
 import spark.Session;
-import spark.TemplateEngine;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Unit Test Suite for the GetSpectatorStopWatchingRoute handler
  *
  * @author Ethan Davison
- * @date Last Modified 8/4/20
+ * @author Rayna Mishra
+ * @date Last Modified 4/12/20
  */
 @Tag("UI-Tier")
 public class GetSpectatorStopWatchingRouteTest {
@@ -31,7 +30,7 @@ public class GetSpectatorStopWatchingRouteTest {
     /** Project-level Objects */
     private Player me;
 
-    /** Class under Test */
+    /** Component under Test */
     private GetSpectatorStopWatchingRoute CuT;
 
     /**
@@ -39,6 +38,14 @@ public class GetSpectatorStopWatchingRouteTest {
      */
     @BeforeEach
     public void setup(){
+        request = mock(Request.class);
+        session = mock(Session.class);
+        when(request.session()).thenReturn(session);
+        response = mock(Response.class);
+
+        me = new Player("Player name");
+        when(request.session().attribute("currentUser")).thenReturn(me);
+        CuT = new GetSpectatorStopWatchingRoute();
     }
 
     /**
@@ -47,5 +54,16 @@ public class GetSpectatorStopWatchingRouteTest {
      */
     @Test
     public void testHandle() throws Exception{
+        // Invoke test
+        try {
+            CuT.handle(request, response);
+            fail("Redirects invoke halt exceptions.");
+        }catch (Exception e) {
+            //expected
+        }
+
+        //Analyze results
+        assertEquals(Player.Status.SEARCHING, me.status);
+        verify(response).redirect(WebServer.HOME_URL);
     }
 }
