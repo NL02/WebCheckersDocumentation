@@ -41,19 +41,17 @@ public class PlayerLobbyTest {
     @Test
     public void test_make_game(){
         player1 = mock(Player.class);
-        Game game = mock(Game.class);
         when(player1.getName()).thenReturn("Avdol");
         CuT.saveUser(player1);
 
-        when(new Game(player1)).thenReturn(game);
 
         // Invoke test
         CuT.newGame(player1);
-        Game gameMade = CuT.getGame("Avdol");
+        Game gameMade = CuT.getGame(player1.name);
 
         // Check results
         // 1) The returned game is not null
-        assertEquals(game, gameMade);
+        assertNotNull(gameMade);
     }
 
     /**
