@@ -70,7 +70,7 @@ public class PostLoginRoute implements Route {
 
         if(playerLobby.findPlayer(username) == null) {
             newPlayer = new Player(username);
-            playerLobby.addOnlinePlayer(newPlayer);
+            playerLobby.addOnlinePlayer();
             is_added = playerLobby.saveUser(newPlayer);
         }
         else{
@@ -80,6 +80,7 @@ public class PostLoginRoute implements Route {
             }
             else {
                 is_added = AddUserStatus.SUCCESS;
+                playerLobby.addOnlinePlayer();
             }
         }
 

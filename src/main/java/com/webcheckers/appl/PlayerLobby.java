@@ -20,7 +20,6 @@ public class PlayerLobby {
 
     private ArrayList<Player> waitingPlayers = new ArrayList<>();
     private static int liveCount = 0;
-    private ArrayList<Player> onlinePlayers = new ArrayList<>();
 
     private Map <String, Player> userMap = new HashMap<>();
     private static int totalGames = 0;
@@ -121,21 +120,6 @@ public class PlayerLobby {
         return waitingPlayers;
     }
 
-    /**
-     * removeUser removes a user from the list of online players (onlinePlayers)
-     *
-   //  * @param player player instance to be removed from onlinePlayers
-     */
-//    public void removeUser(Player player){
-//        // checking if user exists in array just in case
-//        for(int i = 0; i < onlinePlayers.size(); i ++) {
-//            if (onlinePlayers.get(i).equals(player)) {
-//                onlinePlayers.remove(player);
-//                return;
-//            }
-//        }
-//    }
-
     public static int getTotalGames(){
         return totalGames;
     }
@@ -167,11 +151,9 @@ public class PlayerLobby {
     /**
      * addOnlinePlayer adds a player to the onlinePlayers list
      *
-     * @param player player instance to be added
      */
-    public void addOnlinePlayer(Player player){
+    public void addOnlinePlayer(){
         increment();
-        //onlinePlayers.add(player);
     }
 
     /**
@@ -185,7 +167,6 @@ public class PlayerLobby {
     }
 
     public void endSession(Player player){
-        //removeUser(player);
         decrement();
         player.endSession();
         findPlayer(player.name);
