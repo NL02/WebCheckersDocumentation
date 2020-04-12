@@ -32,7 +32,7 @@ public class Player {
     public Player(String username) {
         this.name = username;
         this.status = Status.SEARCHING;
-        playerID = username.hashCode();
+//        playerID = username.hashCode();
     }
 
     //private int getPlayerID() {

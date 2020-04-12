@@ -1,10 +1,12 @@
 package com.webcheckers.ui.pageroutes;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.ui.TemplateEngineTester;
 import com.webcheckers.util.Message;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import spark.*;
 import spark.template.freemarker.FreeMarkerEngine;
 
@@ -70,17 +72,17 @@ public class GetLoginRouteTest {
      */
     @Test
     public void testRender() throws Exception {
-//        final TemplateEngineTester engineTester = new TemplateEngineTester();
-//        when(engine.render((any(ModelAndView.class)))).thenAnswer(engineTester.makeAnswer());
+        final TemplateEngineTester engineTester = new TemplateEngineTester();
+        when(engine.render((ArgumentMatchers.any(ModelAndView.class)))).thenAnswer(engineTester.makeAnswer());
 
         // Render the page
         CuT.handle(request, response);
 
         // Assert that the view-model is a non-null Map with the proper attributes and view name
-//        engineTester.assertViewModelExists();
-//        engineTester.assertViewModelIsaMap();
-//        engineTester.assertViewModelAttribute(GetLoginRoute.TITLE, session.attribute(GetLoginRoute.TITLE_ATTR));
-//        engineTester.assertViewName(GetLoginRoute.VIEW_NAME);
+        engineTester.assertViewModelExists();
+        engineTester.assertViewModelIsaMap();
+        engineTester.assertViewModelAttribute(GetLoginRoute.TITLE, session.attribute(GetLoginRoute.TITLE_ATTR));
+        engineTester.assertViewName(GetLoginRoute.VIEW_NAME);
     }
 
     /**
