@@ -52,7 +52,6 @@ public class GetSpectateGameRouteTest {
         me = mock(Player.class);
 
         CuT = new GetSpectateGameRoute(templateEngine);
-
     }
 
     /**
