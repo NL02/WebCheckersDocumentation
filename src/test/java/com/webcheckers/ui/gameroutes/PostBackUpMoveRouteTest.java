@@ -19,7 +19,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Unit testing for PostBackupMove
+ * Unit testing for PostBackupMoveRoute
+ *
+ * @author May Wu
  */
 @Tag("UI-Tier")
 public class PostBackUpMoveRouteTest {
