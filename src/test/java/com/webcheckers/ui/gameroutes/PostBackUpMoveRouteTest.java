@@ -59,6 +59,10 @@ public class PostBackUpMoveRouteTest {
         CuT = new PostBackupMoveRoute();
     }
 
+    /**
+     * Test that player cannot backup if there are no moves made
+     * @throws Exception
+     */
     @Test
     public void test_cannotBackup() throws Exception {
         when(request.session().attribute("currentUser")).thenReturn(redPlayer);
@@ -69,6 +73,10 @@ public class PostBackUpMoveRouteTest {
 
     }
 
+    /**
+     * Tests that player can backup correctly
+     * @throws Exception
+     */
     @Test
     public void test_canBackup() throws Exception {
         when(request.session().attribute("currentUser")).thenReturn(redPlayer);
