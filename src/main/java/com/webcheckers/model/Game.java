@@ -24,6 +24,8 @@ public class Game {
     private String gameOverMsg = null;
     public Player winner = null;
 
+    //TODO LIST OF ALL MOVES MADE
+
     public Game(Player whitePlayer, Player redPlayer) {
         LOG.fine("Game Created");
         this.redPlayer = redPlayer;
