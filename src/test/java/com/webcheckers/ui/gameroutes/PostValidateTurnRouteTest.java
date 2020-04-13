@@ -5,7 +5,6 @@ import com.webcheckers.appl.Player;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Position;
-import com.webcheckers.util.Message;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -34,7 +33,6 @@ public class PostValidateTurnRouteTest {
     private Response response;
     private Player player;
     private Gson gson;
-    private Message message;
     private Game game;
 
     /**
