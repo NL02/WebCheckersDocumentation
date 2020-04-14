@@ -127,7 +127,7 @@ public class Game {
                     break;
                 }
                 space = board.getBoard()[i][j];
-                if (!space.isValid() || space.getPiece() == null || space.getPiece().getColor() != activeColor) {
+                if(space.getPiece() == null || space.getPiece().getColor() != activeColor){
                     continue;
                 }
                 pieces++;

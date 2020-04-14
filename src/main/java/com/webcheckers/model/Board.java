@@ -78,6 +78,11 @@ public class Board {
             return OUT_OF_BOUNDS;
         }
 
+        // Verify move doesn't go too far
+        if (Math.abs(endX - startX) > 2 || Math.abs(endY - startY) > 2) {
+            return TOO_FAR;
+        }
+
         // If move is a simple move, verify it's the only move
         if (Math.abs(endX - startX) == 1) {
             if (pendingMoves.size() > 0) {
@@ -116,9 +121,11 @@ public class Board {
             return INVALID_SPACE;
         }
         // Verify move length
+        /*
         else if (Math.abs(endX - startX) > 2 || Math.abs(endY - startY) > 2) {
             return TOO_FAR;
         }
+        */
         // Verify move is diagonal
         else if (startX == endX || startY == endY) {
             return NOT_DIAGONAL;
@@ -388,7 +395,7 @@ public class Board {
         return board[index];
     }
 
-    public Space[] getRowReversesd( int index ) {
+    public Space[] getRowReversed(int index ) {
         Space[] row = getRow(index);
         Space[] reversed = new Space[ROWS];
         int indexing = ROWS;
