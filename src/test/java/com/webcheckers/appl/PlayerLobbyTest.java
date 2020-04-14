@@ -65,7 +65,7 @@ public class PlayerLobbyTest {
         player2 = mock(Player.class);
         when(player2.getName()).thenReturn("Caesar");
         player3 = mock(Player.class);
-        when(player3.getName()).thenReturn("Johny");
+        when(player3.getName()).thenReturn("Will");
         Player ghost = mock(Player.class);
         when(ghost.getName()).thenReturn("Waiting for Player");
 
@@ -73,6 +73,11 @@ public class PlayerLobbyTest {
         when(game1.getRedPlayer()).thenReturn(player2);
         Game game2 = mock(Game.class);
         when(game2.getRedPlayer()).thenReturn(ghost);
+
+        CuT.addGame(player1, game1);
+        CuT.addGame(player2, game1);
+        CuT.addGame(player3, game2);
+        CuT.addGame(ghost, game2);
 
         /// Invoke Test
         Collection<Game> gameList = CuT.getAllGames();

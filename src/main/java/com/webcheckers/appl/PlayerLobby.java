@@ -45,7 +45,7 @@ public class PlayerLobby {
         Game game;
         for(String key : activeGames.keySet()){
             game = activeGames.get(key);
-            if(!gameList.contains(game) && !game.getRedPlayer().name.equals("Waiting for Player")){
+            if(!gameList.contains(game) && !game.getRedPlayer().getName().equals("Waiting for Player")){
                 gameList.add(game);
             }
         }
@@ -134,7 +134,7 @@ public class PlayerLobby {
     }
 
     public static void addGame(Player player, Game game){
-        activeGames.put(player.name, game);
+        activeGames.put(player.getName(), game);
         //TODO Add game to allGames
     }
 
