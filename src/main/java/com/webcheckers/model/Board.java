@@ -349,6 +349,10 @@ public class Board {
         }
     }
 
+    /**
+     * Function to test end of game by blocked piece
+     * @param test
+     */
     private void PopulateBoard(boolean test){
         if(test){
             board[0][1].setPiece(new Piece(Color.RED));
@@ -360,6 +364,9 @@ public class Board {
         }
     }
 
+    /**
+     * Populate board with pieces in checkers format
+     */
     private void PopulateBoard() {
         for (int row = 0; row < ROWS; row++) {
             for(int col = 0; col < COLS; col++) {
