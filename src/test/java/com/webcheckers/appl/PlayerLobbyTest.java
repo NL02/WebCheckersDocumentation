@@ -82,7 +82,7 @@ public class PlayerLobbyTest {
         /// Invoke Test
         Collection<Game> gameList = CuT.getAllGames();
         assertEquals(1, gameList.size());
-        assertEquals(true, gameList.contains(game1));
+        assertTrue(gameList.contains(game1));
     }
 
     /**
