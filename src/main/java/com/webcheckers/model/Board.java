@@ -41,7 +41,7 @@ public class Board {
 
     public Board() {
         InitializeSpaces();
-        PopulateBoard();
+        PopulateBoard(false);
         pendingMoves = new ArrayList<>();
         activeColor = Color.RED;
     }
@@ -347,6 +347,21 @@ public class Board {
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Function to test end of game by blocked piece
+     * @param test
+     */
+    private void PopulateBoard(boolean test){
+        if(test){
+            board[0][1].setPiece(new Piece(Color.RED));
+            board[2][1].setPiece(new Piece(Color.WHITE));
+            board[4][3].setPiece(new Piece(Color.WHITE));
+        }
+        else{
+            PopulateBoard();
         }
     }
 
