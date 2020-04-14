@@ -116,7 +116,6 @@ public class Game {
         int pieces = 0;
         int validMoves = 0;
         Space space;
-        Piece piece;
         for (int i = 0; i < 8; i++) {
             if (validMoves != 0) {
                 break;
@@ -126,7 +125,7 @@ public class Game {
                     break;
                 }
                 space = board.getBoard()[i][j];
-                if(!space.isValid() || space.getPiece() == null || space.getPiece().getColor() != activeColor){
+                if(space.getPiece() == null || space.getPiece().getColor() != activeColor){
                     continue;
                 }
                 pieces++;
