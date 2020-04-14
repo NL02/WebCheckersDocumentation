@@ -79,13 +79,6 @@ public class BoardTest {
         assertEquals(Board.OUT_OF_BOUNDS, CuT.validateMove(x_end));
     }
 
-    /**
-     * Test that an ILLEGAL_COMBO message is returned
-     */
-    @Test
-    public void test_validateMove_illegal() {
-        Move firstMove = new Move(new Position(5, 2), new Position(4, 3));
-    }
 
     /**
      * Test that a piece cannot jump an empty piece
@@ -109,6 +102,39 @@ public class BoardTest {
         CuT.submitTurn();
         Move red2 = new Move(new Position(5, 4), new Position(3, 2));
         assertEquals(Board.OWN_PIECE, CuT.validateMove(red2));
+    }
+
+    /**
+     * Test that a piece cannot make King moves (WHITE)
+     */
+    @Test
+    public void test_validateMove_notKing_white() {
+        Move red1 = new Move(new Position(5, 0), new Position(4, 1));
+        CuT.validateMove(red1);
+        CuT.submitTurn();
+        Move white1 = new Move(new Position(5, 4), new Position(4, 5));
+        CuT.validateMove(white1);
+        CuT.submitTurn();
+        Move red2 = new Move(new Position(5, 2), new Position(4, 3));
+        CuT.validateMove(red2);
+        CuT.submitTurn();
+        Move white_invalid = new Move(new Position(4, 5), new Position(5, 4));
+        assertEquals(Board.NOT_KING, CuT.validateMove(white_invalid));
+    }
+
+    /**
+     * Test that a piece cannot make King moves (RED)
+     */
+    @Test
+    public void test_validateMove_notKing_red() {
+        Move red1 = new Move(new Position(5, 2), new Position(4, 3));
+        CuT.validateMove(red1);
+        CuT.submitTurn();
+        Move white1 = new Move(new Position(5, 4), new Position(4, 3));
+        CuT.validateMove(white1);
+        CuT.submitTurn();
+        Move red2 = new Move(new Position(4, 3), new Position(5, 2));
+        assertEquals(Board.NOT_KING, CuT.validateMove(red2));
     }
 
     /**

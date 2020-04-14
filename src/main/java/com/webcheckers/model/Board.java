@@ -40,7 +40,7 @@ public class Board {
 
     public Board() {
         InitializeSpaces();
-        PopulateBoard(false);
+        PopulateBoard();
         pendingMoves = new ArrayList<>();
         activeColor = Color.RED;
     }
@@ -349,16 +349,6 @@ public class Board {
         }
     }
 
-    private void PopulateBoard(boolean test){
-        if(test){
-            board[0][1].setPiece(new Piece(Color.RED));
-            board[2][1].setPiece(new Piece(Color.WHITE));
-            board[4][3].setPiece(new Piece(Color.WHITE));
-        }
-        else{
-            PopulateBoard();
-        }
-    }
 
     private void PopulateBoard() {
         for (int row = 0; row < ROWS; row++) {
