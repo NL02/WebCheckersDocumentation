@@ -22,7 +22,6 @@ public class GetSpectatorStopWatchingRoute implements Route {
         Session session = request.session();
         Player me = session.attribute("currentUser");
 
-        me.endGame(true);
         me.status = Player.Status.SEARCHING;
         response.redirect("/");
         halt();

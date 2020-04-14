@@ -25,6 +25,7 @@ public class PlayerLobby {
     private Map <String, Player> userMap = new HashMap<>();
     private static int totalGames = 0;
     public static Map<String, Game> activeGames = new HashMap<>();
+    //TODO ADD LIST OF ALL COMPLETED GAMES
 
     //
     // Public methods

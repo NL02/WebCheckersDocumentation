@@ -33,11 +33,13 @@ public class  GetHomeRoute implements Route {
   static final String TITLE = "Welcome!";
   static final String NUM_PLAYERS_ATTR = "num_players";
   static final String NUM_PLAYERS_MSG = "There are %d players signed on.";
+  static final String STAT_STRING ="Games played: %d | Games won: %d | Win percentage %f";
   static final String MESSAGE_ATTR = "message";
   static final String VIEW_NAME = "home.ftl";
   static final String CURRENT_USER_ATTR = "currentUser";
   static final String PLAYER_LIST_ATTR = "playerList";
   static final String GAME_LIST_ATTR = "gameList";
+  static final String STAT_ATTR = "stat";
 
 
   //
@@ -95,8 +97,14 @@ public class  GetHomeRoute implements Route {
     // list all active games
     vm.put(GAME_LIST_ATTR, playerLobby.getAllGames());
 
+    vm.put(STAT_ATTR, Message.info("Please Login"));
+
 
     Player currentUser = request.session().attribute("currentUser");
+    if(currentUser != null){
+      Message stat = Message.info(String.format(STAT_STRING, currentUser.getGamesPlayed(), currentUser.getGamesWon(), currentUser.getWinPercent()));
+      vm.put(STAT_ATTR, stat);
+    }
     if(currentUser != null && currentUser.status == Player.Status.INGAME){
       response.redirect("/game");
       halt();

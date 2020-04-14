@@ -24,6 +24,8 @@ public class Game {
     private String gameOverMsg = null;
     public Player winner = null;
 
+    //TODO LIST OF ALL MOVES MADE
+
     public Game(Player whitePlayer, Player redPlayer) {
         LOG.fine("Game Created");
         this.redPlayer = redPlayer;
@@ -129,7 +131,7 @@ public class Game {
                     continue;
                 }
                 pieces++;
-                if(board.checkCanMove(i, j)){
+                if (board.checkCanMove(i, j)) {
                     validMoves++;
                 }
             }
@@ -142,7 +144,8 @@ public class Game {
         Player loser = activePlayer == whitePlayer ? whitePlayer : redPlayer;
         if (pieces == 0) {
             gameOver(loser.name + " has no pieces remaining! " + winner.name + " is the winner!", winner);
+        } else {
+            gameOver(loser.name + " has no valid moves to make! " + winner.name + " is the winner!", winner);
         }
-        gameOver(loser.name + " has no valid moves to make! " + winner.name + " is the winner!", winner);
     }
 }

@@ -18,8 +18,8 @@ public class PostLoginRoute implements Route {
 
     // Values used in the view-model map for rendering the post login view after a login attempt
     static final String MESSAGE_ATTR = "message";
-    static final String INVALID_USERNAME = "Usernames must have at least one alphanumeric character";
-    static final String PICK_ANOTHER_USERNAME = "Another player is using that name, please pick another one";
+    static final String INVALID_USERNAME = "Usernames can only contain alphanumeric characters.";
+    static final String PICK_ANOTHER_USERNAME = "%s is currently in use, please pick another.";
     static final String TITLE_ATTR = "title";
     static final String CURRENT_USER_ATTR = "currentUser";
 
@@ -70,7 +70,6 @@ public class PostLoginRoute implements Route {
 
         if(playerLobby.findPlayer(username) == null) {
             newPlayer = new Player(username);
-            playerLobby.addOnlinePlayer(newPlayer);
             is_added = playerLobby.saveUser(newPlayer);
         }
         else{
@@ -84,6 +83,7 @@ public class PostLoginRoute implements Route {
         }
 
         if(is_added == AddUserStatus.SUCCESS){
+            playerLobby.addOnlinePlayer(newPlayer);
             httpSession.attribute(CURRENT_USER_ATTR, newPlayer);
         }
         else if (is_added == AddUserStatus.INVLAID){
@@ -92,7 +92,7 @@ public class PostLoginRoute implements Route {
             return templateEngine.render(new ModelAndView(vm, "/signin.ftl"));
         }
         else{
-            Message error = Message.error(PICK_ANOTHER_USERNAME);
+            Message error = Message.error(String.format(PICK_ANOTHER_USERNAME, username));
             vm.put(MESSAGE_ATTR, error);
             return templateEngine.render(new ModelAndView(vm, "/signin.ftl"));
         }

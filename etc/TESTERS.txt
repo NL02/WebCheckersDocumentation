@@ -1,0 +1,28 @@
+Running the application:
+1. Make sure you have Maven installed correctly.
+2. Use the command line to navigate to the directory where you have unzipped
+   the application.
+3. Execute this command to run the application:
+   mvn compile exec:java
+4. Open a new browser window. If you are hosting on your computer, go to
+   localhost:4567. If someone else is hosting and you want to connect to them,
+   replace localhost with their IPv4 address. They can find it by running the
+   command ipconfig.
+5. To test with a second player on the same computer, open a new window in
+   incognito mode or your browser's equivalent, and go to localhost:4567 as
+   before.
+6. Testing spectator mode will require two devices. As before, use localhost:4567
+   if the spectator will be on the host's device and replace localhost with the
+   IP address if it will be a separate device.
+7. Computers are required to test game functionality, but spectate mode can be
+   tested via smartphone.
+
+Notes on our implementation:
+1. There is a known bug where dropping a piece onto another piece causes an
+   uncaught JavaScript error, which leaves the player unable to move pieces.
+   Refreshing the page will restore functionality.
+2. Games are started by having one player click "Create Game", which puts them
+   into an empty game while they wait for an opponent. Their name is added to a
+   list of open games on the home page. The second player clicks that name to
+   join and start the game. When they do, this adds the game to the list of
+   games that can be spectated.
