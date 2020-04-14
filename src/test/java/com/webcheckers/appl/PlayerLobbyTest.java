@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -52,6 +53,45 @@ public class PlayerLobbyTest {
         // Check results
         // 1) The returned game is not null
         assertNotNull(gameMade);
+    }
+
+    /**
+     * Test the ability to get all active games in a list
+     */
+    @Test
+    public void test_get_all_games(){
+        player1 = mock(Player.class);
+        when(player1.getName()).thenReturn("Gyro");
+        player2 = mock(Player.class);
+        when(player2.getName()).thenReturn("Caesar");
+        player3 = mock(Player.class);
+        when(player3.getName()).thenReturn("Johny");
+        Player ghost = mock(Player.class);
+        when(ghost.getName()).thenReturn("Waiting for Player");
+
+        Game game1 = mock(Game.class);
+        when(game1.getRedPlayer()).thenReturn(player2);
+        Game game2 = mock(Game.class);
+        when(game2.getRedPlayer()).thenReturn(ghost);
+
+        /// Invoke Test
+        Collection<Game> gameList = CuT.getAllGames();
+        assertEquals(1, gameList.size());
+        assertEquals(true, gameList.contains(game1));
+    }
+
+    /**
+     * Test ability to increment liveCount
+     */
+    @Test
+    public void test_increment(){
+        int liveCount = CuT.getLiveCount();
+
+        // Invoke test
+        PlayerLobby.increment();
+        int liveCountAfter = CuT.getLiveCount();
+
+        assertEquals(liveCount + 1, liveCountAfter);
     }
 
     /**
@@ -298,6 +338,8 @@ public class PlayerLobbyTest {
         assertEquals(player2, result2);
         assertEquals(player3, result3);
     }
+
+
 
 
 }
