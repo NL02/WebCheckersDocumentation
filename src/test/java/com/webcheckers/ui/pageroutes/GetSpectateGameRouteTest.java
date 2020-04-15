@@ -12,10 +12,9 @@ import spark.Response;
 import spark.Session;
 import spark.TemplateEngine;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Unit Test Suite for the GetSpectatorGameRoute handler
@@ -31,11 +30,11 @@ public class GetSpectateGameRouteTest {
     private Response response;
     private TemplateEngine templateEngine;
     private TemplateEngineTester engineTester;
+    private Session session;
 
     /** Project-level Objects */
     private PlayerLobby playerLobby;
     private Game game;
-    private Player me;
 
     /** Class under Testing */
     private GetSpectateGameRoute CuT;
@@ -46,14 +45,64 @@ public class GetSpectateGameRouteTest {
      */
     @BeforeEach
     public void setup(){
+        request = mock(Request.class);
+        response = mock(Response.class);
+        templateEngine = mock(TemplateEngine.class);
+        engineTester = mock(TemplateEngineTester.class);
+        session = mock(Session.class);
+
+        playerLobby = new PlayerLobby();
+        game = mock(Game.class);
+
+
+        CuT = new GetSpectateGameRoute(templateEngine);
+        when(request.queryParams("player")).thenReturn("validPlayer");
+        Player me = new Player("validPlayer");
+        me.status = Player.Status.SEARCHING;
+
+
+        game = PlayerLobby.getGame("SomeString");
+        when(request.session()).thenReturn(session);
+        when(session.attribute(GetSpectateGameRoute.CURRENT_USER_ATTR)).thenReturn(me);
+
     }
 
     /**
-     * Test for the handle() method to ensure correct rendering
-     *  when the game is not over
+     * Test correct view model attributes
      */
     @Test
-    public void testNotOver() throws Exception{
+    public void test_viewModel() throws Exception {
+        playerLobby = new PlayerLobby();
+        Player whitePlayer = new Player("whitePlayer");
+
+
+        CuT = new GetSpectateGameRoute(templateEngine);
+        when(request.queryParams("player")).thenReturn("validPlayer");
+        Player me = new Player("validPlayer");
+        me.status = Player.Status.SEARCHING;
+
+        game = new Game(whitePlayer,me);
+        PlayerLobby.addGame(whitePlayer,game);
+        PlayerLobby.addGame(me,game);
+        me.startGame(game);
+        game = PlayerLobby.getGame(whitePlayer.name);
+        when(request.session()).thenReturn(session);
+        when(session.attribute(GetSpectateGameRoute.CURRENT_USER_ATTR)).thenReturn(me);
+        assertNotNull(game);
+//        try {
+//            CuT.handle(request, response);
+//            fail("Redirects invoke halt exceptions.");
+//        } catch (HaltException e){
+//            System.out.println("IT HALTS?????");
+//           // expected
+//        }
+        CuT.handle(request, response);
+        System.out.println("IT DOESNT HALT");
+        engineTester.assertViewModelExists();
+        engineTester.assertViewModelIsaMap();
+        engineTester.assertViewModelAttribute(GetSpectateGameRoute.CURRENT_USER_ATTR,me);
+        engineTester.assertViewModelAttribute(GetSpectateGameRoute.VIEW_MODE_ATTR,GetSpectateGameRoute.VIEW_MODE);
+        engineTester.assertViewModelAttribute(GetSpectateGameRoute.TITLE_ATTR,GetSpectateGameRoute.TITLE_START);
     }
 
     /**
@@ -61,7 +110,29 @@ public class GetSpectateGameRouteTest {
      *  when the game is over
      */
     @Test
-    public void testIsOver() throws Exception{
+    public void testIsOver() throws Exception   {
+        playerLobby = new PlayerLobby();
+        Player whitePlayer = new Player("whitePlayer");
+
+
+        CuT = new GetSpectateGameRoute(templateEngine);
+        when(request.queryParams("player")).thenReturn("validPlayer");
+        Player me = new Player("validPlayer");
+        me.status = Player.Status.SEARCHING;
+
+        game = new Game(whitePlayer,me);
+        PlayerLobby.addGame(whitePlayer,game);
+        PlayerLobby.addGame(me,game);
+        me.startGame(game);
+        game = PlayerLobby.getGame(whitePlayer.name);
+        when(request.session()).thenReturn(session);
+        when(session.attribute(GetSpectateGameRoute.CURRENT_USER_ATTR)).thenReturn(me);
+        assertNotNull(game);
+
+        game.gameOver("notNull", me);
+
+        CuT.handle(request,response);
+
     }
 
 
