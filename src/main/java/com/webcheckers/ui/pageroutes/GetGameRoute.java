@@ -166,8 +166,10 @@ public class GetGameRoute implements Route {
         Player redPlayer = game.getRedPlayer();
         Player whitePlayer = game.getWhitePlayer();
 
-        whitePlayer.endGame(game.winner == whitePlayer);
-        redPlayer.endGame(game.winner == redPlayer);
+        redPlayer.status = Player.Status.ENDGAME;
+        whitePlayer.status = Player.Status.ENDGAME;
+
+        me.endGame(game.winner == me);
 
         Map<String, Object> vm = new HashMap<>();
 

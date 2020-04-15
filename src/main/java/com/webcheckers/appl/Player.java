@@ -64,13 +64,10 @@ public class Player {
      * endGame sets the player game to null
      */
     public void endGame(boolean hasWon) {
-        if (this.status != Status.ENDGAME) {
             gamesPlayed++;
             if (hasWon) {
                 gamesWon++;
             }
-            this.status = Status.ENDGAME;
-        }
     }
 
     public void endSession(){
