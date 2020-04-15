@@ -57,7 +57,7 @@ public class PlayerLobby {
     /**
      * Collect site wide statistics when a game is finished.
      */
-    private static void gameFinished(){
+    static void gameFinished(){
             totalGames++;
     }
 
