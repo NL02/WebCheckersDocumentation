@@ -8,11 +8,11 @@ public class Board {
     // Move validation messages
     static final Message VALID_MOVE = Message.info("Move is valid");
     static final Message OUT_OF_BOUNDS = Message.error("Move is out of bounds");
-    static final Message INVALID_SPACE = Message.error("Cannot move to white space");
+//    static final Message INVALID_SPACE = Message.error("Cannot move to white space");
     static final Message SPACE_OCCUPIED = Message.error("A piece occupies this space");
     static final Message TOO_FAR = Message.error("Move is too far");
     static final Message ILLEGAL_COMBO = Message.error("Cannot make simple move and jump in same turn");
-    static final Message NOT_DIAGONAL = Message.error("Cannot move that direction");
+//    static final Message NOT_DIAGONAL = Message.error("Cannot move that direction");
     static final Message NO_PIECE = Message.error("No piece to jump");
     static final Message NOT_KING = Message.error("Only king pieces can move backwards");
     static final Message OWN_PIECE = Message.error("Can't jump own piece");
@@ -40,7 +40,7 @@ public class Board {
 
     public Board() {
         InitializeSpaces();
-        PopulateBoard(false);
+        PopulateBoard();
         pendingMoves = new ArrayList<>();
         activeColor = Color.RED;
     }
@@ -117,9 +117,9 @@ public class Board {
             return SPACE_OCCUPIED;
         }
         // Verify space is valid for movement
-        else if (!board[endX][endY].isValid()) {
-            return INVALID_SPACE;
-        }
+//        else if (!board[endX][endY].isValid()) {
+//            return INVALID_SPACE;
+//        }
         // Verify move length
         /*
         else if (Math.abs(endX - startX) > 2 || Math.abs(endY - startY) > 2) {
@@ -127,9 +127,9 @@ public class Board {
         }
         */
         // Verify move is diagonal
-        else if (startX == endX || startY == endY) {
-            return NOT_DIAGONAL;
-        }
+//        else if (startX == endX || startY == endY) {
+//            return NOT_DIAGONAL;
+//        }
 
         // Move is valid, so add it to pendingMoves
         pendingMoves.add(move);
@@ -356,17 +356,17 @@ public class Board {
         }
     }
 
-    private void PopulateBoard(boolean test){
-        if(test){
+//    private void PopulateBoard(boolean test){
+//        if(test){
 //            board[6][7].setPiece(new Piece(Color.WHITE));
-            board[5][6].setPiece(new Piece(Color.WHITE));
-            board[3][4].setPiece(new Piece(Color.WHITE));
-            board[2][3].setPiece(new Piece(Color.RED));
-        }
-        else{
-            PopulateBoard();
-        }
-    }
+//            board[5][6].setPiece(new Piece(Color.WHITE));
+//            board[3][4].setPiece(new Piece(Color.WHITE));
+//            board[2][3].setPiece(new Piece(Color.RED));
+//        }
+//        else{
+//            PopulateBoard();
+//        }
+//    }
 
     private void PopulateBoard() {
         for (int row = 0; row < ROWS; row++) {
@@ -415,20 +415,6 @@ public class Board {
         else{
             activeColor = Color.RED;
         }
-    }
-
-    /**
-     * @return true if the pending move is a jump
-     */
-    public boolean isJumping() {
-        return isJumping;
-    }
-
-    /**
-     * @return true if a piece is moving
-     */
-    public boolean isMoving() {
-        return isMoving;
     }
 
     @Override

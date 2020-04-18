@@ -89,13 +89,6 @@ public class GetSpectateGameRouteTest {
         when(request.session()).thenReturn(session);
         when(session.attribute(GetSpectateGameRoute.CURRENT_USER_ATTR)).thenReturn(me);
         assertNotNull(game);
-//        try {
-//            CuT.handle(request, response);
-//            fail("Redirects invoke halt exceptions.");
-//        } catch (HaltException e){
-//            System.out.println("IT HALTS?????");
-//           // expected
-//        }
         CuT.handle(request, response);
         System.out.println("IT DOESNT HALT");
         engineTester.assertViewModelExists();
