@@ -358,9 +358,10 @@ public class Board {
 
     private void PopulateBoard(boolean test){
         if(test){
-            board[0][1].setPiece(new Piece(Color.RED));
-            board[2][1].setPiece(new Piece(Color.WHITE));
-            board[4][3].setPiece(new Piece(Color.WHITE));
+//            board[6][7].setPiece(new Piece(Color.WHITE));
+            board[5][6].setPiece(new Piece(Color.WHITE));
+            board[3][4].setPiece(new Piece(Color.WHITE));
+            board[2][3].setPiece(new Piece(Color.RED));
         }
         else{
             PopulateBoard();
