@@ -13,7 +13,11 @@ import spark.TemplateEngine;
 
 import static org.mockito.Mockito.*;
 
-//import com.webcheckers.ui.TemplateEngineTester;
+/**
+ * Test class for PostLoginRoute Test
+ *
+ * @author Nelson Liang
+ */
 
 @Tag("UI-Tier")
 public class PostLoginRouteTest {
@@ -70,8 +74,6 @@ public class PostLoginRouteTest {
         when(request.queryParams("username")).thenReturn("validPlayer");
         when(playerLobby.findPlayer("validPlayer")).thenReturn(currUser);
 
-//        when(Message.error(PostLoginRoute.INVALID_USERNAME)).thenReturn(Message.error(PostLoginRoute.INVALID_USERNAME));
-
         CuT.handle(request,response);
         verifyZeroInteractions(response);
     }
@@ -95,7 +97,6 @@ public class PostLoginRouteTest {
     public void test_addUserInvalid() throws Exception {
         currUser = new Player("");
         when(request.queryParams("username")).thenReturn(".");
-//        when(playerLobby.findPlayer("validPlayer")).thenReturn(PostLoginRoute.AddUserStatus.INVLAID);
         when(playerLobby.saveUser(currUser)).thenReturn(PostLoginRoute.AddUserStatus.INVLAID);
 
         CuT.handle(request,response);

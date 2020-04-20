@@ -16,6 +16,11 @@ import java.util.Collection;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Test for GetHomeRoute
+ *
+ * @author Nelson Liang
+ */
 @Tag("UI-Tier")
 public class GetHomeRouteTest {
     /**
@@ -71,7 +76,6 @@ public class GetHomeRouteTest {
 
 
         testHelper.assertViewModelAttribute(GetHomeRoute.MESSAGE_ATTR,GetHomeRoute.WELCOME_MSG);
-//        testHelper.assertViewModelAttribute(GetHomeRoute.NUM_PLAYERS_ATTR,num_players);
         testHelper.assertViewModelAttribute(GetHomeRoute.CURRENT_USER_ATTR,session.attribute("currentUser"));
         testHelper.assertViewModelAttribute(GetHomeRoute.PLAYER_LIST_ATTR,playerLobby.getWaitingPlayer());
         testHelper.assertViewModelAttribute(GetHomeRoute.GAME_LIST_ATTR,playerLobby.getAllGames());
