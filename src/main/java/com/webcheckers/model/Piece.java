@@ -1,13 +1,11 @@
 package com.webcheckers.model;
 
 /**
- * View component for checkers pieces. Temporarily holding model-tier information until model-tier board classes
- * are added.
+ * Object representing a checkers piece.
  *
  * @author Wyatt Holcombe
  */
 public class Piece {
-
     private Color color;    // Color of this piece, red or white
     private PieceType type; // Type of piece, single or king
 

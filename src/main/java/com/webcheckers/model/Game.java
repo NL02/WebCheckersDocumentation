@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 /**
  * A single "Checkers game".
  *
+ * @author Wyatt Holcombe, Ethan Davison
+ * Commented by: May Wu
  */
 public class Game {
     private static final Logger LOG = Logger.getLogger(Game.class.getName());
@@ -26,6 +28,11 @@ public class Game {
 
     //TODO LIST OF ALL MOVES MADE
 
+    /**
+     * Constructor for game with two players
+     * @param whitePlayer
+     * @param redPlayer
+     */
     public Game(Player whitePlayer, Player redPlayer) {
         LOG.fine("Game Created");
         this.redPlayer = redPlayer;
@@ -35,6 +42,10 @@ public class Game {
         this.activePlayer = redPlayer;
     }
 
+    /**
+     * Constructor for game with only one player
+     * @param whitePlayer Player
+     */
     public Game(Player whitePlayer){
         LOG.fine("Game Created");
         this.whitePlayer = whitePlayer;
@@ -43,18 +54,35 @@ public class Game {
         redPlayer = null;
     }
 
+    /**
+     * Validates move in model
+     * @param move move being validated
+     * @return Message that move was validated
+     */
     public Message validateMove(Move move) {
         return this.board.validateMove(move);
     }
 
+    /**
+     * Backs up move in model
+     * @return Message that move was backed up
+     */
     public Message backupMove() {
         return this.board.backupMove();
     }
 
+    /**
+     * Submits turn in model
+     * @return Message that turn was submitted
+     */
     public Message submitTurn() {
         return this.board.submitTurn();
     }
 
+    /**
+     * Adds red player to game
+     * @param redPlayer Player
+     */
     public synchronized void addRedPlayer(Player redPlayer){
         LOG.fine("Game started between " + whitePlayer.name + " and " + redPlayer.name);
         this.activePlayer = redPlayer;
@@ -93,27 +121,48 @@ public class Game {
         board.changeActiveColor();
     }
 
+    /**
+     * sets winner of game
+     * @param gameOverMsg String of game over
+     * @param whoWon Winner of game
+     */
     public void gameOver(String gameOverMsg, Player whoWon){
         this.winner = whoWon;
         this.gameOverMsg = gameOverMsg;
     }
 
+    /**
+     * @return String message that says game is over
+     */
     public String isGameOver(){
         return gameOverMsg;
     }
 
+    /**
+     * @return White Player
+     */
     public synchronized Player getWhitePlayer() {
         return whitePlayer;
     }
 
+    /**
+     * @param board add board to game
+     */
     public synchronized void addBoard(Board board){
         this.board = board;
     }
 
+    /**
+     * @return board of a game
+     */
     public synchronized Board getBoard() {
         return this.board;
     }
 
+    /**
+     * Checks end conditions of a game
+     * to see if a game is over
+     */
     public void checkEndGame() {
         int pieces = 0;
         int validMoves = 0;
