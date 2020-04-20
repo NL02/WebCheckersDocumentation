@@ -2,12 +2,16 @@ package com.webcheckers.appl;
 
 import com.webcheckers.model.Game;
 
+/**
+ * Player class represents a single player and their player statistics.
+ *
+ * @author Nelson Liang
+ */
 public class Player {
     //private final int playerID; // Internal ID constructed by hashing player info
     public final String name;
     public Status status;
     public Game game;
-    public int playerID;
 
     private int gamesPlayed = 0;
     private int gamesWon = 0;
@@ -32,12 +36,8 @@ public class Player {
     public Player(String username) {
         this.name = username;
         this.status = Status.SEARCHING;
-//        playerID = username.hashCode();
     }
 
-    //private int getPlayerID() {
-    //   return playerID;
-    //}
 
     public void startGame(Game game){
         this.game = game;
@@ -70,19 +70,34 @@ public class Player {
             }
     }
 
+    /**
+     * endSession sets the status of a player to OFFLINE
+     */
     public void endSession(){
         this.status = Status.OFFLINE;
         this.game = null;
     }
 
+    /**
+     * Getter for games played
+     * @return
+     */
     public int getGamesPlayed(){
         return gamesPlayed;
     }
 
+    /**
+     * Getter for games won
+     * @return
+     */
     public int getGamesWon(){
         return gamesWon;
     }
 
+    /**
+     * Gettor for getting win percentage
+     * @return
+     */
     public float getWinPercent(){
         return  gamesPlayed != 0 ? (float)gamesWon/(float)gamesPlayed * 100 : 0;
     }

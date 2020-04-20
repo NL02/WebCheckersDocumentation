@@ -4,7 +4,7 @@ import com.webcheckers.util.Message;
 import java.util.ArrayList;
 
 /**
- * Board model which also handles the move validation.
+ * Board model handles the model of the board as well as the move validation.
  *
  * @author Wyatt Holcombe, Nelson Liang
  */
