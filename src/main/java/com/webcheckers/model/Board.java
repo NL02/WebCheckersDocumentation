@@ -1,9 +1,13 @@
 package com.webcheckers.model;
 
 import com.webcheckers.util.Message;
-
 import java.util.ArrayList;
 
+/**
+ * Board model which also handles the move validation.
+ *
+ * @author Wyatt Holcombe, Nelson Liang
+ */
 public class Board {
     // Move validation messages
     static final Message VALID_MOVE = Message.info("Move is valid");
