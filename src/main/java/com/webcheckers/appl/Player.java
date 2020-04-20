@@ -38,7 +38,11 @@ public class Player {
         this.status = Status.SEARCHING;
     }
 
-
+    /**
+     * Sets this player's game to a new one.
+     *
+     * @param game Game the player is playing
+     */
     public void startGame(Game game){
         this.game = game;
     }
