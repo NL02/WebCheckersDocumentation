@@ -145,20 +145,17 @@ public class Board {
      */
     public Message submitTurn() {
         int startX = pendingMoves.get(0).getStart().getRow();
+        int endX = pendingMoves.get(0).getEnd().getRow();
 
         // If it's a simple move, verify no jumps are available
-        if (pendingMoves.size() == 1) {
-            int endX = pendingMoves.get(0).getEnd().getRow();
-
-            if (Math.abs(endX - startX) == 1) {
-                for (int row = 0; row < ROWS; row++) {
-                    for (int cell = 0; cell < COLS; cell++) {
-                        // Verify a piece of the active color is at this cell
-                        if (board[row][cell].getPiece() != null
-                                && board[row][cell].getPiece().getColor() == activeColor) {
-                            if (checkJumps(row, cell)) {
-                                return JUMP_AVAILABLE;
-                            }
+        if (Math.abs(endX - startX) == 1) {
+            for (int row = 0; row < ROWS; row++) {
+                for (int cell = 0; cell < COLS; cell++) {
+                    // Verify a piece of the active color is at this cell
+                    if (board[row][cell].getPiece() != null
+                            && board[row][cell].getPiece().getColor() == activeColor) {
+                        if (checkJumps(row, cell)) {
+                            return JUMP_AVAILABLE;
                         }
                     }
                 }
