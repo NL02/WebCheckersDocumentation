@@ -99,19 +99,6 @@ public class PlayerLobbyTest {
         assertEquals(liveCount + 1, liveCountAfter);
     }
 
-    /**
-     * Test the ability to increment the total number of games
-     */
-    @Test
-    public void test_game_finished(){
-        int totalGames = CuT.getTotalGames();
-        // Invoke test
-        CuT.gameFinished();
-        int totalGamesAfter = CuT.getTotalGames();
-
-        // Analyze results:
-        assertEquals(totalGames + 1, totalGamesAfter);
-    }
 
     /**
      * Test the ability to not save a user with an invalid user name -- no name given (null)

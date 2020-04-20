@@ -7,41 +7,37 @@ import java.util.*;
 import java.util.logging.Logger;
 
 /**
- * The object to coordinate the state of the Web Application and keep site wide statistics.
- * This class is an example of the Pure Fabrication principle.
- * Contains all players that have signed in and are in the system
+ * The main application layer of the web server.
+ * Contains all essential side wide information and functions
+ * Contains all players and games currently on the site
  */
 public class PlayerLobby {
+
     private static final Logger LOG = Logger.getLogger(PlayerLobby.class.getName());
 
-    //
-    // Attributes
-    //
-
+    /** Site info */
     private ArrayList<Player> waitingPlayers = new ArrayList<>();
     private static int liveCount = 0;
     private ArrayList<Player> onlinePlayers = new ArrayList<>();
-
     private Map <String, Player> userMap = new HashMap<>();
-    private static int totalGames = 0;
     public static Map<String, Game> activeGames = new HashMap<>();
-    //TODO ADD LIST OF ALL COMPLETED GAMES
-
-    //
-    // Public methods
-    //
 
 
     /**
-     * Create a new {CheckersGame} game.
-     *
-     * @return
-     *   A new {@link Game}
+     * Finds a Game instance in the activeGames map
+     * @param whitePlayer the name of the player the Game is saved under
+     * @return the instance of the game
      */
     public static Game getGame(String whitePlayer){
         return activeGames.getOrDefault(whitePlayer, null);
     }
 
+    /**
+     * Returns a truncated list of all active games
+     * Excludes games that have not started
+     * Excludes duplicates
+     * @return A list of all games
+     */
     public Collection<Game> getAllGames(){
         ArrayList<Game> gameList = new ArrayList<>();
         Game game;
@@ -54,18 +50,10 @@ public class PlayerLobby {
         return gameList;
     }
 
-    /**
-     * Collect site wide statistics when a game is finished.
-     */
-    static void gameFinished(){
-            totalGames++;
-    }
 
     /**
-     * saveUser takes in a user, checks if they are in the userMap, adds them if they are not, or changes their status to
-     * SEARCHING if no other user is using that username
-     *
-     * @param newPlayer - player to add to map/set to SEARCHING
+     * Checks to see if a player is valid. If not, returns why.
+     * @param newPlayer - player to add to map/set
      * @return - addUserStatus enum based on whether or not the user was added
      */
     public PostLoginRoute.AddUserStatus saveUser(Player newPlayer) {
@@ -137,10 +125,6 @@ public class PlayerLobby {
         }
     }
 
-    public static int getTotalGames(){
-        return totalGames;
-    }
-
     /**
      * newGame creates a new CheckersGame instance and adds it to the activeGames array
      *
@@ -152,7 +136,6 @@ public class PlayerLobby {
 
     public static void addGame(Player player, Game game){
         activeGames.put(player.getName(), game);
-        //TODO Add game to allGames
     }
 
     /**
@@ -161,7 +144,7 @@ public class PlayerLobby {
      * @param player that is starting the game
      */
     public static void removeGame(Player player){
-        gameFinished();
+
         activeGames.remove(player.name);
     }
 

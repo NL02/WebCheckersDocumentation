@@ -2,13 +2,20 @@ package com.webcheckers.appl;
 
 import com.webcheckers.model.Game;
 
+/**
+ * The Player class represents one instance of a user or "player" that has
+ * logged in to the web server
+ *
+ * @author Wyatt Holcombe
+ */
 public class Player {
-    //private final int playerID; // Internal ID constructed by hashing player info
+
+    /** Player states and essential info */
     public final String name;
     public Status status;
     public Game game;
-    public int playerID;
 
+    /** Player statistics */
     private int gamesPlayed = 0;
     private int gamesWon = 0;
 
@@ -20,8 +27,8 @@ public class Player {
         SEARCHING, //Player is not in a game, nor looking for a game
         WAITING, //Player has created a new game and is waiting for
         INGAME, //Player is currently in a game or spectating
-        ENDGAME,
-        SPECTATING
+        ENDGAME, //Player has just finished a gae and has *not* left the game
+        SPECTATING //Player is currently spectating a game
     }
 
     /**
@@ -32,13 +39,12 @@ public class Player {
     public Player(String username) {
         this.name = username;
         this.status = Status.SEARCHING;
-//        playerID = username.hashCode();
     }
 
-    //private int getPlayerID() {
-    //   return playerID;
-    //}
-
+    /**
+     * Adds a game to the Player instance
+     * @param game the game this player has joined
+     */
     public void startGame(Game game){
         this.game = game;
     }
@@ -54,7 +60,7 @@ public class Player {
     /**
      * Returns the game this player is playing.
      *
-     * @return game
+     * @return current game
      */
     public Game getGame() {
         return game;
@@ -70,19 +76,35 @@ public class Player {
             }
     }
 
+    /**
+     * A function that is called when a user closes out of the web page
+     * Sets them to offline and ends the game they are in
+     */
     public void endSession(){
         this.status = Status.OFFLINE;
         this.game = null;
     }
 
+    /**
+     * Returns the number of games the player has participated in
+     * @return number of games player
+     */
     public int getGamesPlayed(){
         return gamesPlayed;
     }
 
+    /**
+     * Returns the number of games this player has won
+     * @return number of games won
+     */
     public int getGamesWon(){
         return gamesWon;
     }
 
+    /**
+     * Calculates and returns this players win percentage
+     * @return win percentage
+     */
     public float getWinPercent(){
         return  gamesPlayed != 0 ? (float)gamesWon/(float)gamesPlayed * 100 : 0;
     }
