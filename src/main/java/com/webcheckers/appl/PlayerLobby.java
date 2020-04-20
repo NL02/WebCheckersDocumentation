@@ -10,6 +10,8 @@ import java.util.logging.Logger;
  * The object to coordinate the state of the Web Application and keep site wide statistics.
  * This class is an example of the Pure Fabrication principle.
  * Contains all players that have signed in and are in the system
+ *
+ * @author Nelson Liang
  */
 public class PlayerLobby {
     private static final Logger LOG = Logger.getLogger(PlayerLobby.class.getName());
@@ -25,8 +27,6 @@ public class PlayerLobby {
     private Map <String, Player> userMap = new HashMap<>();
     private static int totalGames = 0;
     public static Map<String, Game> activeGames = new HashMap<>();
-    //TODO ADD LIST OF ALL COMPLETED GAMES
-
     //
     // Public methods
     //
