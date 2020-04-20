@@ -40,6 +40,9 @@ public class Board {
     private int turnStartX = -1;
     private int turnStartY = -1;
 
+    /**
+     * Creates initial Board
+     */
     public Board() {
         InitializeSpaces();
         PopulateBoard();
@@ -47,6 +50,12 @@ public class Board {
         activeColor = Color.RED;
     }
 
+    /**
+     * Validates a given move
+     * @param move move trying to be validated
+     * @return Message whether it is valid
+     * if invalid, gives description of why it is invalid
+     */
     public Message validateMove(Move move) {
         int startX = move.getStart().getRow();
         int startY = move.getStart().getCell();
@@ -174,6 +183,12 @@ public class Board {
         return NO_MOVES;
     }
 
+    /**
+     * Check if piece can move to given space
+     * @param row row of space
+     * @param col col of space
+     * @return true if can move, false otherwise
+     */
     protected boolean checkCanMove(int row, int col){
         return checkJumps(row, col) || checkSimpleMoves(row, col);
     }
@@ -320,6 +335,9 @@ public class Board {
         }
     }
 
+    /**
+     * Fills empty board with empty Spaces
+     */
     private void InitializeSpaces() {
         board = new Space[ROWS][COLS];
 
@@ -342,21 +360,9 @@ public class Board {
         }
     }
 
-//    /**
-//     * Function used to test various configurations as well as populating the board normally
-//     * @param test
-//     */
-//    private void PopulateBoard(boolean test){
-//        if(test){
-//            board[1][0].setPiece(new Piece(Color.RED));
-//            board[2][1].setPiece(new Piece(Color.WHITE));
-//            board[4][3].setPiece(new Piece(Color.WHITE));
-//        }
-//        else{
-//            PopulateBoard();
-//        }
-//    }
-
+    /**
+     * Puts Red and White pieces on board
+     */
     private void PopulateBoard() {
         for (int row = 0; row < ROWS; row++) {
             for(int col = 0; col < COLS; col++) {
@@ -373,11 +379,18 @@ public class Board {
         }
     }
 
+    /**
+     * @return board instance
+     */
     public Space[][] getBoard() {
         return board;
     }
 
 
+    /**
+     * @param index row of board
+     * @return array of spaces of any given row
+     */
     public Space[] getRow(int index) {
         if (index < 0 || index > 7) {
             throw new IllegalArgumentException("Index must be between 0 and 7");
@@ -385,6 +398,10 @@ public class Board {
         return board[index];
     }
 
+    /**
+     * @param index row of board
+     * @return array of spaces of any given row in reverse
+     */
     public Space[] getRowReversed(int index ) {
         Space[] row = getRow(index);
         Space[] reversed = new Space[ROWS];
@@ -397,6 +414,9 @@ public class Board {
             return reversed;
     }
 
+    /**
+     * Changes the active color instance variable
+     */
     protected void changeActiveColor(){
         if(activeColor == Color.RED){
             activeColor = Color.WHITE;
@@ -406,6 +426,9 @@ public class Board {
         }
     }
 
+    /**
+     * @return String format of Board
+     */
     @Override
     public String toString(){
         return null;
