@@ -2,6 +2,8 @@ package com.webcheckers.model;
 
 /**
  * Represents the location of an element on the board.
+ *
+ * @author May Wu
  */
 public class Position {
     private int row;    // Row index

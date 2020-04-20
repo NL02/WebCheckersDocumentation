@@ -2,6 +2,8 @@ package com.webcheckers.model;
 
 /**
  * Represents a move made by a player.
+ *
+ * @author May Wu, Wyatt Holcombe, Nelson Liang
  */
 public class Move {
     private final Position start; // Start position of the move
