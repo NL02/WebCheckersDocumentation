@@ -18,7 +18,6 @@ public class Piece {
         KING
     }
 
-
     /**
      * Constructs a new CheckersPiece.
      *
