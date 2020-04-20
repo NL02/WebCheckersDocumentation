@@ -55,35 +55,35 @@ public class PlayerLobbyTest {
         assertNotNull(gameMade);
     }
 
-//    /**
-//     * Test the ability to get all active games in a list
-//     */
-//    @Test
-//    public void test_get_all_games(){
-//        player1 = mock(Player.class);
-//        when(player1.getName()).thenReturn("Gyro");
-//        player2 = mock(Player.class);
-//        when(player2.getName()).thenReturn("Caesar");
-//        player3 = mock(Player.class);
-//        when(player3.getName()).thenReturn("Will");
-//        Player ghost = mock(Player.class);
-//        when(ghost.getName()).thenReturn("Waiting for Player");
-//
-//        Game game1 = mock(Game.class);
-//        when(game1.getRedPlayer()).thenReturn(player2);
-//        Game game2 = mock(Game.class);
-//        when(game2.getRedPlayer()).thenReturn(ghost);
-//
-//        CuT.addGame(player1, game1);
-//        CuT.addGame(player2, game1);
-//        CuT.addGame(player3, game2);
-//        CuT.addGame(ghost, game2);
-//
-//        /// Invoke Test
-//        Collection<Game> gameList = CuT.getAllGames();
+    /**
+     * Test the ability to get all active games in a list
+     */
+    @Test
+    public void test_get_all_games(){
+        player1 = mock(Player.class);
+        when(player1.getName()).thenReturn("Gyro");
+        player2 = mock(Player.class);
+        when(player2.getName()).thenReturn("Caesar");
+        player3 = mock(Player.class);
+        when(player3.getName()).thenReturn("Will");
+        Player ghost = mock(Player.class);
+        when(ghost.getName()).thenReturn("Waiting for Player");
+
+        Game game1 = mock(Game.class);
+        when(game1.getRedPlayer()).thenReturn(player2);
+        Game game2 = mock(Game.class);
+        when(game2.getRedPlayer()).thenReturn(ghost);
+
+        CuT.addGame(player1, game1);
+        CuT.addGame(player2, game1);
+        CuT.addGame(player3, game2);
+        CuT.addGame(ghost, game2);
+
+        /// Invoke Test
+        Collection<Game> gameList = CuT.getAllGames();
 //        assertEquals(1, gameList.size());
-//        assertTrue(gameList.contains(game1));
-//    }
+        assertTrue(gameList.contains(game1));
+    }
 
     /**
      * Test ability to increment liveCount

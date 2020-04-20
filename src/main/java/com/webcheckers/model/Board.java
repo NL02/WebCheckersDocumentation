@@ -8,18 +8,17 @@ public class Board {
     // Move validation messages
     static final Message VALID_MOVE = Message.info("Move is valid");
     static final Message OUT_OF_BOUNDS = Message.error("Move is out of bounds");
-    static final Message INVALID_SPACE = Message.error("Cannot move to white space");
+//    static final Message INVALID_SPACE = Message.error("Cannot move to white space");
     static final Message SPACE_OCCUPIED = Message.error("A piece occupies this space");
     static final Message TOO_FAR = Message.error("Move is too far");
     static final Message ILLEGAL_COMBO = Message.error("Cannot make simple move and jump in same turn");
-    static final Message NOT_DIAGONAL = Message.error("Cannot move that direction");
+//    static final Message NOT_DIAGONAL = Message.error("Cannot move that direction");
     static final Message NO_PIECE = Message.error("No piece to jump");
     static final Message NOT_KING = Message.error("Only king pieces can move backwards");
     static final Message OWN_PIECE = Message.error("Can't jump own piece");
 
     // Submit turn messages
     static final Message JUMP_AVAILABLE = Message.error("A jump is available, so you must make a jump move");
-    static final Message MULTIJUMP_AVAILABLE = Message.error("You must complete the multi-jump");
 
     // Backup move messages
     static final Message BACKUP_SUCCESSFUL = Message.info("Move undone");
@@ -41,7 +40,7 @@ public class Board {
 
     public Board() {
         InitializeSpaces();
-        PopulateBoard(false);
+        PopulateBoard();
         pendingMoves = new ArrayList<>();
         activeColor = Color.RED;
     }
@@ -118,9 +117,9 @@ public class Board {
             return SPACE_OCCUPIED;
         }
         // Verify space is valid for movement
-        else if (!board[endX][endY].isValid()) {
-            return INVALID_SPACE;
-        }
+//        else if (!board[endX][endY].isValid()) {
+//            return INVALID_SPACE;
+//        }
         // Verify move length
         /*
         else if (Math.abs(endX - startX) > 2 || Math.abs(endY - startY) > 2) {
@@ -128,9 +127,9 @@ public class Board {
         }
         */
         // Verify move is diagonal
-        else if (startX == endX || startY == endY) {
-            return NOT_DIAGONAL;
-        }
+//        else if (startX == endX || startY == endY) {
+//            return NOT_DIAGONAL;
+//        }
 
         // Move is valid, so add it to pendingMoves
         pendingMoves.add(move);
@@ -144,62 +143,30 @@ public class Board {
      * @return Message indicating submission success or failure
      */
     public Message submitTurn() {
-        int startX = pendingMoves.get(0).getStart().getRow();
-        int endX = pendingMoves.get(0).getEnd().getRow();
-
         // If it's a simple move, verify no jumps are available
-        if (Math.abs(endX - startX) == 1) {
-            for (int row = 0; row < ROWS; row++) {
-                for (int cell = 0; cell < COLS; cell++) {
-                    // Verify a piece of the active color is at this cell
-                    if (board[row][cell].getPiece() != null
-                            && board[row][cell].getPiece().getColor() == activeColor) {
-                        if (checkJumps(row, cell)) {
-                            return JUMP_AVAILABLE;
+        if (pendingMoves.size() == 1) {
+            int startX = pendingMoves.get(0).getStart().getRow();
+            int endX = pendingMoves.get(0).getEnd().getRow();
+
+            if (Math.abs(endX - startX) == 1) {
+                for (int row = 0; row < ROWS; row++) {
+                    for (int cell = 0; cell < COLS; cell++) {
+                        // Verify a piece of the active color is at this cell
+                        if (board[row][cell].getPiece() != null
+                                && board[row][cell].getPiece().getColor() == activeColor) {
+                            if (checkJumps(row, cell)) {
+                                return JUMP_AVAILABLE;
+                            }
                         }
                     }
                 }
             }
         }
-        // Otherwise, it's a jump/multi-jump move, so verify that the player can't extend it
-        else {
-            // Store coordinates needed to verify multi-jump
-            int startY = pendingMoves.get(0).getStart().getCell();
-            Move finalMove = pendingMoves.get(pendingMoves.size() - 1);
-            finalMove.setMidpoint();
-            int midX = finalMove.getMidpoint().getRow();
-            int midY = finalMove.getMidpoint().getCell();
-            int finalX = finalMove.getEnd().getRow();
-            int finalY = finalMove.getEnd().getCell();
 
-            // Temporarily move the piece there
-            board[finalX][finalY].setPiece(board[startX][startY].getPiece());
-            board[startX][startY].removePiece();
-            Piece jumpedPiece = board[midX][midY].getPiece();
-            board[midX][midY].removePiece();
-
-            // If this jump can be extended, return error message
-            if (checkJumps(finalX, finalY)) {
-                // Undo temporary move
-                board[startX][startY].setPiece(board[finalX][finalY].getPiece());
-                board[finalX][finalY].removePiece();
-                board[midX][midY].setPiece(jumpedPiece);
-
-                return MULTIJUMP_AVAILABLE;
-            }
-
-            // Undo temporary move
-            board[startX][startY].setPiece(board[finalX][finalY].getPiece());
-            board[finalX][finalY].removePiece();
-            board[midX][midY].setPiece(jumpedPiece);
-        }
-
-        // Execute each move
         for (Move move : pendingMoves) {
             executeMove(move);
         }
 
-        // Reset all move-related fields
         pendingMoves.clear();
         turnStartX = -1;
         turnStartY = -1;
@@ -214,14 +181,12 @@ public class Board {
      * @return Message indicating backup success or failure
      */
     public Message backupMove() {
-        // Only do so if there are moves to undo
         if (pendingMoves.size() > 0) {
             pendingMoves.remove(pendingMoves.size() - 1);
             return BACKUP_SUCCESSFUL;
         }
         return NO_MOVES;
     }
-
 
     protected boolean checkCanMove(int row, int col){
         return checkJumps(row, col) || checkSimpleMoves(row, col);
@@ -453,20 +418,6 @@ public class Board {
         else{
             activeColor = Color.RED;
         }
-    }
-
-    /**
-     * @return true if the pending move is a jump
-     */
-    public boolean isJumping() {
-        return isJumping;
-    }
-
-    /**
-     * @return true if a piece is moving
-     */
-    public boolean isMoving() {
-        return isMoving;
     }
 
     @Override

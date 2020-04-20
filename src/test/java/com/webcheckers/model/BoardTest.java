@@ -159,7 +159,6 @@ public class BoardTest {
         assertEquals(Board.BACKUP_SUCCESSFUL, CuT.backupMove());
     }
 
-
     @Test
     public void test_executeMove() {
         Move move = new Move(new Position(5, 0), new Position(4, 1));
