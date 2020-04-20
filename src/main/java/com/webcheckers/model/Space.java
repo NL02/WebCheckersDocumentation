@@ -1,23 +1,22 @@
 package com.webcheckers.model;
 
 /**
- * View component for squares on the board. Temporarily holding model-tier information until model-tier board classes
- * are added.
+ * Object representing a Space on a checkers board.
  *
  * @author Wyatt Holcombe
  */
 public class Space {
 
-    private int cellIdx;         // Index of this square on the row
-    private boolean valid;       // Whether a piece can be moved here (true if so, else false)
-    private Piece piece; // Piece that occupies this square, if there is one
+    private int cellIdx;    // Index of this space on the row
+    private boolean valid;  // Whether a piece can be moved here
+    private Piece piece;    // Piece that occupies this square, if there is one
 
     /**
-     * Constructs a new BoardSquare.
+     * Constructs a new Space with an initial piece.
      *
-     * @param index Index of this square in a row
-     * @param valid Whether a piece can occupy this square
-     * @param piece CheckersPiece to start here, if applicable
+     * @param index Index of this space in a row
+     * @param valid Whether this space can be moved to
+     * @param piece Piece to start here, if applicable
      */
     public Space(int index, boolean valid, Piece piece) {
         this.cellIdx = index;
@@ -25,6 +24,12 @@ public class Space {
         this.piece = piece;
     }
 
+    /**
+     * Constructs a new Space without an initial piece.
+     *
+     * @param index Index of this space in a row
+     * @param valid Whether this space can be moved to
+     */
     public Space(int index, boolean valid ) {
         this.cellIdx = index;
         this.valid = valid;
@@ -32,7 +37,7 @@ public class Space {
     }
 
     /**
-     * Returns this square's index.
+     * Returns this space's index.
      *
      * @return index
      */
@@ -41,12 +46,12 @@ public class Space {
     }
 
     /**
-     * Returns whether this square is valid for pieces to be placed on.
+     * Returns whether this space is valid for pieces to be placed on.
      *
      * @return valid
      */
     public boolean isValid() {
-        if(valid){
+        if (valid) {
             return piece == null;
         }
         return valid;
@@ -61,13 +66,20 @@ public class Space {
         return this.piece;
     }
 
-
+    /**
+     * Set a new piece on this space.
+     *
+     * @param newPiece The piece to place here
+     */
     public void setPiece(Piece newPiece) {
         if (piece == null){
             piece = newPiece;
         }
     }
 
+    /**
+     * Remove this space's piece.
+     */
     public void removePiece() {
         if ( piece != null ) {
             piece = null;

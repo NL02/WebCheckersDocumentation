@@ -82,5 +82,11 @@ public class MoveTest {
         assertEquals(0, CuT.getMidpoint().getCell(), "Incorrect midpoint position cell");
     }
 
-
+    @Test
+    public void test_isValid_False() {
+        Position start = new Position(4,1);
+        Position end = new Position (2,5);
+        CuT = new Move(start,end);
+        assertFalse(CuT.isValid());
+    }
 }

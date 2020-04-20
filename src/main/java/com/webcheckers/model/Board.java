@@ -1,25 +1,26 @@
 package com.webcheckers.model;
 
 import com.webcheckers.util.Message;
-
 import java.util.ArrayList;
 
+/**
+ * Board model handles the model of the board as well as the move validation.
+ *
+ * @author Wyatt Holcombe, Nelson Liang
+ */
 public class Board {
     // Move validation messages
     static final Message VALID_MOVE = Message.info("Move is valid");
     static final Message OUT_OF_BOUNDS = Message.error("Move is out of bounds");
-    static final Message INVALID_SPACE = Message.error("Cannot move to white space");
     static final Message SPACE_OCCUPIED = Message.error("A piece occupies this space");
     static final Message TOO_FAR = Message.error("Move is too far");
     static final Message ILLEGAL_COMBO = Message.error("Cannot make simple move and jump in same turn");
-    static final Message NOT_DIAGONAL = Message.error("Cannot move that direction");
     static final Message NO_PIECE = Message.error("No piece to jump");
     static final Message NOT_KING = Message.error("Only king pieces can move backwards");
     static final Message OWN_PIECE = Message.error("Can't jump own piece");
 
     // Submit turn messages
     static final Message JUMP_AVAILABLE = Message.error("A jump is available, so you must make a jump move");
-    static final Message MULTIJUMP_AVAILABLE = Message.error("You must complete the multi-jump");
 
     // Backup move messages
     static final Message BACKUP_SUCCESSFUL = Message.info("Move undone");
@@ -39,13 +40,22 @@ public class Board {
     private int turnStartX = -1;
     private int turnStartY = -1;
 
+    /**
+     * Creates initial Board
+     */
     public Board() {
         InitializeSpaces();
-        PopulateBoard(false);
+        PopulateBoard();
         pendingMoves = new ArrayList<>();
         activeColor = Color.RED;
     }
 
+    /**
+     * Validates a given move
+     * @param move move trying to be validated
+     * @return Message whether it is valid
+     * if invalid, gives description of why it is invalid
+     */
     public Message validateMove(Move move) {
         int startX = move.getStart().getRow();
         int startY = move.getStart().getCell();
@@ -104,32 +114,16 @@ public class Board {
         }
 
         // Verify move is in right direction
-        //if (!isJumping) {
-            if (movedPiece.getType() != Piece.PieceType.KING) {
-                if (movedPiece.getColor() == Color.RED && startX > endX
-                        || movedPiece.getColor() == Color.WHITE && startX < endX) {
-                    return NOT_KING;
-                }
+        if (movedPiece.getType() != Piece.PieceType.KING) {
+            if (movedPiece.getColor() == Color.RED && startX > endX
+                    || movedPiece.getColor() == Color.WHITE && startX < endX) {
+                return NOT_KING;
             }
-        //}
+        }
 
         // Verify space is unoccupied
         if (board[endX][endY].getPiece() != null) {
             return SPACE_OCCUPIED;
-        }
-        // Verify space is valid for movement
-        else if (!board[endX][endY].isValid()) {
-            return INVALID_SPACE;
-        }
-        // Verify move length
-        /*
-        else if (Math.abs(endX - startX) > 2 || Math.abs(endY - startY) > 2) {
-            return TOO_FAR;
-        }
-        */
-        // Verify move is diagonal
-        else if (startX == endX || startY == endY) {
-            return NOT_DIAGONAL;
         }
 
         // Move is valid, so add it to pendingMoves
@@ -144,62 +138,30 @@ public class Board {
      * @return Message indicating submission success or failure
      */
     public Message submitTurn() {
-        int startX = pendingMoves.get(0).getStart().getRow();
-        int endX = pendingMoves.get(0).getEnd().getRow();
-
         // If it's a simple move, verify no jumps are available
-        if (Math.abs(endX - startX) == 1) {
-            for (int row = 0; row < ROWS; row++) {
-                for (int cell = 0; cell < COLS; cell++) {
-                    // Verify a piece of the active color is at this cell
-                    if (board[row][cell].getPiece() != null
-                            && board[row][cell].getPiece().getColor() == activeColor) {
-                        if (checkJumps(row, cell)) {
-                            return JUMP_AVAILABLE;
+        if (pendingMoves.size() == 1) {
+            int startX = pendingMoves.get(0).getStart().getRow();
+            int endX = pendingMoves.get(0).getEnd().getRow();
+
+            if (Math.abs(endX - startX) == 1) {
+                for (int row = 0; row < ROWS; row++) {
+                    for (int cell = 0; cell < COLS; cell++) {
+                        // Verify a piece of the active color is at this cell
+                        if (board[row][cell].getPiece() != null
+                                && board[row][cell].getPiece().getColor() == activeColor) {
+                            if (checkJumps(row, cell)) {
+                                return JUMP_AVAILABLE;
+                            }
                         }
                     }
                 }
             }
         }
-        // Otherwise, it's a jump/multi-jump move, so verify that the player can't extend it
-        else {
-            // Store coordinates needed to verify multi-jump
-            int startY = pendingMoves.get(0).getStart().getCell();
-            Move finalMove = pendingMoves.get(pendingMoves.size() - 1);
-            finalMove.setMidpoint();
-            int midX = finalMove.getMidpoint().getRow();
-            int midY = finalMove.getMidpoint().getCell();
-            int finalX = finalMove.getEnd().getRow();
-            int finalY = finalMove.getEnd().getCell();
 
-            // Temporarily move the piece there
-            board[finalX][finalY].setPiece(board[startX][startY].getPiece());
-            board[startX][startY].removePiece();
-            Piece jumpedPiece = board[midX][midY].getPiece();
-            board[midX][midY].removePiece();
-
-            // If this jump can be extended, return error message
-            if (checkJumps(finalX, finalY)) {
-                // Undo temporary move
-                board[startX][startY].setPiece(board[finalX][finalY].getPiece());
-                board[finalX][finalY].removePiece();
-                board[midX][midY].setPiece(jumpedPiece);
-
-                return MULTIJUMP_AVAILABLE;
-            }
-
-            // Undo temporary move
-            board[startX][startY].setPiece(board[finalX][finalY].getPiece());
-            board[finalX][finalY].removePiece();
-            board[midX][midY].setPiece(jumpedPiece);
-        }
-
-        // Execute each move
         for (Move move : pendingMoves) {
             executeMove(move);
         }
 
-        // Reset all move-related fields
         pendingMoves.clear();
         turnStartX = -1;
         turnStartY = -1;
@@ -214,7 +176,6 @@ public class Board {
      * @return Message indicating backup success or failure
      */
     public Message backupMove() {
-        // Only do so if there are moves to undo
         if (pendingMoves.size() > 0) {
             pendingMoves.remove(pendingMoves.size() - 1);
             return BACKUP_SUCCESSFUL;
@@ -222,7 +183,12 @@ public class Board {
         return NO_MOVES;
     }
 
-
+    /**
+     * Check if piece can move to given space
+     * @param row row of space
+     * @param col col of space
+     * @return true if can move, false otherwise
+     */
     protected boolean checkCanMove(int row, int col){
         return checkJumps(row, col) || checkSimpleMoves(row, col);
     }
@@ -369,6 +335,9 @@ public class Board {
         }
     }
 
+    /**
+     * Fills empty board with empty Spaces
+     */
     private void InitializeSpaces() {
         board = new Space[ROWS][COLS];
 
@@ -391,17 +360,9 @@ public class Board {
         }
     }
 
-    private void PopulateBoard(boolean test){
-        if(test){
-            board[0][1].setPiece(new Piece(Color.RED));
-            board[2][1].setPiece(new Piece(Color.WHITE));
-            board[4][3].setPiece(new Piece(Color.WHITE));
-        }
-        else{
-            PopulateBoard();
-        }
-    }
-
+    /**
+     * Puts Red and White pieces on board
+     */
     private void PopulateBoard() {
         for (int row = 0; row < ROWS; row++) {
             for(int col = 0; col < COLS; col++) {
@@ -418,11 +379,18 @@ public class Board {
         }
     }
 
+    /**
+     * @return board instance
+     */
     public Space[][] getBoard() {
         return board;
     }
 
 
+    /**
+     * @param index row of board
+     * @return array of spaces of any given row
+     */
     public Space[] getRow(int index) {
         if (index < 0 || index > 7) {
             throw new IllegalArgumentException("Index must be between 0 and 7");
@@ -430,6 +398,10 @@ public class Board {
         return board[index];
     }
 
+    /**
+     * @param index row of board
+     * @return array of spaces of any given row in reverse
+     */
     public Space[] getRowReversed(int index ) {
         Space[] row = getRow(index);
         Space[] reversed = new Space[ROWS];
@@ -442,6 +414,9 @@ public class Board {
             return reversed;
     }
 
+    /**
+     * Changes the active color instance variable
+     */
     protected void changeActiveColor(){
         if(activeColor == Color.RED){
             activeColor = Color.WHITE;
@@ -452,19 +427,8 @@ public class Board {
     }
 
     /**
-     * @return true if the pending move is a jump
+     * @return String format of Board
      */
-    public boolean isJumping() {
-        return isJumping;
-    }
-
-    /**
-     * @return true if a piece is moving
-     */
-    public boolean isMoving() {
-        return isMoving;
-    }
-
     @Override
     public String toString(){
         return null;

@@ -1,9 +1,18 @@
 package com.webcheckers.model;
 
+/**
+ * Represents the location of an element on the board.
+ */
 public class Position {
-    private int row;
-    private int cell;
+    private int row;    // Row index
+    private int cell;   // Column/cell index
 
+    /**
+     * Constructs a new Position object.
+     *
+     * @param row Row index this position represents
+     * @param cell Column/Cell index this position represents
+     */
     public Position(int row, int cell) {
         this.row = row;
         this.cell = cell;
@@ -30,4 +39,5 @@ public class Position {
     public int getCell() {
         return cell;
     }
+
 }

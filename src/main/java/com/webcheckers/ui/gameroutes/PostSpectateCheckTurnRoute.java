@@ -26,8 +26,7 @@ public class PostSpectateCheckTurnRoute implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         LOG.fine("PostSpectateCheckTurnRoute invoked");
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
+        Gson gson = new Gson();
         Session session = request.session();
         Player me = session.attribute("currentUser");
         Game game = me.getGame();
