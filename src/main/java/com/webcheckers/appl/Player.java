@@ -8,7 +8,6 @@ import com.webcheckers.model.Game;
  * @author Nelson Liang
  */
 public class Player {
-    //private final int playerID; // Internal ID constructed by hashing player info
     public final String name;
     public Status status;
     public Game game;
