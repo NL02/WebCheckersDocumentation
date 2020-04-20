@@ -10,6 +10,10 @@ import java.util.logging.Logger;
 
 import static spark.Spark.halt;
 
+/**
+ * Route pertaining to an attempt to sign out to the web server
+ * @author Rayna Mishra
+ */
 public class PostSignOutRoute implements Route{
 
     private static final Logger LOG = Logger.getLogger(PostSignOutRoute.class.getName());

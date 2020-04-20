@@ -14,6 +14,11 @@ import java.util.logging.Logger;
 
 import static spark.Spark.halt;
 
+/**
+ * Route that handles entering into spectator mode
+ *
+ * @author Ethan Davison
+ */
 public class GetSpectateGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSpectateGameRoute.class.getName());
 
@@ -39,7 +44,10 @@ public class GetSpectateGameRoute implements Route {
         LOG.config("GetSpectateGameRoute is initialized");
     }
 
-    @Override
+    /**
+     * Handle method for GetSpectateGameRoute
+     */
+     @Override
     public Object handle(Request request, Response response) throws Exception {
         LOG.fine("SpectateGameRoute invoked");
 

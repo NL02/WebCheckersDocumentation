@@ -12,6 +12,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * Route handler for an attempt to login
+ * @author Rayna Mishra
+ */
 public class PostLoginRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(PostLoginRoute.class.getName());
@@ -50,9 +54,9 @@ public class PostLoginRoute implements Route {
         LOG.config("PostLoginRoute is initialized.");
     }
 
-    //
-    // TemplateViewRoute method
-    //
+    /**
+     * Handle method for PostLoginRoute
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
         LOG.fine("PostLoginRoute Invoked");

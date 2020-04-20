@@ -10,6 +10,7 @@ import java.util.logging.Logger;
  * The main application layer of the web server.
  * Contains all essential side wide information and functions
  * Contains all players and games currently on the site
+ * @author Wyatt Holcombe
  */
 public class PlayerLobby {
 
