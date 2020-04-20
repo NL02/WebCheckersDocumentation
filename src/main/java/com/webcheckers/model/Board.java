@@ -8,11 +8,9 @@ public class Board {
     // Move validation messages
     static final Message VALID_MOVE = Message.info("Move is valid");
     static final Message OUT_OF_BOUNDS = Message.error("Move is out of bounds");
-//    static final Message INVALID_SPACE = Message.error("Cannot move to white space");
     static final Message SPACE_OCCUPIED = Message.error("A piece occupies this space");
     static final Message TOO_FAR = Message.error("Move is too far");
     static final Message ILLEGAL_COMBO = Message.error("Cannot make simple move and jump in same turn");
-//    static final Message NOT_DIAGONAL = Message.error("Cannot move that direction");
     static final Message NO_PIECE = Message.error("No piece to jump");
     static final Message NOT_KING = Message.error("Only king pieces can move backwards");
     static final Message OWN_PIECE = Message.error("Can't jump own piece");
@@ -103,33 +101,17 @@ public class Board {
         }
 
         // Verify move is in right direction
-        //if (!isJumping) {
-            if (movedPiece.getType() != Piece.PieceType.KING) {
-                if (movedPiece.getColor() == Color.RED && startX > endX
-                        || movedPiece.getColor() == Color.WHITE && startX < endX) {
-                    return NOT_KING;
-                }
+        if (movedPiece.getType() != Piece.PieceType.KING) {
+            if (movedPiece.getColor() == Color.RED && startX > endX
+                    || movedPiece.getColor() == Color.WHITE && startX < endX) {
+                return NOT_KING;
             }
-        //}
+        }
 
         // Verify space is unoccupied
         if (board[endX][endY].getPiece() != null) {
             return SPACE_OCCUPIED;
         }
-        // Verify space is valid for movement
-//        else if (!board[endX][endY].isValid()) {
-//            return INVALID_SPACE;
-//        }
-        // Verify move length
-        /*
-        else if (Math.abs(endX - startX) > 2 || Math.abs(endY - startY) > 2) {
-            return TOO_FAR;
-        }
-        */
-        // Verify move is diagonal
-//        else if (startX == endX || startY == endY) {
-//            return NOT_DIAGONAL;
-//        }
 
         // Move is valid, so add it to pendingMoves
         pendingMoves.add(move);
@@ -356,20 +338,20 @@ public class Board {
         }
     }
 
-    /**
-     * Function used to test various configurations as well as populating the board normally
-     * @param test
-     */
-    private void PopulateBoard(boolean test){
-        if(test){
-            board[1][0].setPiece(new Piece(Color.RED));
-            board[2][1].setPiece(new Piece(Color.WHITE));
-            board[4][3].setPiece(new Piece(Color.WHITE));
-        }
-        else{
-            PopulateBoard();
-        }
-    }
+//    /**
+//     * Function used to test various configurations as well as populating the board normally
+//     * @param test
+//     */
+//    private void PopulateBoard(boolean test){
+//        if(test){
+//            board[1][0].setPiece(new Piece(Color.RED));
+//            board[2][1].setPiece(new Piece(Color.WHITE));
+//            board[4][3].setPiece(new Piece(Color.WHITE));
+//        }
+//        else{
+//            PopulateBoard();
+//        }
+//    }
 
     private void PopulateBoard() {
         for (int row = 0; row < ROWS; row++) {
