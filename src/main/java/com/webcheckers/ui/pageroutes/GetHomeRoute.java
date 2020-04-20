@@ -1,5 +1,6 @@
 package com.webcheckers.ui.pageroutes;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -33,7 +34,7 @@ public class  GetHomeRoute implements Route {
   static final String TITLE = "Welcome!";
   static final String NUM_PLAYERS_ATTR = "num_players";
   static final String NUM_PLAYERS_MSG = "There are %d players signed on.";
-  static final String STAT_STRING ="Games played: %d | Games won: %d | Win percentage %f";
+  static final String STAT_STRING ="Games played: %d | Games won: %d | Win percentage %s";
   static final String MESSAGE_ATTR = "message";
   static final String VIEW_NAME = "home.ftl";
   static final String CURRENT_USER_ATTR = "currentUser";
@@ -45,6 +46,8 @@ public class  GetHomeRoute implements Route {
   //
   // Attributes
   //
+
+  private final DecimalFormat df = new DecimalFormat("0.00");
 
   private final PlayerLobby playerLobby;
   private final TemplateEngine templateEngine;
@@ -102,7 +105,7 @@ public class  GetHomeRoute implements Route {
 
     Player currentUser = request.session().attribute("currentUser");
     if(currentUser != null){
-      Message stat = Message.info(String.format(STAT_STRING, currentUser.getGamesPlayed(), currentUser.getGamesWon(), currentUser.getWinPercent()));
+      Message stat = Message.info(String.format(STAT_STRING, currentUser.getGamesPlayed(), currentUser.getGamesWon(), df.format(currentUser.getWinPercent())));
       vm.put(STAT_ATTR, stat);
     }
     if(currentUser != null && currentUser.status == Player.Status.INGAME){
