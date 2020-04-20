@@ -11,7 +11,7 @@ import java.util.Iterator;
  * View component for the checkers board that contains iterable rows. Temporarily holding model-tier information until
  * model-tier board classes are added.
  *
- * @author Wyatt Holcombe
+ * @author Wyatt Holcombe, Nelson Liang
  */
 public class BoardView implements Iterable<Row> {
 

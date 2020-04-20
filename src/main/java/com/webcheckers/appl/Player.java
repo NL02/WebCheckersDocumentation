@@ -3,22 +3,23 @@ package com.webcheckers.appl;
 import com.webcheckers.model.Game;
 
 /**
- * Object that represents a WebCheckers player and stores their information.
+ * Player class represents a single player and their player statistics.
+ *
+ * @author Nelson Liang
  */
 public class Player {
-    /* Public attributes */
-    public final String name;   // Player's name
-    public Status status;       // Player's status in the application
-    public Game game;           // Current game
+    //private final int playerID; // Internal ID constructed by hashing player info
+    public final String name;
+    public Status status;
+    public Game game;
 
-    /* Private attributes */
     private int gamesPlayed = 0;
     private int gamesWon = 0;
 
     /**
      * Status - enums for the current state of the player
      */
-    public enum Status {
+    public enum Status{
         OFFLINE, //Player is not online
         SEARCHING, //Player is not in a game, nor looking for a game
         WAITING, //Player has created a new game and is waiting for
@@ -37,18 +38,13 @@ public class Player {
         this.status = Status.SEARCHING;
     }
 
-    /**
-     * Sets this player's game when they join one.
-     *
-     * @param game The game that the player joined
-     */
+
     public void startGame(Game game){
         this.game = game;
     }
 
     /**
-     * Returns the name of the player instance.
-     *
+     * getName returns the name of the player instance
      * @return player name
      */
     public String getName() {
@@ -65,7 +61,7 @@ public class Player {
     }
 
     /**
-     * Sets the player's game to null.
+     * endGame sets the player game to null
      */
     public void endGame(boolean hasWon) {
             gamesPlayed++;
@@ -75,7 +71,7 @@ public class Player {
     }
 
     /**
-     * Sets this player's status to OFFLINE.
+     * endSession sets the status of a player to OFFLINE
      */
     public void endSession(){
         this.status = Status.OFFLINE;
@@ -83,34 +79,31 @@ public class Player {
     }
 
     /**
-     * Returns the number of games this player has played.
-     *
-     * @return gamesPlayed
+     * Getter for games played
+     * @return
      */
     public int getGamesPlayed(){
         return gamesPlayed;
     }
 
     /**
-     * Returns the number of games won by this player.
-     *
-     * @return gamesWon
+     * Getter for games won
+     * @return
      */
     public int getGamesWon(){
         return gamesWon;
     }
 
     /**
-     * Calculates and returns this player's win percentage.
-     *
-     * @return Float from 0.0 to 100.0%
+     * Gettor for getting win percentage
+     * @return
      */
     public float getWinPercent(){
         return  gamesPlayed != 0 ? (float)gamesWon/(float)gamesPlayed * 100 : 0;
     }
 
     /**
-     * Checks if the given object is equal (has the name username) as this player instance
+     * checks if the given object is equal (has the name username) as this player instance
      *
      * @param obj Object to check
      * @return boolean based on whether or not obj has the same username as this instance of player
