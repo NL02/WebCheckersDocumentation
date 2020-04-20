@@ -8,13 +8,27 @@ import java.util.logging.Logger;
 
 import static spark.Spark.halt;
 
+/**
+ * Route handler for when a spectator chooses to stop spectating.
+ */
 public class GetSpectatorStopWatchingRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSpectatorStopWatchingRoute.class.getName());
 
-    public GetSpectatorStopWatchingRoute(){
+    /**
+     * Constructs a new GetSpectatorStopWatchingRoute.
+     */
+    public GetSpectatorStopWatchingRoute() {
         LOG.config("GetSpectatorStopWatchingRoute initialized");
     }
 
+    /**
+     * Handles /spectator/stopWatching requests.
+     *
+     * @param request HTTP request
+     * @param response HTTP response
+     * @return
+     * @throws Exception
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
         LOG.fine("GetSpectatorStopWatchingRoute invoked");

@@ -8,8 +8,7 @@ import com.webcheckers.model.Row;
 import java.util.Iterator;
 
 /**
- * View component for the checkers board that contains iterable rows. Temporarily holding model-tier information until
- * model-tier board classes are added.
+ * View component for the checkers board that contains iterable rows.
  *
  * @author Wyatt Holcombe, Nelson Liang
  */
