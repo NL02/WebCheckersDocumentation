@@ -25,12 +25,10 @@ public class PlayerLobby {
     private Map <String, Player> userMap = new HashMap<>();
     private static int totalGames = 0;
     public static Map<String, Game> activeGames = new HashMap<>();
-    //TODO ADD LIST OF ALL COMPLETED GAMES
 
     //
     // Public methods
     //
-
 
     /**
      * Create a new {CheckersGame} game.
@@ -57,7 +55,7 @@ public class PlayerLobby {
     /**
      * Collect site wide statistics when a game is finished.
      */
-    static void gameFinished(){
+    public static void gameFinished(){
             totalGames++;
     }
 
@@ -185,6 +183,11 @@ public class PlayerLobby {
         return userMap.getOrDefault(username, null);
     }
 
+    /**
+     * Ends a player's session.
+     *
+     * @param player Player to end session for
+     */
     public void endSession(Player player){
         removeUser(player);
         decrement();
