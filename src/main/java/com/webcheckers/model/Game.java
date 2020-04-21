@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 /**
  * A single "Checkers game".
  *
- * @author Wyatt Holcombe, Ethan Davison
+ * @author Wyatt Holcombe, Ethan Davison, Nelson Liang
  * Commented by: May Wu
  */
 public class Game {
