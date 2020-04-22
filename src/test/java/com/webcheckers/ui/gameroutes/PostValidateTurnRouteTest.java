@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 /**
  * The unit test suite for PostValidateTurnRoute
  *
- *
+ * @author Nelson Liang
  */
 @Tag("UI-tier")
 public class PostValidateTurnRouteTest {
@@ -61,8 +61,7 @@ public class PostValidateTurnRouteTest {
         when(session.attribute(PostValidateMoveRoute.CURRENT_USER_ATTR)).thenReturn(player);
         when(request.body()).thenReturn(gson.toJson(move));
         when(player.getGame()).thenReturn(game);
-//        assertEquals(gson.toJson(Message.info("Move is valid")),
-//                CuT.handle(request, response));
+
         CuT.handle(request,response);
     }
 }

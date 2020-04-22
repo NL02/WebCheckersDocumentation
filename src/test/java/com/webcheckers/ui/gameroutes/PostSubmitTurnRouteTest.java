@@ -15,6 +15,7 @@ import static org.mockito.Mockito.when;
 /**
  * The unit test suite for PostSubmitTurnRoute
  *
+ * @author Nelson Liang
  */
 public class PostSubmitTurnRouteTest {
     /**
@@ -49,6 +50,10 @@ public class PostSubmitTurnRouteTest {
 
     }
 
+    /**
+     * test that the handle method doesnt return null
+     * @throws Exception
+     */
     @Test
     public void test_handleMethod() throws Exception {
         when(session.attribute("currentUser")).thenReturn(redPlayer);
